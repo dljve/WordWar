@@ -35,7 +35,7 @@ public class GdxHex extends ApplicationAdapter implements GestureDetector.Gestur
 	private ArrayList<Rectangle> tiles;
 	private Map<Rectangle, Texture> textures;
 
-	private float currentZoom = 1f;
+	private float currentZoom = 2f;
 	private float zoomLimit = 2f;
 	private float panRate = 1f;
 
