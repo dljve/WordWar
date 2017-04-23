@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
@@ -27,6 +28,7 @@ public class GdxHex extends ApplicationAdapter implements GestureDetector.Gestur
 	private Texture tileB;
 	private Texture bg;
 	private Sprite sprite;
+	private BitmapFont font; //or use alex answer to use custom font
 
 	private final int BOARD_SIZE = 5;
 	private final int TILE_SIZE = 256;
@@ -49,6 +51,7 @@ public class GdxHex extends ApplicationAdapter implements GestureDetector.Gestur
 
 		tiles = new ArrayList<Rectangle>();
 		textures = new HashMap<Rectangle, Texture>();
+		font = new BitmapFont();
 
 		// Textures
 		tileW = new Texture("tileW.png");
@@ -85,8 +88,8 @@ public class GdxHex extends ApplicationAdapter implements GestureDetector.Gestur
 	}
 
 	public void generateTiles() {
-		float w = WORLD_WIDTH; //Gdx.graphics.getWidth();
-		float h = WORLD_HEIGHT; //Gdx.graphics.getHeight();
+		float w = WORLD_WIDTH;
+		float h = WORLD_HEIGHT;
 		int y_offset = (int)h/2 - TILE_SIZE/2;
 
 		for (int y = 0; y < BOARD_SIZE; y++) {
