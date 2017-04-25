@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.applab.wordwar;
 
 import com.badlogic.gdx.math.Rectangle;
 

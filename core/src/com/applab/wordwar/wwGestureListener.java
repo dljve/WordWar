@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.applab.wordwar;
 
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.MathUtils;
@@ -8,9 +8,9 @@ import com.badlogic.gdx.math.Vector3;
 
 public class wwGestureListener implements GestureDetector.GestureListener{
 
-    private GdxHex game;
+    private Game game;
 
-    public wwGestureListener(GdxHex game) {
+    public wwGestureListener(Game game) {
         this.game = game;
     }
 

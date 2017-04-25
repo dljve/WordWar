@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.applab.wordwar;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -23,13 +23,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-class GdxHex extends ApplicationAdapter {
+public class Game extends ApplicationAdapter {
 	private SpriteBatch batch;
 
 	protected OrthographicCamera cam;
 	protected ArrayList<Rectangle> tiles; 	// Tile positions
 	protected ArrayList<Rectangle> frontier; 	// Tile frontier
-	private Map<Rectangle, Item> items; 	// Tile-Item pairs
+	private Map<Rectangle, com.applab.wordwar.Item> items; 	// Tile-Item pairs
 	private Map<Rectangle, Color> colors; 	// Tile-Color pairs
 	private Map<Rectangle, int[]> captures;	// Tile-Capture pairs
 	private Stage HUD;
@@ -156,7 +156,7 @@ class GdxHex extends ApplicationAdapter {
 
 		tiles = new ArrayList<Rectangle>();
 		frontier = new ArrayList<Rectangle>();
-		items = new HashMap<Rectangle, Item>();
+		items = new HashMap<Rectangle, com.applab.wordwar.Item>();
 		colors = new HashMap<Rectangle, Color>();
 		captures = new HashMap<Rectangle, int[]>();
 
@@ -189,7 +189,7 @@ class GdxHex extends ApplicationAdapter {
 
 		// Input Processors
 		GestureDetector gestureDetector = new GestureDetector(new wwGestureListener(this));
-		wwInputProcessor inputProcessor = new wwInputProcessor(this);
+		com.applab.wordwar.wwInputProcessor inputProcessor = new com.applab.wordwar.wwInputProcessor(this);
 		InputMultiplexer multiplexer = new InputMultiplexer();
 		multiplexer.addProcessor(inputProcessor);
 		multiplexer.addProcessor(gestureDetector);
@@ -382,10 +382,10 @@ class GdxHex extends ApplicationAdapter {
 		};
 
 		for (int i = 0; i < tiles.size(); i++) {
-			Item item = new Item(swen[i][0], swen[i][1]);
-			if (i==baseTiles[0]) item = new Item ("","");
-			if (i==baseTiles[1]) item = new Item ("","");
-			if (i==baseTiles[2]) item = new Item ("","");
+			com.applab.wordwar.Item item = new com.applab.wordwar.Item(swen[i][0], swen[i][1]);
+			if (i==baseTiles[0]) item = new com.applab.wordwar.Item("","");
+			if (i==baseTiles[1]) item = new com.applab.wordwar.Item("","");
+			if (i==baseTiles[2]) item = new com.applab.wordwar.Item("","");
 
 			// Calculate word positions
 			GlyphLayout wordGlyph = new GlyphLayout(gillsans, swen[i][0]);
@@ -486,7 +486,7 @@ class GdxHex extends ApplicationAdapter {
 		batch.setColor(1, 1, 1, 1);
 
 		for (Rectangle tile : tiles) {
-			Item item = items.get(tile);
+			com.applab.wordwar.Item item = items.get(tile);
 			Rectangle wordPos = item.getWordPosition();
 			Rectangle transPos = item.getTranslationPosition();
 			gillsans.draw(batch, item.getWord(), wordPos.x, wordPos.y);

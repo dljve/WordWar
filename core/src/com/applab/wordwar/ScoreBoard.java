@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.applab.wordwar;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -11,13 +11,13 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class ScoreBoard extends Actor {
 
-    private GdxHex game;
+    private Game game;
     private ShapeRenderer renderer = new ShapeRenderer();
     private Color outline = Color.BLACK;
     private Color background = new Color(0,0,0,0.5f);
     private BitmapFont gillsans;
 
-    public ScoreBoard (GdxHex game) {
+    public ScoreBoard (Game game) {
         this.game = game;
 
         gillsans = new BitmapFont(Gdx.files.internal("gillsans72.fnt"), false);

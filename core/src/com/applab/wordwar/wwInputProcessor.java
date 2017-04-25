@@ -1,14 +1,13 @@
-package com.mygdx.game;
+package com.applab.wordwar;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 
 public class wwInputProcessor implements InputProcessor {
 
-        private GdxHex game;
+        private Game game;
 
-        public wwInputProcessor(GdxHex game) {
+        public wwInputProcessor(Game game) {
             this.game = game;
         }
 
