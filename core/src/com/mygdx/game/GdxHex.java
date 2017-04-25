@@ -11,9 +11,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -25,16 +23,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-public class GdxHex extends ApplicationAdapter implements GestureDetector.GestureListener {
+class GdxHex extends ApplicationAdapter {
 	private SpriteBatch batch;
-	private OrthographicCamera cam;
-	private GestureDetector gestureDetector;
-	private ArrayList<Rectangle> tiles; 	// Tile positions
-	private ArrayList<Rectangle> frontier; 	// Tile frontier
+
+	protected OrthographicCamera cam;
+	protected ArrayList<Rectangle> tiles; 	// Tile positions
+	protected ArrayList<Rectangle> frontier; 	// Tile frontier
 	private Map<Rectangle, Item> items; 	// Tile-Item pairs
 	private Map<Rectangle, Color> colors; 	// Tile-Color pairs
 	private Map<Rectangle, int[]> captures;	// Tile-Capture pairs
-	private Rectangle activeTile = null;
 	private Stage HUD;
 	private Actor scoreBoard;
 
@@ -47,7 +44,7 @@ public class GdxHex extends ApplicationAdapter implements GestureDetector.Gestur
 
 	private float BOARD_OPACITY = 0.95f;
 
-	public Color[][][] getColor() {
+	Color[][][] getColor() {
 		return color;
 	}
 
@@ -76,31 +73,32 @@ public class GdxHex extends ApplicationAdapter implements GestureDetector.Gestur
 	};
 
 	// Constants
-	private final int WORLD_WIDTH = 4000;
-	private final int WORLD_HEIGHT = 3000;
+	protected final int WORLD_WIDTH = 4000;
+	protected final int WORLD_HEIGHT = 3000;
 	private final int BOARD_SIZE = 5;
 	private final int TILE_SIZE = 256;
 	private final int TILE_WIDTH = 222;
 	private final int TILE_HEIGHT = 192; // 3/4th of tile
-	private float currentZoom = 2f;
-	private float zoomLimit = 2f;
-	private float panRate = 1f;
+	protected float currentZoom = 2f;
+	protected final float zoomLimit = 2f;
+	protected final float panRate = 0.75f;
 	private int PLAYER_ID = 1;	// 0, 1 or 2 (assigned by server at start of the game)
 	private int[] baseTiles = {32, 38 ,53}; // Starting tiles for board size 5 (hardcoded)
-	private float INCORRECT_FEEDBACK_TIME = 4; // Time to show the correct answer after a trial
-	private float CORRECT_FEEDBACK_TIME = 0.5f;
+	private final float INCORRECT_FEEDBACK_TIME = 4; // Time to show the correct answer after a trial
+	private final float CORRECT_FEEDBACK_TIME = 0.5f;
 	private boolean showNumbersOnTiles = false; // For developer purposes
-	private long GAME_DURATION = 10*60; // Game duration in seconds
+	private final long GAME_DURATION = 10*60; // Game duration in seconds
 
 	// Variables
 	private boolean inTrial = false;
 	private String answer = "";
 	private float feedbackTime;
-	private String trialType; // "study" or "test"
+	protected String trialType; // "study" or "test"
 	private Vector3 prevPos; // Store the board position when in trial mode
 	private float prevZoom; // Store the zoom when in trial mode
 	private int[] scores = {1,1,1};
 	private long endTime = 0;
+	protected Rectangle activeTile = null; // The tile active during a trial
 
 	public int[] getScores() {
 		return scores;
@@ -190,7 +188,7 @@ public class GdxHex extends ApplicationAdapter implements GestureDetector.Gestur
 		HUD.addActor(scoreBoard);
 
 		// Input Processors
-		gestureDetector = new GestureDetector(this);
+		GestureDetector gestureDetector = new GestureDetector(new wwGestureListener(this));
 		wwInputProcessor inputProcessor = new wwInputProcessor(this);
 		InputMultiplexer multiplexer = new InputMultiplexer();
 		multiplexer.addProcessor(inputProcessor);
@@ -228,6 +226,7 @@ public class GdxHex extends ApplicationAdapter implements GestureDetector.Gestur
 		if (answer.equals(items.get(activeTile).getTranslation())) {
 			correctFeedback();
 		} else {
+			Gdx.app.log("a",trialType);
 			if (trialType == "study")
 				return;	// For the study the user should type the translation until it is correct
 			else
@@ -238,8 +237,6 @@ public class GdxHex extends ApplicationAdapter implements GestureDetector.Gestur
 		Timer.schedule(new Timer.Task(){
 			@Override
 			public void run() {
-				// For the STUDY trial with novel items
-				items.get(activeTile).setTranslation("");
 				endTrial();
 				updateFrontier();
 			}
@@ -247,16 +244,28 @@ public class GdxHex extends ApplicationAdapter implements GestureDetector.Gestur
 	}
 
 	private void correctFeedback() {
-		captures.get(activeTile)[PLAYER_ID] = 1;
-		updateColor(activeTile);
+		if (trialType=="study")
+			items.get(activeTile).setNovel(false);
+		captureTile(activeTile);
 		feedbackTime = CORRECT_FEEDBACK_TIME;
-		scores[PLAYER_ID]++; // Increase score
-	}
 
+	}
 	private void incorrectFeedback() {
+		Gdx.app.log("a","incorrect feedback (test)");
 		answer = items.get(activeTile).getTranslation();
 		feedbackTime = INCORRECT_FEEDBACK_TIME;
-		scores[PLAYER_ID]--; // Decrease score
+	}
+
+	private void captureTile(Rectangle tile) {
+		captures.get(tile)[PLAYER_ID] = 1;
+		updateColor(tile);
+		scores[PLAYER_ID]++;
+	}
+
+	private void looseTile(Rectangle tile) {
+		captures.get(tile)[PLAYER_ID] = 0;
+		updateColor(tile);
+		scores[PLAYER_ID]--;
 	}
 
 	/**
@@ -274,6 +283,14 @@ public class GdxHex extends ApplicationAdapter implements GestureDetector.Gestur
 	 *
 	 */
 	public void updateFrontier() {
+		// If there is a test trial you must click the corresponding tile
+		if (trialType=="test") {
+			frontier.clear();
+			frontier.add(activeTile);
+			Color c = colors.get(activeTile);
+			colors.put(activeTile, new Color(c.r, c.g, c.b, BOARD_OPACITY));
+			return;
+		}
 		ArrayList<Rectangle> area = new ArrayList<Rectangle>();
 		ArrayList<Rectangle> neighbors = new ArrayList<Rectangle>();
 
@@ -393,6 +410,16 @@ public class GdxHex extends ApplicationAdapter implements GestureDetector.Gestur
 		}
 	}
 
+	public void promptTestTrial() {
+		// TODO: This will be triggered after receiving a test trial from the server
+		trialType = "test";
+
+		// Example: set the test tile and decapture it
+		activeTile = tiles.get(8);
+		captures.get(activeTile)[PLAYER_ID] = 0;
+		updateColor(activeTile);
+	}
+
 	public void startTrial() {
 		inTrial = true;
 		Gdx.input.setCatchBackKey(true);
@@ -422,8 +449,10 @@ public class GdxHex extends ApplicationAdapter implements GestureDetector.Gestur
 	 * Clear the answer text, disable the keyboard,
 	 * restore the zoom and camera position, restore the tile colors
 	 */
+	private int trialsDone = 0;
 	public void endTrial() {
 		answer = "";
+		trialType = "";
 		Gdx.input.setOnscreenKeyboardVisible(false);
 		for (Rectangle tile : tiles)
 			updateColor(tile);
@@ -442,7 +471,7 @@ public class GdxHex extends ApplicationAdapter implements GestureDetector.Gestur
 
 	@Override
 	public void render() {
-		Gdx.gl.glClearColor(0, 0, 0, 1);
+		Gdx.gl.glClearColor(0.13f, 0.23f, 0.26f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		cam.update();
@@ -491,92 +520,6 @@ public class GdxHex extends ApplicationAdapter implements GestureDetector.Gestur
 	public void resize(int width, int height) {
 	}
 
-	@Override
-	public boolean touchDown(float x, float y, int pointer, int button) {
-		Vector3 worldCoords = cam.unproject(new Vector3(x,y,0));
 
-		for (Rectangle tile : tiles) {
-			if ( tile.contains(worldCoords.x,worldCoords.y) ) {
-				Gdx.app.log("test",tile.x + " " + tile.y);
-				break;
-			}
-		}
-		return false;
-	}
-
-
-	@Override
-	public boolean tap(float x, float y, int count, int button) {
-		return false;
-	}
-
-
-	@Override
-	public boolean longPress(float x, float y) {
-		Vector3 worldCoords = cam.unproject(new Vector3(x,y,0));
-
-		for (Rectangle tile : tiles) {
-			if ( tile.contains(worldCoords.x,worldCoords.y) &&
-					frontier.contains(tile) && !isBaseTile(tile) ) {
-				trialType = "study";
-				activeTile = tile;
-				startTrial();
-				break;
-			}
-		}
-
-		return false;
-	}
-
-	@Override
-	public boolean fling(float velocityX, float velocityY, int button) {
-		return false;
-	}
-
-	@Override
-	public boolean pan(float x, float y, float deltaX, float deltaY) {
-		if (inTrial)
-			return false;
-
-		cam.translate(-deltaX * currentZoom * panRate, deltaY * currentZoom * panRate);
-
-		float effectiveViewportWidth = cam.viewportWidth * cam.zoom;
-		float effectiveViewportHeight = cam.viewportHeight * cam.zoom;
-
-		cam.position.x = MathUtils.clamp(cam.position.x, effectiveViewportWidth / 2f, WORLD_WIDTH - effectiveViewportWidth / 2f);
-		cam.position.y = MathUtils.clamp(cam.position.y, effectiveViewportHeight / 2f, WORLD_HEIGHT - effectiveViewportHeight / 2f);
-		cam.update();
-		return false;
-	}
-
-	@Override
-	public boolean panStop(float x, float y, int pointer, int button) {
-		currentZoom = cam.zoom;
-		return false;
-	}
-
-	@Override
-	public boolean zoom(float initialDistance, float distance) {
-		if (inTrial)
-			return false;
-
-		float newZoom = (initialDistance / distance) * currentZoom;
-		if (newZoom <= zoomLimit) {
-			cam.zoom = newZoom;
-			cam.zoom = MathUtils.clamp(cam.zoom, 0.1f, WORLD_WIDTH/cam.viewportWidth);
-			cam.update();
-		}
-		return false;
-	}
-
-	@Override
-	public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2) {
-		return false;
-	}
-
-	@Override
-	public void pinchStop() {
-
-	}
 
 }

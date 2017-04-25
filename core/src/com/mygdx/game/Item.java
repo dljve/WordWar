@@ -8,6 +8,11 @@ public class Item {
     private String translation;
     private Rectangle wordPosition;
     private Rectangle translationPosition;
+
+    public void setNovel(boolean novel) {
+        this.novel = novel;
+    }
+
     private boolean novel = true;
 
     public Item(String word, String translation) {
