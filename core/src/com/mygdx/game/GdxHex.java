@@ -78,6 +78,7 @@ public class GdxHex extends ApplicationAdapter implements GestureDetector.Gestur
 	private float panRate = 1f;
 	private boolean showNumbersOnTiles = false;
 	private int[] baseTiles = {32, 38 ,53};
+	private int PLAYER_ID = 0;
 
 	private boolean inTrial = false;
 	private String answer = "";
@@ -168,6 +169,8 @@ public class GdxHex extends ApplicationAdapter implements GestureDetector.Gestur
 		captures.get(activeTile)[0] = 1;
 		updateColor(activeTile);
 		items.get(activeTile).setTranslation("");
+		//correctFeedback();
+		//incorrectFeedback();
 
 		endTrial();
 		updateFrontier();
@@ -182,14 +185,18 @@ public class GdxHex extends ApplicationAdapter implements GestureDetector.Gestur
 		colors.put(tile, color[c[0]][c[1]][c[2]] );
 	}
 
+	/**
+	 * Update the frontier for the player
+	 * The frontier contains all the tiles that the player can capture
+	 *
+	 */
 	public void updateFrontier() {
-		int id = 0;
 		ArrayList<Rectangle> area = new ArrayList<Rectangle>();
 		ArrayList<Rectangle> neighbors = new ArrayList<Rectangle>();
 
 		// List the tiles in the player's area
 		for (Rectangle tile : tiles) {
-			if (captures.get(tile)[id]==1) {
+			if (captures.get(tile)[PLAYER_ID]==1) {
 				area.add(tile);
 			}
 		}
@@ -210,7 +217,7 @@ public class GdxHex extends ApplicationAdapter implements GestureDetector.Gestur
 		// Add the uncaptured neighbors to the frontier
 		frontier.clear();
 		for (Rectangle neighbor : neighbors) {
-			if (captures.get(neighbor)[id]==0) {
+			if (captures.get(neighbor)[PLAYER_ID]==0) {
 				// Make sure it neighbors at least two tiles or the base tile
 				int n = 0;
 				for (int i = 0; i < neighbors.size(); i++) {
