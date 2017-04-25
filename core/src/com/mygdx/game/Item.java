@@ -10,6 +10,11 @@ public class Item {
     private Rectangle translationPosition;
     private boolean novel = true;
 
+    public Item(String word, String translation) {
+        this.word = word;
+        this.translation = translation;
+    }
+
     public Rectangle getWordPosition() {
         return wordPosition;
     }
@@ -30,8 +35,11 @@ public class Item {
         this.translationPosition = position;
     }
 
-    public Item(String word, String translation) {
+    public void setWord(String word) {
         this.word = word;
+    }
+
+    public void setTranslation(String translation) {
         this.translation = translation;
     }
 
