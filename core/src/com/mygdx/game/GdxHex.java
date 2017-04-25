@@ -15,6 +15,10 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,16 +34,21 @@ public class GdxHex extends ApplicationAdapter implements GestureDetector.Gestur
 	private Map<Rectangle, Color> colors; 	// Tile-Color pairs
 	private Map<Rectangle, int[]> captures;	// Tile-Capture pairs
 	private Rectangle activeTile = null;
+	private Stage HUD;
+	private Actor scoreBoard;
 
 	// Textures
 	private Texture tileW;
 	private Texture bg;
 
 	// Fonts
-	private BitmapFont font;
 	private BitmapFont gillsans;
 
 	private float BOARD_OPACITY = 0.95f;
+
+	public Color[][][] getColor() {
+		return color;
+	}
 
 	// Tile colors
 	private Color[][][] color = new Color[][][] {
@@ -65,7 +74,6 @@ public class GdxHex extends ApplicationAdapter implements GestureDetector.Gestur
 		}
 	};
 
-
 	// Constants
 	private final int WORLD_WIDTH = 4000;
 	private final int WORLD_HEIGHT = 3000;
@@ -76,19 +84,55 @@ public class GdxHex extends ApplicationAdapter implements GestureDetector.Gestur
 	private float currentZoom = 2f;
 	private float zoomLimit = 2f;
 	private float panRate = 1f;
-	private boolean showNumbersOnTiles = false;
-	private int[] baseTiles = {32, 38 ,53};
-	private int PLAYER_ID = 0;
+	private int PLAYER_ID = 1;	// 0, 1 or 2 (assigned by server at start of the game)
+	private int[] baseTiles = {32, 38 ,53}; // Starting tiles for board size 5 (hardcoded)
+	private float INCORRECT_FEEDBACK_TIME = 4; // Time to show the correct answer after a trial
+	private float CORRECT_FEEDBACK_TIME = 0.5f;
+	private boolean showNumbersOnTiles = false; // For developer purposes
 
+	// Variables
 	private boolean inTrial = false;
 	private String answer = "";
+	private float feedbackTime;
+	private String trialType; // "study" or "test"
+	private Vector3 prevPos; // Store the board position when in trial mode
+	private float prevZoom; // Store the zoom when in trial mode
+	private int[] scores = {1,1,1};
+
+	public int[] getScores() {
+		return scores;
+	}
+
+	/**
+	 * Return array of player IDs sorted by score
+	 * @return
+     */
+	public int[] getPlayerPlaces() {
+		if (scores[0] >= scores[1] && scores[0] >= scores[2]) {
+			if (scores[1] >= scores[2]) {
+				return new int[] {0,1,2};
+			} else {
+				return new int[] {0,2,1};
+			}
+		} else if (scores[1] >= scores[0] && scores[1] >= scores[2]) {
+			if (scores[0] >= scores[2]) {
+				return new int[] {1,0,2};
+			} else {
+				return new int[] {1,2,0};
+			}
+		} else {
+			if (scores[0] >= scores[1]) {
+				return new int[] {2,0,1};
+			} else {
+				return new int[] {2,1,0};
+			}
+		}
+	}
+
 
 	public boolean isInTrial() {
 		return inTrial;
 	}
-
-	private Vector3 prevPos;
-	private float prevZoom;
 
 	public void setAnswer(String answer) {
 		this.answer = answer;
@@ -109,7 +153,6 @@ public class GdxHex extends ApplicationAdapter implements GestureDetector.Gestur
 		captures = new HashMap<Rectangle, int[]>();
 
 		// Load Fonts
-		font = new BitmapFont();
 		gillsans = new BitmapFont(Gdx.files.internal("gillsans72.fnt"), false);
 		gillsans.getData().setScale(0.5f);
 		gillsans.setColor(Color.BLACK);
@@ -128,6 +171,14 @@ public class GdxHex extends ApplicationAdapter implements GestureDetector.Gestur
 		cam.zoom = currentZoom;
 		cam.update();
 
+		// HUD
+		HUD = new Stage(new ScreenViewport());
+		scoreBoard = new ScoreBoard(this);
+		scoreBoard.setSize(0.15f * w, 0.1f * w);
+		scoreBoard.setPosition(w-scoreBoard.getWidth()-0.05f*w, h-scoreBoard.getHeight()-0.05f*h);
+
+		HUD.addActor(scoreBoard);
+
 		// Input Processors
 		gestureDetector = new GestureDetector(this);
 		wwInputProcessor inputProcessor = new wwInputProcessor(this);
@@ -135,8 +186,6 @@ public class GdxHex extends ApplicationAdapter implements GestureDetector.Gestur
 		multiplexer.addProcessor(inputProcessor);
 		multiplexer.addProcessor(gestureDetector);
 		Gdx.input.setInputProcessor(multiplexer);
-
-		Gdx.input.setCatchBackKey(true);
 
 		// Prepare game
 		generateTiles();
@@ -163,17 +212,40 @@ public class GdxHex extends ApplicationAdapter implements GestureDetector.Gestur
 	public void giveTranslation() {
 		// TODO: give translation to server and receive feedback
 		// TODO: For study the model does not need to be updated
-		// TODO: For test, receive "correct"/"incorrect"
+		// TODO: For test, update model, (receive "correct"/"incorrect")
 
-		// Show feedback (player 0 captures tile as an example)
-		captures.get(activeTile)[0] = 1;
+		if (answer.equals(items.get(activeTile).getTranslation())) {
+			correctFeedback();
+		} else {
+			if (trialType == "study")
+				return;	// For the study the user should type the translation until it is correct
+			else
+				incorrectFeedback();
+		}
+
+		// End the trial only after the feedback
+		Timer.schedule(new Timer.Task(){
+			@Override
+			public void run() {
+				// For the STUDY trial with novel items
+				items.get(activeTile).setTranslation("");
+				endTrial();
+				updateFrontier();
+			}
+		}, feedbackTime);
+	}
+
+	private void correctFeedback() {
+		captures.get(activeTile)[PLAYER_ID] = 1;
 		updateColor(activeTile);
-		items.get(activeTile).setTranslation("");
-		//correctFeedback();
-		//incorrectFeedback();
+		feedbackTime = CORRECT_FEEDBACK_TIME;
+		scores[PLAYER_ID]++; // Increase score
+	}
 
-		endTrial();
-		updateFrontier();
+	private void incorrectFeedback() {
+		answer = items.get(activeTile).getTranslation();
+		feedbackTime = INCORRECT_FEEDBACK_TIME;
+		scores[PLAYER_ID]--; // Decrease score
 	}
 
 	/**
@@ -219,6 +291,8 @@ public class GdxHex extends ApplicationAdapter implements GestureDetector.Gestur
 		for (Rectangle neighbor : neighbors) {
 			if (captures.get(neighbor)[PLAYER_ID]==0) {
 				// Make sure it neighbors at least two tiles or the base tile
+				// TODO: Maybe do this different because it could result in no frontier when test trial are incorrect
+				// TODO: Solution: Frontier must contain at least one tile
 				int n = 0;
 				for (int i = 0; i < neighbors.size(); i++) {
 					if (neighbors.get(i) == neighbor) n++;
@@ -310,6 +384,8 @@ public class GdxHex extends ApplicationAdapter implements GestureDetector.Gestur
 
 	public void startTrial() {
 		inTrial = true;
+		Gdx.input.setCatchBackKey(true);
+		scoreBoard.setVisible(false);
 
 		// Center on trial tile and zoom in
 		prevPos = cam.position;
@@ -343,6 +419,8 @@ public class GdxHex extends ApplicationAdapter implements GestureDetector.Gestur
 		inTrial = false;
 		cam.zoom = prevZoom;
 		cam.position.set(prevPos);
+		Gdx.input.setCatchBackKey(false);
+		scoreBoard.setVisible(true);
 	}
 
 	public boolean isBaseTile(Rectangle tile) {
@@ -388,6 +466,8 @@ public class GdxHex extends ApplicationAdapter implements GestureDetector.Gestur
 			}
 		}
 		batch.end();
+
+		HUD.draw();
 	}
 
 	@Override
@@ -427,6 +507,7 @@ public class GdxHex extends ApplicationAdapter implements GestureDetector.Gestur
 		for (Rectangle tile : tiles) {
 			if ( tile.contains(worldCoords.x,worldCoords.y) &&
 					frontier.contains(tile) && !isBaseTile(tile) ) {
+				trialType = "study";
 				activeTile = tile;
 				startTrial();
 				break;
