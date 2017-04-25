@@ -67,7 +67,7 @@ public class Game extends ApplicationAdapter {
 			},
 			new Color[] {
 				new Color(0.29f, 0.00f, 0.51f, BOARD_OPACITY),	// Player 0 & 1
-				new Color(0.47f, 0.30f, 0.07f, BOARD_OPACITY)	// Player 0 & 1 & 3
+				new Color(0.47f, 0.30f, 0.07f, BOARD_OPACITY)	// Player 0 & 1 & 2
 			}
 		}
 	};
@@ -428,7 +428,7 @@ public class Game extends ApplicationAdapter {
 		// Center on trial tile and zoom in
 		prevPos = cam.position;
 		prevZoom = cam.zoom;
-		cam.position.set(activeTile.x + TILE_SIZE / 2, activeTile.y, 0);
+		cam.position.set(activeTile.x + TILE_SIZE / 2, activeTile.y + 32, 0);
 		cam.zoom = 0.4f;
 
 		// Grey out other tiles
