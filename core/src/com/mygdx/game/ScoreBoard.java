@@ -68,6 +68,13 @@ public class ScoreBoard extends Actor {
             gillsans.setColor(Color.WHITE);
             gillsans.draw(batch, score, getX()+getWidth()-scoreGlyph.width-getWidth()*0.05f,
                     getY()+getHeight()-i*(scoreGlyph.height+getHeight()*0.2f)-y_margin);
+
+            // Draw time
+            String timeLeft = game.getTimeLeft();
+            GlyphLayout timeGlyph = new GlyphLayout(gillsans, timeLeft);
+            gillsans.draw(batch, timeLeft, Gdx.graphics.getWidth()*0.05f,
+                    0.95f*Gdx.graphics.getHeight() - timeGlyph.height);
+
         }
 
     }

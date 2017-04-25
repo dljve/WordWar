@@ -23,6 +23,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public class GdxHex extends ApplicationAdapter implements GestureDetector.GestureListener {
 	private SpriteBatch batch;
@@ -89,6 +90,7 @@ public class GdxHex extends ApplicationAdapter implements GestureDetector.Gestur
 	private float INCORRECT_FEEDBACK_TIME = 4; // Time to show the correct answer after a trial
 	private float CORRECT_FEEDBACK_TIME = 0.5f;
 	private boolean showNumbersOnTiles = false; // For developer purposes
+	private long GAME_DURATION = 10*60; // Game duration in seconds
 
 	// Variables
 	private boolean inTrial = false;
@@ -98,11 +100,20 @@ public class GdxHex extends ApplicationAdapter implements GestureDetector.Gestur
 	private Vector3 prevPos; // Store the board position when in trial mode
 	private float prevZoom; // Store the zoom when in trial mode
 	private int[] scores = {1,1,1};
+	private long endTime = 0;
 
 	public int[] getScores() {
 		return scores;
 	}
 
+	public String getTimeLeft() {
+		long timeLeft = endTime-System.currentTimeMillis();
+		return String.format("%02d:%02d",
+				TimeUnit.MILLISECONDS.toMinutes(timeLeft),
+				TimeUnit.MILLISECONDS.toSeconds(timeLeft) -
+						TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(timeLeft))
+		);
+	}
 	/**
 	 * Return array of player IDs sorted by score
 	 * @return
@@ -128,7 +139,6 @@ public class GdxHex extends ApplicationAdapter implements GestureDetector.Gestur
 			}
 		}
 	}
-
 
 	public boolean isInTrial() {
 		return inTrial;
@@ -188,6 +198,7 @@ public class GdxHex extends ApplicationAdapter implements GestureDetector.Gestur
 		Gdx.input.setInputProcessor(multiplexer);
 
 		// Prepare game
+		endTime = System.currentTimeMillis() + GAME_DURATION*1000;
 		generateTiles();
 		getBoardState();
 		assignWordsToTiles();
