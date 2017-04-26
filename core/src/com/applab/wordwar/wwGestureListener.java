@@ -1,5 +1,6 @@
 package com.applab.wordwar;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
@@ -17,6 +18,10 @@ public class wwGestureListener implements GestureDetector.GestureListener{
     @Override
     public boolean touchDown(float x, float y, int pointer, int button) {
         Vector3 worldCoords = game.cam.unproject(new Vector3(x,y,0));
+
+       if (game.isInTrial() && game.activeTile.contains(worldCoords.x,worldCoords.y)) {
+           Gdx.input.setOnscreenKeyboardVisible(true);
+       }
 
         for (Rectangle tile : game.tiles) {
             if ( tile.contains(worldCoords.x,worldCoords.y) ) {

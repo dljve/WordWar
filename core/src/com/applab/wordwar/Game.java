@@ -184,7 +184,6 @@ public class Game extends ApplicationAdapter {
 		scoreBoard = new ScoreBoard(this);
 		scoreBoard.setSize(0.15f * w, 0.1f * w);
 		scoreBoard.setPosition(w-scoreBoard.getWidth()-0.05f*w, h-scoreBoard.getHeight()-0.05f*h);
-
 		HUD.addActor(scoreBoard);
 
 		// Input Processors
@@ -194,6 +193,7 @@ public class Game extends ApplicationAdapter {
 		multiplexer.addProcessor(inputProcessor);
 		multiplexer.addProcessor(gestureDetector);
 		Gdx.input.setInputProcessor(multiplexer);
+		Gdx.input.setCatchBackKey(true);
 
 		// Prepare game
 		endTime = System.currentTimeMillis() + GAME_DURATION*1000;
@@ -422,7 +422,6 @@ public class Game extends ApplicationAdapter {
 
 	public void startTrial() {
 		inTrial = true;
-		Gdx.input.setCatchBackKey(true);
 		scoreBoard.setVisible(false);
 
 		// Center on trial tile and zoom in
@@ -449,7 +448,6 @@ public class Game extends ApplicationAdapter {
 	 * Clear the answer text, disable the keyboard,
 	 * restore the zoom and camera position, restore the tile colors
 	 */
-	private int trialsDone = 0;
 	public void endTrial() {
 		answer = "";
 		trialType = "";
@@ -459,7 +457,6 @@ public class Game extends ApplicationAdapter {
 		inTrial = false;
 		cam.zoom = prevZoom;
 		cam.position.set(prevPos);
-		Gdx.input.setCatchBackKey(false);
 		scoreBoard.setVisible(true);
 	}
 

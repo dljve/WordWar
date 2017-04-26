@@ -1,5 +1,6 @@
 package com.applab.wordwar;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 
@@ -17,7 +18,7 @@ public class wwInputProcessor implements InputProcessor {
 
         public boolean keyUp (int keycode) {
             if (game.isInTrial()) {
-                if (keycode == Input.Keys.BACK || keycode == Input.Keys.ENTER) {
+                if (keycode == Input.Keys.ENTER) {
                     game.giveTranslation();
                 } else if (keycode == Input.Keys.BACKSPACE && game.getAnswer().length() > 0) {
                     game.setAnswer(game.getAnswer().substring(0, game.getAnswer().length() - 1));
