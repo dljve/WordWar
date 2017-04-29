@@ -33,7 +33,7 @@ public class Game extends ApplicationAdapter {
 	private Map<Rectangle, Color> colors; 	// Tile-Color pairs
 	private Map<Rectangle, int[]> captures;	// Tile-Capture pairs
 	private Stage HUD;
-	private Actor scoreBoard;
+	private Actor scoreBoard, endScreen;
 
 	// Textures
 	private Texture tileW;
@@ -82,12 +82,12 @@ public class Game extends ApplicationAdapter {
 	protected float currentZoom = 2f;
 	protected final float zoomLimit = 2f;
 	protected final float panRate = 0.75f;
-	private int PLAYER_ID = 1;	// 0, 1 or 2 (assigned by server at start of the game)
+	protected int PLAYER_ID = 1;	// 0, 1 or 2 (assigned by server at start of the game)
 	private int[] baseTiles = {32, 38 ,53}; // Starting tiles for board size 5 (hardcoded)
 	private final float INCORRECT_FEEDBACK_TIME = 4; // Time to show the correct answer after a trial
-	private final float CORRECT_FEEDBACK_TIME = 0.5f;
+	private final float CORRECT_FEEDBACK_TIME = 0.6f;
 	private boolean showNumbersOnTiles = false; // For developer purposes
-	private final long GAME_DURATION = 10*60; // Game duration in seconds
+	private final long GAME_DURATION = 600; // Game duration in seconds
 
 	// Variables
 	private boolean inTrial = false;
@@ -96,7 +96,7 @@ public class Game extends ApplicationAdapter {
 	protected String trialType; // "study" or "test"
 	private Vector3 prevPos; // Store the board position when in trial mode
 	private float prevZoom; // Store the zoom when in trial mode
-	private int[] scores = {1,1,1};
+	protected int[] scores = {1,1,1};
 	private long endTime = 0;
 	protected Rectangle activeTile = null; // The tile active during a trial
 
@@ -112,6 +112,11 @@ public class Game extends ApplicationAdapter {
 						TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(timeLeft))
 		);
 	}
+
+	public boolean isGameEnd() {
+		return endTime < System.currentTimeMillis();
+	}
+
 	/**
 	 * Return array of player IDs sorted by score
 	 * @return
@@ -185,6 +190,11 @@ public class Game extends ApplicationAdapter {
 		scoreBoard.setSize(0.15f * w, 0.1f * w);
 		scoreBoard.setPosition(w-scoreBoard.getWidth()-0.05f*w, h-scoreBoard.getHeight()-0.05f*h);
 		HUD.addActor(scoreBoard);
+		endScreen = new EndScreen(this);
+		endScreen.setSize(0.7f * w, 0.7f * h);
+		endScreen.setPosition(0.15f*w, 0.15f*h);
+		endScreen.setVisible(false);
+		HUD.addActor(endScreen);
 
 		// Input Processors
 		GestureDetector gestureDetector = new GestureDetector(new wwGestureListener(this));
@@ -476,12 +486,14 @@ public class Game extends ApplicationAdapter {
 		batch.begin();
 		batch.draw(bg, 0, 0);
 
+		// Draw the tiles of the board
 		for (Rectangle tile : tiles) {
 			batch.setColor(colors.get(tile));
 			batch.draw(tileW, tile.x, tile.y);
 		}
 		batch.setColor(1, 1, 1, 1);
 
+		// Draw the words on the tiles
 		for (Rectangle tile : tiles) {
 			com.applab.wordwar.Item item = items.get(tile);
 			Rectangle wordPos = item.getWordPosition();
@@ -490,12 +502,15 @@ public class Game extends ApplicationAdapter {
 			if (item.isNovel())
 				gillsans.draw(batch, item.getTranslation(), transPos.x, transPos.y);
 		}
+
+		// Draw the answer text in trial mode
 		if (inTrial) {
 			GlyphLayout answerGlyph = new GlyphLayout(gillsans, answer);
 			float x = activeTile.x + TILE_SIZE/2 - answerGlyph.width/2;
 			gillsans.draw(batch, answer, x, activeTile.y + 64 + answerGlyph.height);
 		}
 
+		// For debugging: draw the tile indices
 		if (showNumbersOnTiles) {
 			gillsans.setColor(new Color(0,0,0,1));
 			for (int i = 0; i < tiles.size(); i++) {
@@ -504,6 +519,12 @@ public class Game extends ApplicationAdapter {
 		}
 		batch.end();
 
+		// Display the End Screen if there is no time left
+		if (isGameEnd()) {
+			scoreBoard.setVisible(false);
+			endScreen.setVisible(true);
+			Gdx.input.setCatchBackKey(false);
+		}
 		HUD.draw();
 	}
 

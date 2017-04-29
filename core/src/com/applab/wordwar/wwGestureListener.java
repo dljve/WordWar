@@ -17,17 +17,15 @@ public class wwGestureListener implements GestureDetector.GestureListener{
 
     @Override
     public boolean touchDown(float x, float y, int pointer, int button) {
+        if (game.isGameEnd())
+            return false;
+
         Vector3 worldCoords = game.cam.unproject(new Vector3(x,y,0));
 
-       if (game.isInTrial() && game.activeTile.contains(worldCoords.x,worldCoords.y)) {
+        if (game.isInTrial() && game.activeTile.contains(worldCoords.x,worldCoords.y)) {
            Gdx.input.setOnscreenKeyboardVisible(true);
-       }
-
-        for (Rectangle tile : game.tiles) {
-            if ( tile.contains(worldCoords.x,worldCoords.y) ) {
-                break;
-            }
         }
+
         return false;
     }
 
@@ -40,6 +38,9 @@ public class wwGestureListener implements GestureDetector.GestureListener{
 
     @Override
     public boolean longPress(float x, float y) {
+        if (game.isGameEnd())
+            return false;
+
         Vector3 worldCoords = game.cam.unproject(new Vector3(x,y,0));
 
         for (Rectangle tile : game.tiles) {
@@ -62,7 +63,7 @@ public class wwGestureListener implements GestureDetector.GestureListener{
 
     @Override
     public boolean pan(float x, float y, float deltaX, float deltaY) {
-        if (game.isInTrial())
+        if (game.isInTrial() || game.isGameEnd())
             return false;
 
         game.cam.translate(-deltaX * game.currentZoom * game.panRate, deltaY * game.currentZoom * game.panRate);
@@ -84,7 +85,7 @@ public class wwGestureListener implements GestureDetector.GestureListener{
 
     @Override
     public boolean zoom(float initialDistance, float distance) {
-        if (game.isInTrial())
+        if (game.isInTrial() || game.isGameEnd())
             return false;
 
         float newZoom = (initialDistance / distance) * game.currentZoom;
