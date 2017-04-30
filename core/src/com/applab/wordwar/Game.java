@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.mygdx.game.MainClass;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -99,6 +100,11 @@ public class Game implements Screen {
 	protected int[] scores = {1,1,1};
 	private long endTime = 0;
 	protected Rectangle activeTile = null; // The tile active during a trial
+	private MainClass app;
+
+	public Game(MainClass app){
+		this.app = app;
+	}
 
 	public int[] getScores() {
 		return scores;

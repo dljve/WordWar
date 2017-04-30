@@ -25,13 +25,14 @@ public class GameTableDataStructure {
         parentTable = new Table();
         this.id = id;
 
+
         // to get the design from presentation, I need three tables
         leftTable = new Table();
         rightTable = new Table();
 
         parentTable.add(leftTable);
         parentTable.add(rightTable);
-        rootTable.add(parentTable);//width(5 * GdxHex.deviceWidth / 7).height(2 *GdxHex.deviceHeight / 12).align(Align.center);
+       // rootTable.add(parentTable).width(5 * MainClass.deviceWidth / 7).height(2 * MainClass.deviceHeight / 12).align(Align.center);
 
         //setting the blue background for each table
         leftTable.setBackground(new TextureRegionDrawable(new TextureRegion(new Texture("bgMiniTabel.png"))));
@@ -42,15 +43,17 @@ public class GameTableDataStructure {
         TextButton joinButton = new TextButton("Join", skin, "default");
 
         Label languagesLabel = new Label("English - Romanian", skin, "default");
+        //languagesLabel.setFontScale(1.3f);
         Label noPlayersLabel = new Label("1/4 Players", skin, "default");
 
 
+        //leftTable.debug();
         leftTable.pad(30);
-        leftTable.add(languagesLabel).expand().fill();
+        leftTable.add(languagesLabel).expand().fill().center();
         leftTable.row();
-        leftTable.add(noPlayersLabel).expand().fill();
+        leftTable.add(noPlayersLabel).expand().fill().center();
 
-        rightTable.add(joinButton).expandX().fill();
+        rightTable.add(joinButton).expand().fill();
         rightTable.pad(50);
     }
 }

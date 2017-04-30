@@ -46,7 +46,7 @@ public class SplashScreen implements Screen {
         currentTime = TimeUtils.millis();
         if (currentTime - startTime < app.getSplashScreenDisplayTime()) {
             batch.begin();
-            batch.draw(texture, 0, 0, GdxHex.deviceWidth, GdxHex.deviceHeight);
+            batch.draw(texture, 0, 0, app.deviceWidth, app.deviceHeight);
             batch.end();
         }else{
             app.setScreen(new LobbyScreen(app));

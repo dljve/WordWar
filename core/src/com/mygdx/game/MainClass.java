@@ -34,7 +34,7 @@ public class MainClass extends Game  {
 		deviceHeight = Gdx.graphics.getHeight();
 		splashScreenDisplayTime = 500l;
 
-		setScreen(new LobbyScreen(this));
+		setScreen(new SplashScreen(this));
 
 
 	}

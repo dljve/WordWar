@@ -80,7 +80,7 @@ public class GameScreen implements Screen, GestureDetector.GestureListener{
 
         // Set camera
         cam = new OrthographicCamera(); //new OrthographicCamera(30,30*r);
-        cam.setToOrtho(false, GdxHex.deviceWidth, GdxHex.deviceHeight);
+        cam.setToOrtho(false, app.deviceWidth, app.deviceHeight);
         cam.position.set(WORLD_WIDTH/2, WORLD_HEIGHT/2, 0);
         cam.zoom = currentZoom;
         cam.update();

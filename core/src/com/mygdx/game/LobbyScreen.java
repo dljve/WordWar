@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import com.applab.wordwar.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -31,7 +32,7 @@ public class LobbyScreen implements Screen {
     private TextButton createGameButton;
     private Table rootTable;// occupies the whole device screen
     private ScrollPane scrollPane;
-    private  Table scrollPaneTable;
+    private Table scrollPaneTable;
     private Stack stack;
     Cell cell;
     private float heightDistanceUnit;
@@ -47,6 +48,7 @@ public class LobbyScreen implements Screen {
         //skin = new Skin(Gdx.files.internal("uiskin.json"));
         skin = new Skin(Gdx.files.internal("uiskin.json"));
         stage = new Stage(new ScreenViewport());
+        skin.
 
         heightDistanceUnit = app.deviceHeight / 18;
 
@@ -56,8 +58,8 @@ public class LobbyScreen implements Screen {
 
         initializeCreateButton();
 
-        for (int i=0; i<1; i++){
-           newGameToList(i);
+        for (int i = 0; i < 6; i++) {
+            newGameToList(i);
         }
 
 
@@ -66,6 +68,7 @@ public class LobbyScreen implements Screen {
         //Gdx.app.log("Device size", app.deviceHeight + "  width :" + app.deviceWidth);
 
     }
+
     public void initializeRootTable() {
         rootTable = new Table();
 
@@ -85,34 +88,37 @@ public class LobbyScreen implements Screen {
 
     }
 
-    public void initializeScrollPane(){
+    public void initializeScrollPane() {
         scrollPaneTable = new Table();
         scrollPaneTable.setBackground(new TextureRegionDrawable(new TextureRegion(new Texture("bgLobby.png"))));
-       // scrollPaneTable.defaults().expandX().fill();
+        scrollPaneTable.defaults().expandX();
         scrollPaneTable.center().top();
+        //scrollPaneTable.setDebug(true);
 
         scrollPane = new ScrollPane(scrollPaneTable, skin);
         scrollPane.setFadeScrollBars(true);
+        scrollPane.setScrollingDisabled(true, false);
 
-        Gdx.app.log("first cell height:", " " );
+
+        Gdx.app.log("columns:", " " + scrollPaneTable.getColumns());
 
         //Gdx.app.log("Rows: ", rootTable.getRows() + " " + rootTable.);
         scrollPaneTable.pad(10);
-        rootTable.add(scrollPane).width(5*app.deviceWidth/7).height(11 * heightDistanceUnit).padBottom(heightDistanceUnit);
+        rootTable.add(scrollPane).width(6 * app.deviceWidth / 7).height(12 * heightDistanceUnit).padBottom(heightDistanceUnit);
         rootTable.row();
     }
 
 
-
-
-
     private GameTableDataStructure newGameToList(int id) {
         GameTableDataStructure newGameTableDataStructure = new GameTableDataStructure(scrollPaneTable, id);
-        Table gameTable = newGameTableDataStructure.parentTable;
-        float prefferedWidth = gameTable.getMinWidth();
-        float prefferedHeight = gameTable.getMinHeight();
 
-        scrollPaneTable.add(gameTable).width(prefferedWidth).height(prefferedHeight);
+
+        Table gameTable = newGameTableDataStructure.parentTable;
+        float gameTableWidth = gameTable.getMinWidth() * 1.8f;
+        float gameTableHeight = gameTable.getMinHeight() * 1.8f;
+
+        scrollPaneTable.add(gameTable).width(gameTableWidth).height(gameTableHeight).padBottom(heightDistanceUnit).center();
+        //scrollPaneTable.add(new Table());
         scrollPaneTable.row();
 
         return newGameTableDataStructure;
@@ -126,17 +132,16 @@ public class LobbyScreen implements Screen {
         createGameButton.getLabel().setFontScale(2f);
 
 
-
         createGameButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                app.setScreen(new GameScreen(app));
+                app.setScreen(new Game(app));
                 dispose();
             }
 
         });
 
-        rootTable.add(createGameButton).align(Align.bottom).width(2 * app.deviceWidth / 3).height(2 * heightDistanceUnit).padBottom(heightDistanceUnit);
+        rootTable.add(createGameButton).align(Align.bottom).width(2 * app.deviceWidth / 3).height(2 * heightDistanceUnit).padBottom(20);
 
     }
 
