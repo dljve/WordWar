@@ -1,8 +1,7 @@
-package com.mygdx.game;
+package com.applab.wordwar;
 
 import android.os.Bundle;
 
-import com.applab.wordwar.Game;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 

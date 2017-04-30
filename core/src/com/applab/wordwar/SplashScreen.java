@@ -1,10 +1,8 @@
-package com.mygdx.game;
+package com.applab.wordwar;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.TimeUtils;
@@ -33,22 +31,23 @@ public class SplashScreen implements Screen {
 
         batch = new SpriteBatch();
         texture = new Texture("wordWarLogo.jpg");
-
         startTime = TimeUtils.millis();
 
     }
 
     @Override
     public void render(float delta) {
+
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         currentTime = TimeUtils.millis();
+
         if (currentTime - startTime < app.getSplashScreenDisplayTime()) {
             batch.begin();
             batch.draw(texture, 0, 0, app.deviceWidth, app.deviceHeight);
             batch.end();
-        }else{
+        } else{
             app.setScreen(new LobbyScreen(app));
             dispose(); //dispose the current instance of the screen
         }

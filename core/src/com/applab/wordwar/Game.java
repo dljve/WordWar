@@ -17,7 +17,6 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.mygdx.game.MainClass;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,7 +25,6 @@ import java.util.concurrent.TimeUnit;
 
 public class Game implements Screen {
 	private SpriteBatch batch;
-
 	protected OrthographicCamera cam;
 	protected ArrayList<Rectangle> tiles; 	// Tile positions
 	protected ArrayList<Rectangle> frontier; 	// Tile frontier
@@ -74,8 +72,8 @@ public class Game implements Screen {
 	};
 
 	// Constants
-	protected final int WORLD_WIDTH = 4000;
-	protected final int WORLD_HEIGHT = 3000;
+	protected final int WORLD_WIDTH = 3000;
+	protected final int WORLD_HEIGHT = 4500;
 	private final int BOARD_SIZE = 5;
 	private final int TILE_SIZE = 256;
 	private final int TILE_WIDTH = 222;
@@ -102,12 +100,12 @@ public class Game implements Screen {
 	protected Rectangle activeTile = null; // The tile active during a trial
 	private MainClass app;
 
-	public Game(MainClass app){
-		this.app = app;
-	}
-
 	public int[] getScores() {
 		return scores;
+	}
+
+	public Game(MainClass app) {
+		this.app = app;
 	}
 
 	public String getTimeLeft() {
@@ -193,11 +191,11 @@ public class Game implements Screen {
 		// HUD
 		HUD = new Stage(new ScreenViewport());
 		scoreBoard = new ScoreBoard(this);
-		scoreBoard.setSize(0.15f * w, 0.1f * w);
+		scoreBoard.setSize(0.35f * w, 0.20f * w);
 		scoreBoard.setPosition(w-scoreBoard.getWidth()-0.05f*w, h-scoreBoard.getHeight()-0.05f*h);
 		HUD.addActor(scoreBoard);
 		endScreen = new EndScreen(this);
-		endScreen.setSize(0.7f * w, 0.7f * h);
+		endScreen.setSize(0.7f * w, 0.35f * h);
 		endScreen.setPosition(0.15f*w, 0.15f*h);
 		endScreen.setVisible(false);
 		HUD.addActor(endScreen);
@@ -490,7 +488,7 @@ public class Game implements Screen {
 		cam.update();
 		batch.setProjectionMatrix(cam.combined);
 		batch.begin();
-		batch.draw(bg, 0, 0);
+		batch.draw(bg, (WORLD_WIDTH-bg.getWidth())/2, (WORLD_HEIGHT-bg.getHeight())/2 );
 
 		// Draw the tiles of the board
 		for (Rectangle tile : tiles) {

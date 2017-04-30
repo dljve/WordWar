@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.applab.wordwar;
 
 import com.applab.wordwar.Game;
 import com.badlogic.gdx.Gdx;
@@ -48,7 +48,6 @@ public class LobbyScreen implements Screen {
         //skin = new Skin(Gdx.files.internal("uiskin.json"));
         skin = new Skin(Gdx.files.internal("uiskin.json"));
         stage = new Stage(new ScreenViewport());
-        skin.
 
         heightDistanceUnit = app.deviceHeight / 18;
 
