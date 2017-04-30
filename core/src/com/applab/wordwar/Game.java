@@ -1,8 +1,8 @@
 package com.applab.wordwar;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-public class Game extends ApplicationAdapter {
+public class Game implements Screen {
 	private SpriteBatch batch;
 
 	protected OrthographicCamera cam;
@@ -156,7 +156,7 @@ public class Game extends ApplicationAdapter {
 	}
 
 	@Override
-	public void create() {
+	public void show() {
 		batch = new SpriteBatch();
 
 		tiles = new ArrayList<Rectangle>();
@@ -477,7 +477,7 @@ public class Game extends ApplicationAdapter {
 	}
 
 	@Override
-	public void render() {
+	public void render(float delta) {
 		Gdx.gl.glClearColor(0.13f, 0.23f, 0.26f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -538,6 +538,20 @@ public class Game extends ApplicationAdapter {
 	public void resize(int width, int height) {
 	}
 
+	@Override
+	public void pause() {
+
+	}
+
+	@Override
+	public void resume() {
+
+	}
+
+	@Override
+	public void hide() {
+
+	}
 
 
 }
