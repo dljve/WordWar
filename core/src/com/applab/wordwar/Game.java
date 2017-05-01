@@ -1,5 +1,7 @@
 package com.applab.wordwar;
 
+import com.applab.wordwar.model.GameModel;
+import com.applab.wordwar.model.Player;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
@@ -104,9 +106,13 @@ public class Game implements Screen {
 		return scores;
 	}
 
-	public Game(MainClass app, int id) {
+	public Game(MainClass app) {
 		this.app = app;
-		PLAYER_ID = id;
+		for(Player player: app.getClient().getGameModel().getPlayers()){
+			if(player.getId() == app.getClient().getPlayer().getId()){
+				PLAYER_ID = player.getColor();
+			}
+		}
 	}
 
 	public String getTimeLeft() {

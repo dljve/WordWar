@@ -1,8 +1,6 @@
 package com.applab.wordwar;
 
-import com.applab.wordwar.Game;
 import com.applab.wordwar.model.GameModel;
-import com.applab.wordwar.server.TempRivialClient;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -135,6 +133,7 @@ public class LobbyScreen implements Screen {
 
         createGameButton.getLabel().setFontScale(2f);
 
+        rootTable.add(createGameButton).align(Align.bottom).width(2 * app.deviceWidth / 3).height(2 * heightDistanceUnit).padBottom(20);
 
         createGameButton.addListener(new ClickListener() {
             @Override
@@ -150,26 +149,26 @@ public class LobbyScreen implements Screen {
                 }
                 app.getClient().createGame();
                 //TODO Create thread to wait until client has a gameModel
-                new Thread(new Runnable() {
+
+                Gdx.app.postRunnable(new Runnable() {
                     @Override
                     public void run() {
                         boolean gameNotCreated = true;
-                        GameModel gm = null;
-                        while(gameNotCreated){
+                        GameModel gm;
+                        while(gameNotCreated) {
                             gm = app.getClient().getGameModel();
                             gameNotCreated = (gm == null);
                         }
-                        // TODO Do stuff with the gameModel
-
-                        app.setScreen(new Game(app, gm.getId()));
+                        app.setScreen(new Game(app));
                         dispose();
                     }
-                }).start();
+                });
+
             }
 
         });
 
-        rootTable.add(createGameButton).align(Align.bottom).width(2 * app.deviceWidth / 3).height(2 * heightDistanceUnit).padBottom(20);
+
 
     }
 

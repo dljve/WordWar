@@ -27,8 +27,8 @@ public class MainClass extends Game  {
 		splashScreenDisplayTime = 2000l;
 
 		try {
-			client = new TempRivialClient("192.168.0.104", 5964);
-
+			client = new TempRivialClient("172.20.10.2", 8888);
+			(new Thread(client)).start();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
