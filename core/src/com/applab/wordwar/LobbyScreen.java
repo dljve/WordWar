@@ -1,5 +1,6 @@
 package com.applab.wordwar;
 
+import com.applab.wordwar.model.GameModel;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -18,8 +19,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-
-import sun.applet.Main;
 
 
 /**
@@ -52,7 +51,10 @@ public class LobbyScreen implements Screen {
         skin = new Skin(Gdx.files.internal("uiskin.json"));
         stage = new Stage(new ScreenViewport());
 
+        // TODO: receive games information from server
+        //app.getClient().getGames();
 
+        heightDistanceUnit = app.deviceHeight / 18;
 
         initializeRootTable();
 
@@ -133,12 +135,37 @@ public class LobbyScreen implements Screen {
 
         createGameButton.getLabel().setFontScale(2f);
 
+        rootTable.add(createGameButton).align(Align.bottom).width(2 * app.deviceWidth / 3).height(2 * heightDistanceUnit).padBottom(20);
 
         createGameButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                app.setScreen(new Game(app));
-                dispose();
+                int timeSlept = 0;
+                while(app.getClient() == null && timeSlept < 100000){
+                    try {
+                        Thread.sleep(1000);
+                        timeSlept += 1000;
+                    } catch (InterruptedException e){
+                        e.printStackTrace();
+                    }
+                }
+                app.getClient().createGame();
+                //TODO Create thread to wait until client has a gameModel
+
+                Gdx.app.postRunnable(new Runnable() {
+                    @Override
+                    public void run() {
+                        boolean gameNotCreated = true;
+                        GameModel gm;
+                        while(gameNotCreated) {
+                            gm = app.getClient().getGameModel();
+                            gameNotCreated = (gm == null);
+                        }
+                        app.setScreen(new Game(app));
+                        dispose();
+                    }
+                });
+
             }
 
         });
@@ -146,6 +173,7 @@ public class LobbyScreen implements Screen {
         rootTable.add(createGameButton).align(Align.bottom).width(2 * app.deviceWidth / 3).height(2 * MainClass.HEIGHT_DISTANCE_UNIT).padBottom(20);
 
     }
+
 
     @Override
     public void render(float delta) {
