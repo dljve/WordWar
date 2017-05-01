@@ -1,8 +1,10 @@
-package com.applab.wordwar;
+package com.applab.wordwar.model;
 
 import com.badlogic.gdx.math.Rectangle;
 
-public class Item {
+import java.io.Serializable;
+
+public class Item implements Serializable {
 
     private String word;
     private String translation;

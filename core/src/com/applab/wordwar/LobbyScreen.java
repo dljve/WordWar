@@ -113,8 +113,7 @@ public class LobbyScreen implements Screen {
 
     private GameTableDataStructure newGameToList(int id) {
         GameTableDataStructure newGameTableDataStructure = new GameTableDataStructure(scrollPaneTable, id);
-
-
+        
         Table gameTable = newGameTableDataStructure.parentTable;
         float gameTableWidth = gameTable.getMinWidth() * 1.8f;
         float gameTableHeight = gameTable.getMinHeight() * 1.8f;

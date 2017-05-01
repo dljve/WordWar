@@ -1,6 +1,8 @@
 package com.applab.wordwar;
 
 import com.applab.wordwar.model.GameModel;
+import com.applab.wordwar.model.Item;
+import com.applab.wordwar.model.GameTile;
 import com.applab.wordwar.model.Player;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
@@ -30,7 +32,7 @@ public class Game implements Screen {
 	protected OrthographicCamera cam;
 	protected ArrayList<Rectangle> tiles; 	// Tile positions
 	protected ArrayList<Rectangle> frontier; 	// Tile frontier
-	private Map<Rectangle, com.applab.wordwar.Item> items; 	// Tile-Item pairs
+	private Map<Rectangle, Item> items; 	// Tile-Item pairs
 	private Map<Rectangle, Color> colors; 	// Tile-Color pairs
 	private Map<Rectangle, int[]> captures;	// Tile-Capture pairs
 	private Stage HUD;
@@ -108,7 +110,8 @@ public class Game implements Screen {
 
 	public Game(MainClass app) {
 		this.app = app;
-		for(Player player: app.getClient().getGameModel().getPlayers()){
+		// Get player color
+		for (Player player : app.getClient().getGameModel().getPlayers()) {
 			if(player.getId() == app.getClient().getPlayer().getId()){
 				PLAYER_ID = player.getColor();
 			}
@@ -172,7 +175,7 @@ public class Game implements Screen {
 
 		tiles = new ArrayList<Rectangle>();
 		frontier = new ArrayList<Rectangle>();
-		items = new HashMap<Rectangle, com.applab.wordwar.Item>();
+		items = new HashMap<Rectangle, Item>();
 		colors = new HashMap<Rectangle, Color>();
 		captures = new HashMap<Rectangle, int[]>();
 
@@ -396,21 +399,27 @@ public class Game implements Screen {
 
 	public void assignWordsToTiles() {
 		// TODO: Receive server messages (tileID, word, translation) for each tile
+		GameModel gm = app.getClient().getGameModel();
 
-		// Example
+		ArrayList<GameTile> map = gm.getMap();
+
+		/* // Example
 		String[][] swen = new String[][] {
 				new String[] {"adhama","honor"},new String[] {"jicho","eye"},new String[] {"pombe","beer"},new String[] {"adui","enemy"},new String[] {"jioni","evening"},new String[] {"rafiki","friend"},new String[] {"afisi","office"},new String[] {"jiwe","stone"},new String[] {"rangi","color"},new String[] {"ajabu","wonder"},new String[] {"kamba","rope"},new String[] {"roho","soul"},new String[] {"anga","sky"},new String[] {"kanisa","church"},new String[] {"saduku","box"},new String[] {"askari","police"},new String[] {"kaputula","pants"},new String[] {"samaki","fish"},new String[] {"baba","father"},new String[] {"karamu","party"},new String[] {"sauti","voice"},new String[] {"bahari","sea"},new String[] {"kazi","work"},new String[] {"shukuru","thanks"},new String[] {"barua","letter"},new String[] {"keja","house"},new String[] {"siri","secret"},new String[] {"basi","bus"},new String[] {"kichwa","head"},new String[] {"skati","skirt"},new String[] {"baskeli","bike"},new String[] {"kijana","boy"},new String[] {"tabibu","doctor"},new String[] {"bibi","grandmother"},new String[] {"kioo","mirror"},new String[] {"tofaa","apple"},new String[] {"bustani","garden"},new String[] {"kisu","knife"},new String[] {"tumaini","hope"},new String[] {"chakula","food"},new String[] {"kitanda","bed"},new String[] {"tumbili","monkey"},new String[] {"chama","society"},new String[] {"kiti","chair"},new String[] {"tunda","fruit"},new String[] {"chanjo","scissors"},new String[] {"kofia","hat"},new String[] {"ufu","death"},new String[] {"chapati","bread"},new String[] {"kuku","chicken"},new String[] {"ujuzi","knowledge"},new String[] {"chunga","pot"},new String[] {"lango","door"},new String[] {"wakati","alarm"},new String[] {"degaga","glasses"},new String[] {"likizo","holidays"},new String[] {"wimbo","song"},new String[] {"dhoruba","storm"},new String[] {"limau","lemon"},new String[] {"wingu","cloud"},new String[] {"duara","wheel"}
-		};
+		}; */
 
+		int wordIndex = 0;
 		for (int i = 0; i < tiles.size(); i++) {
-			com.applab.wordwar.Item item = new com.applab.wordwar.Item(swen[i][0], swen[i][1]);
-			if (i==baseTiles[0]) item = new com.applab.wordwar.Item("","");
-			if (i==baseTiles[1]) item = new com.applab.wordwar.Item("","");
-			if (i==baseTiles[2]) item = new com.applab.wordwar.Item("","");
+			Item item = map.get(wordIndex).getItem();
+			if (i==baseTiles[0] || i==baseTiles[1] || i==baseTiles[2]) {
+				item = new Item("", "");
+			} else {
+				wordIndex++;
+			}
 
 			// Calculate word positions
-			GlyphLayout wordGlyph = new GlyphLayout(gillsans, swen[i][0]);
-			GlyphLayout translationGlyph = new GlyphLayout(gillsans, swen[i][1]);
+			GlyphLayout wordGlyph = new GlyphLayout(gillsans, item.getWord());
+			GlyphLayout translationGlyph = new GlyphLayout(gillsans, item.getWord());
 
 			Rectangle wordPosition = new Rectangle(
 					tiles.get(i).x + TILE_SIZE/2 - wordGlyph.width/2,
@@ -427,7 +436,7 @@ public class Game implements Screen {
 			item.setWordPosition(wordPosition);
 			item.setTranslationPosition(translationPosition);
 
-			items.put(tiles.get(i),item);
+			items.put(tiles.get(i), item);
 		}
 	}
 
@@ -506,7 +515,7 @@ public class Game implements Screen {
 
 		// Draw the words on the tiles
 		for (Rectangle tile : tiles) {
-			com.applab.wordwar.Item item = items.get(tile);
+			Item item = items.get(tile);
 			Rectangle wordPos = item.getWordPosition();
 			Rectangle transPos = item.getTranslationPosition();
 			gillsans.draw(batch, item.getWord(), wordPos.x, wordPos.y);
