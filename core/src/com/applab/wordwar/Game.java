@@ -104,8 +104,9 @@ public class Game implements Screen {
 		return scores;
 	}
 
-	public Game(MainClass app) {
+	public Game(MainClass app, int id) {
 		this.app = app;
+		PLAYER_ID = id;
 	}
 
 	public String getTimeLeft() {
