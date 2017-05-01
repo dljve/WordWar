@@ -1,24 +1,25 @@
 package com.applab.wordwar;
 
-import com.applab.wordwar.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+
+import sun.applet.Main;
 
 
 /**
@@ -33,9 +34,7 @@ public class LobbyScreen implements Screen {
     private Table rootTable;// occupies the whole device screen
     private ScrollPane scrollPane;
     private Table scrollPaneTable;
-    private Stack stack;
-    Cell cell;
-    private float heightDistanceUnit;
+    private BitmapFont gillsansFont;
 
 
     public LobbyScreen(MainClass app) {
@@ -45,11 +44,15 @@ public class LobbyScreen implements Screen {
     @Override
     public void show() {
 
+        gillsansFont = new BitmapFont(Gdx.files.internal("gillsans72.fnt"), false);
+        gillsansFont.getData().setScale(0.6f);
+        gillsansFont.setColor(Color.BLACK);
+
         //skin = new Skin(Gdx.files.internal("uiskin.json"));
         skin = new Skin(Gdx.files.internal("uiskin.json"));
         stage = new Stage(new ScreenViewport());
 
-        heightDistanceUnit = app.deviceHeight / 18;
+
 
         initializeRootTable();
 
@@ -76,13 +79,13 @@ public class LobbyScreen implements Screen {
 
         rootTable.pad(30f);
         rootTable.setFillParent(true);
-        //rootTable.setPosition(0, 0); //puts the table in the bottom-left corner of the device
         rootTable.setBackground(new TextureRegionDrawable(new TextureRegion(new Texture("bgLobby.png"))));
 
+        //adding the top label of this screen
         Texture lobbyLabelTexture = new Texture("topLabelLobby.png");
         TextureRegion lobbyLabelRegion = new TextureRegion(lobbyLabelTexture);
         Image lobbyLabelImage = new Image(lobbyLabelRegion);
-        cell = rootTable.add(lobbyLabelImage).width(app.deviceWidth).height(2 * heightDistanceUnit).padBottom(heightDistanceUnit);
+        rootTable.add(lobbyLabelImage).width(app.deviceWidth).height(2 * MainClass.HEIGHT_DISTANCE_UNIT).padBottom(MainClass.HEIGHT_DISTANCE_UNIT);
         rootTable.row();
 
     }
@@ -103,20 +106,20 @@ public class LobbyScreen implements Screen {
 
         //Gdx.app.log("Rows: ", rootTable.getRows() + " " + rootTable.);
         scrollPaneTable.pad(10);
-        rootTable.add(scrollPane).width(6 * app.deviceWidth / 7).height(12 * heightDistanceUnit).padBottom(heightDistanceUnit);
+        rootTable.add(scrollPane).width(6 * app.deviceWidth / 7).height(12 * MainClass.HEIGHT_DISTANCE_UNIT).padBottom(MainClass.HEIGHT_DISTANCE_UNIT);
         rootTable.row();
     }
 
 
     private GameTableDataStructure newGameToList(int id) {
-        GameTableDataStructure newGameTableDataStructure = new GameTableDataStructure(scrollPaneTable, id);
+        GameTableDataStructure newGameTableDataStructure = new GameTableDataStructure(scrollPaneTable, id, gillsansFont);
 
 
         Table gameTable = newGameTableDataStructure.parentTable;
-        float gameTableWidth = gameTable.getMinWidth() * 1.8f;
-        float gameTableHeight = gameTable.getMinHeight() * 1.8f;
+        float gameTableWidth = scrollPaneTable.getWidth() - 200;
+        float gameTableHeight = MainClass.HEIGHT_DISTANCE_UNIT * 2;
 
-        scrollPaneTable.add(gameTable).width(gameTableWidth).height(gameTableHeight).padBottom(heightDistanceUnit).center();
+        scrollPaneTable.add(gameTable).width(gameTableWidth).height(gameTableHeight).padBottom(MainClass.HEIGHT_DISTANCE_UNIT).center();
         //scrollPaneTable.add(new Table());
         scrollPaneTable.row();
 
@@ -140,7 +143,7 @@ public class LobbyScreen implements Screen {
 
         });
 
-        rootTable.add(createGameButton).align(Align.bottom).width(2 * app.deviceWidth / 3).height(2 * heightDistanceUnit).padBottom(20);
+        rootTable.add(createGameButton).align(Align.bottom).width(2 * app.deviceWidth / 3).height(2 * MainClass.HEIGHT_DISTANCE_UNIT).padBottom(20);
 
     }
 

@@ -7,7 +7,9 @@ public class MainClass extends Game  {
 
 	public static long deviceWidth;
 	public static long deviceHeight;
-	private static long splashScreenDisplayTime;
+	public static long splashScreenDisplayTime;
+	public static float HEIGHT_DISTANCE_UNIT;
+
 
 	@Override
 	public void create() {
@@ -15,8 +17,9 @@ public class MainClass extends Game  {
 		deviceWidth = Gdx.graphics.getWidth();
 		deviceHeight = Gdx.graphics.getHeight();
 		splashScreenDisplayTime = 2000l;
+		HEIGHT_DISTANCE_UNIT = deviceHeight / 18;
 
-		setScreen(new SplashScreen(this));
+		setScreen(new NewGameScreen(this));
 
 
 	}
