@@ -419,7 +419,7 @@ public class Game implements Screen {
 
 			// Calculate word positions
 			GlyphLayout wordGlyph = new GlyphLayout(gillsans, item.getWord());
-			GlyphLayout translationGlyph = new GlyphLayout(gillsans, item.getWord());
+			GlyphLayout translationGlyph = new GlyphLayout(gillsans, item.getTranslation());
 
 			Rectangle wordPosition = new Rectangle(
 					tiles.get(i).x + TILE_SIZE/2 - wordGlyph.width/2,

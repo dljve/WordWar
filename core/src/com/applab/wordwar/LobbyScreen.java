@@ -77,7 +77,7 @@ public class LobbyScreen implements Screen {
         rootTable = new Table();
 
         // debug highlights the table cells(green) and widgets(red)
-        rootTable.setDebug(true);
+        // rootTable.setDebug(true);
 
         rootTable.pad(30f);
         rootTable.setFillParent(true);
