@@ -77,7 +77,7 @@ public class LobbyScreen implements Screen {
         rootTable = new Table();
 
         // debug highlights the table cells(green) and widgets(red)
-        //rootTable.setDebug(true);
+        rootTable.setDebug(true);
 
         rootTable.pad(30f);
         rootTable.setFillParent(true);
@@ -170,7 +170,7 @@ public class LobbyScreen implements Screen {
 
         });
 
-        rootTable.add(createGameButton).align(Align.bottom).width(2 * app.deviceWidth / 3).height(2 * MainClass.HEIGHT_DISTANCE_UNIT).padBottom(20);
+
 
     }
 

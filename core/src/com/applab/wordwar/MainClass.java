@@ -36,7 +36,7 @@ public class MainClass extends Game  {
 			e.printStackTrace();
 		}
 
-		setScreen(new SplashScreen(this));
+		setScreen(new LobbyScreen(this));
 	}
 
 	public long getSplashScreenDisplayTime() { return splashScreenDisplayTime;}
