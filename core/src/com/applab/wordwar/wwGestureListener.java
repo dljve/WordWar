@@ -46,7 +46,6 @@ public class wwGestureListener implements GestureDetector.GestureListener{
         for (Rectangle tile : game.tiles) {
             if ( tile.contains(worldCoords.x,worldCoords.y) &&
                     game.frontier.contains(tile) && !game.isBaseTile(tile) ) {
-                if (game.trialType != "test") game.trialType = "study"; // TODO: receive this from server and remove this line
                 game.activeTile = tile;
                 game.startTrial();
                 break;

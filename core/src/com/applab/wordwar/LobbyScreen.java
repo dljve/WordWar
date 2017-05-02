@@ -20,6 +20,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
+import java.util.ArrayList;
+
 
 /**
  * Created by root on 25.04.2017.
@@ -52,7 +54,7 @@ public class LobbyScreen implements Screen {
         stage = new Stage(new ScreenViewport());
 
         // TODO: receive games information from server
-        //app.getClient().getGames();
+
 
         MainClass.HEIGHT_DISTANCE_UNIT = app.deviceHeight / 18;
 
@@ -62,9 +64,22 @@ public class LobbyScreen implements Screen {
 
         initializeCreateButton();
 
-        for (int i = 0; i < 6; i++) {
-            newGameToList(i);
-        }
+        Gdx.app.postRunnable(new Runnable() {
+            @Override
+            public void run() {
+                app.getClient().getGames();
+                boolean gamesNotFound = true;
+                ArrayList<GameModel> games = new ArrayList<GameModel>();
+                while(gamesNotFound) {
+                    games = app.getClient().getGamesToJoin();
+                    gamesNotFound = (games == null);
+                }
+                for(GameModel game: games){
+                    newGameToList(game);
+                }
+            }
+        });
+
 
 
         stage.addActor(rootTable);
@@ -113,8 +128,8 @@ public class LobbyScreen implements Screen {
     }
 
 
-    private GameTableDataStructure newGameToList(int id) {
-        GameTableDataStructure newGameTableDataStructure = new GameTableDataStructure(scrollPaneTable, id, gillsansFont);
+    private GameTableDataStructure newGameToList(GameModel game) {
+        GameTableDataStructure newGameTableDataStructure = new GameTableDataStructure(scrollPaneTable, game, gillsansFont, app, this);
 
 
         Table gameTable = newGameTableDataStructure.parentTable;
@@ -150,7 +165,6 @@ public class LobbyScreen implements Screen {
                     }
                 }
                 app.getClient().createGame();
-                //TODO Create thread to wait until client has a gameModel
 
                 Gdx.app.postRunnable(new Runnable() {
                     @Override
@@ -161,13 +175,12 @@ public class LobbyScreen implements Screen {
                             gm = app.getClient().getGameModel();
                             gameNotCreated = (gm == null);
                         }
+                        // TODO Go to waiting room instead
                         app.setScreen(new Game(app));
                         dispose();
                     }
                 });
-
             }
-
         });
 
 

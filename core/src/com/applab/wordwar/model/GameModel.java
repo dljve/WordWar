@@ -5,6 +5,7 @@ import com.applab.wordwar.server.exceptions.PlayerNotFoundException;
 import com.applab.wordwar.server.exceptions.TileNotFoundException;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 /**
@@ -40,6 +41,16 @@ public class GameModel implements Serializable {
             System.out.println(players.size());
             // TODO add random color to player
             this.players.add(player);
+            ArrayList<Item> itemSet = new ArrayList<Item>();
+            for(GameTile tile:map){
+                itemSet.add(tile.getItem());
+            }
+            player.initializeSlimStampen(itemSet, false,
+                    BigDecimal.valueOf(15),
+                    BigDecimal.valueOf(0.25),
+                    BigDecimal.valueOf(0.3),
+                    BigDecimal.valueOf(0.8),
+                    BigDecimal.valueOf(-0.5));
         }
         return false;
     }
@@ -66,7 +77,7 @@ public class GameModel implements Serializable {
     }
 
     public boolean canStartGame() {
-        return true; // TODO: players.size() == 3;
+        return players.size() == 3;
     }
 
     public boolean isEndGame() {
@@ -85,6 +96,7 @@ public class GameModel implements Serializable {
     private void changeTile(int tile, int playerId, boolean isOwned) throws TileNotFoundException, PlayerNotFoundException {
         GameTile gameTile = this.getTileWithId(tile);
         Player player = this.getPlayerById(playerId);
+        player.incrementScore(isOwned?1:-1);
         switch (player.getColor()) {
             case Player.BLUE:
                 gameTile.setOwnedByBlue(isOwned);
@@ -105,6 +117,22 @@ public class GameModel implements Serializable {
             }
         }
         throw new PlayerNotFoundException();
+    }
+
+    public Trial getNextTrial(int playerId) throws PlayerNotFoundException{
+        return this.getPlayerById(playerId).getNextTrial();
+    }
+
+    public void practiceEvent(int playerId, Item item, long timestamp) throws PlayerNotFoundException{
+        this.getPlayerById(playerId).practiceEvent(item, timestamp);
+    }
+
+    public void addNewItem(int playerId, Item item) throws PlayerNotFoundException{
+        this.getPlayerById(playerId).addNewItem(item);
+    }
+
+    public void updateModel(int playerId, Item item, long timestamp) throws PlayerNotFoundException{
+        this.getPlayerById(playerId).updateModel(item, timestamp);
     }
 
 }

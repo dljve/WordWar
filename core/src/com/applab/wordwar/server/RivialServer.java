@@ -1,8 +1,12 @@
 package com.applab.wordwar.server;
 // How to get the server running seperately: https://docs.oracle.com/javase/tutorial/networking/sockets/clientServer.html
 
+import com.applab.wordwar.Game;
 import com.applab.wordwar.model.GameModel;
+import com.applab.wordwar.model.Item;
 import com.applab.wordwar.model.Player;
+import com.applab.wordwar.model.SlimStampen;
+import com.applab.wordwar.model.Trial;
 import com.applab.wordwar.model.WordList;
 import com.applab.wordwar.server.exceptions.GameNotFoundException;
 import com.applab.wordwar.server.exceptions.PlayerNotFoundException;
@@ -42,7 +46,7 @@ public class RivialServer implements Runnable{
                 return player;
             }
         }
-        Player player = new Player(client, clients.size());
+        Player player = new Player(client, clients.size(), "Add name");
         clients.add(player);
         Thread thread = new Thread(new ReadThread(this, client));
         thread.start();
@@ -150,6 +154,22 @@ public class RivialServer implements Runnable{
         }catch (IOException e){
             e.printStackTrace();
         }
+    }
+    // Slimstampen functions
+    public Trial handleTrialRequest(int gameId, int playerId) throws GameNotFoundException, PlayerNotFoundException {
+        return this.getGameWithID(gameId).getNextTrial(playerId);
+    }
+
+    public void handlePracticeEvent(int gameId, int playerId, Item item, long timestamp) throws GameNotFoundException, PlayerNotFoundException{
+        this.getGameWithID(gameId).practiceEvent(playerId, item, timestamp);
+    }
+
+    public void addNewItem(int gameId, int playerId, Item item) throws GameNotFoundException, PlayerNotFoundException{
+        this.getGameWithID(gameId).addNewItem(playerId, item);
+    }
+
+    public void updateModel(int gameId, int playerId, Item item, long timestamp) throws GameNotFoundException, PlayerNotFoundException{
+        this.getGameWithID(gameId).updateModel(playerId, item, timestamp);
     }
 
     private class ReadThread implements Runnable {

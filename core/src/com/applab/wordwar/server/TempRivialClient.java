@@ -5,18 +5,23 @@ package com.applab.wordwar.server;
  */
 
 import com.applab.wordwar.model.GameModel;
+import com.applab.wordwar.model.Item;
 import com.applab.wordwar.model.Player;
 import com.applab.wordwar.server.exceptions.PlayerNotFoundException;
 import com.applab.wordwar.server.exceptions.TileNotFoundException;
 import com.applab.wordwar.server.handlers.RivialHandler;
+import com.applab.wordwar.server.messages.AddNewItemMessage;
 import com.applab.wordwar.server.messages.CapturedTileMessage;
 import com.applab.wordwar.server.messages.CreateGameMessage;
 import com.applab.wordwar.server.messages.GameStateRequestMessage;
 import com.applab.wordwar.server.messages.GetGamesMessage;
 import com.applab.wordwar.server.messages.InitMessage;
 import com.applab.wordwar.server.messages.JoinGameMessage;
+import com.applab.wordwar.server.messages.PracticeEventMessage;
+import com.applab.wordwar.server.messages.RequestTrialMessage;
 import com.applab.wordwar.server.messages.RivialProtocol;
 import com.applab.wordwar.server.messages.StartGameMessage;
+import com.applab.wordwar.server.messages.UpdateModelMessage;
 import com.badlogic.gdx.Gdx;
 
 import java.io.IOException;
@@ -32,6 +37,9 @@ public class TempRivialClient implements Runnable {
     private GameModel game; //TODO make this client game model, different from server model!!! possibly
     private Socket socket;
     private Player player;
+    private ArrayList<GameModel> gamesToJoin;
+    private boolean gameStarted = false;
+    private boolean stateChanged = false;
 
     public TempRivialClient(String ip, int port) throws IOException{
         this.portNumber = port;
@@ -49,6 +57,16 @@ public class TempRivialClient implements Runnable {
         return game;
     }
 
+    public ArrayList<GameModel> getGamesToJoin() {
+        return gamesToJoin;
+    }
+
+    public void setStateChanged(boolean stateChanged){
+        this.stateChanged = stateChanged;
+    }
+
+    public boolean stateChanged() { return stateChanged; }
+
     public void setPlayer(Player player){
         this.player = player;
     }
@@ -62,11 +80,12 @@ public class TempRivialClient implements Runnable {
     }
 
     public void getGames(){
+        this.gamesToJoin = null;
         this.sendMessageToServer(new GetGamesMessage());
     }
 
     public void handleGames(ArrayList<GameModel> games){
-        //TODO impl. Show games and let the user pick one.
+        this.gamesToJoin = games;
     }
 
     public void createGame(){
@@ -74,6 +93,7 @@ public class TempRivialClient implements Runnable {
     }
 
     public void joinGame(int gameID){
+        this.game = null;
         this.sendMessageToServer(new JoinGameMessage(player.getId(), gameID));
     }
 
@@ -89,6 +109,7 @@ public class TempRivialClient implements Runnable {
 
     public void handleGameState(GameModel gameModel) {
         this.game = gameModel;
+        this.stateChanged = true;
     }
     public void handleGame(int gameId){
         Gdx.app.log("Client", "In HandleGame");
@@ -100,11 +121,11 @@ public class TempRivialClient implements Runnable {
     }
 
     public void startGame(){
-        // TODO impl.
+        this.gameStarted = true;
     }
 
     public void startFailed() {
-        // TODO
+        this.gameStarted = false;
     }
 
 
@@ -116,19 +137,38 @@ public class TempRivialClient implements Runnable {
     public void handleCapturedTile(int game, int player, int tile) throws TileNotFoundException, PlayerNotFoundException{
         if(this.game.getId() == game){
             this.game.tileCaptured(tile, player);
+            this.stateChanged = true;
         }
     }
 
     public void handleForgottenTile(int game, int player, int tile) throws TileNotFoundException, PlayerNotFoundException {
         if(this.game.getId() == game){
             this.game.tileForgotten(tile, player);
+            this.stateChanged = true;
         }
     }
 
     public void endGame(int game){
         if(this.game.getId() == game){
-            // TODO impl. goal state
+            this.gameStarted = false;
         }
+    }
+
+    // Slimstampen funcitons
+    public void sendRequestTrialMessage(){
+        this.sendMessageToServer(new RequestTrialMessage(this.game.getId(), this.getPlayer().getId()));
+    }
+
+    public void sendPracticeEventMessage(Item item, long timestamp){
+        this.sendMessageToServer(new PracticeEventMessage(this.game.getId(), this.player.getId(), item, timestamp));
+    }
+
+    public void sendAddNewItemMessage(Item item){
+        this.sendMessageToServer(new AddNewItemMessage(this.game.getId(), this.player.getId(), item));
+    }
+
+    public void sendUpdateModelMessage(Item item, long timestamp){
+        this.sendMessageToServer(new UpdateModelMessage(this.game.getId(), this.player.getId(), item, timestamp));
     }
 
     // Networking funcitons

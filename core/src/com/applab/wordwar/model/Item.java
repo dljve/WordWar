@@ -58,4 +58,8 @@ public class Item implements Serializable {
         return translation;
     }
 
+    public boolean equals(Item item) {
+        return (this.getWord().equals(item.getWord()) && this.getTranslation().equals(item.getTranslation()));
+    }
+
 }

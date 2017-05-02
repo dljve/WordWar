@@ -1,5 +1,6 @@
 package com.applab.wordwar;
 
+import com.applab.wordwar.model.Player;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -8,6 +9,10 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class ScoreBoard extends Actor {
 
@@ -50,20 +55,27 @@ public class ScoreBoard extends Actor {
         Gdx.gl.glDisable(GL20.GL_BLEND);
 
         batch.begin();
-        for (int i = 0; i<3; i++) {
-            int id = game.getPlayerPlaces()[i];
+        ArrayList<Player> players = game.getApp().getClient().getGameModel().getPlayers();
+        Collections.sort(players, new Comparator<Player>() {
+            @Override
+            public int compare(Player p1, Player p2) {
+                return p2.getScore() - p1.getScore();
+            }
+        });
+        int i = 0;
+        for (Player player : players) {
+            int id = player.getId();
             float y_margin = getHeight()*0.1f;
 
             // Draw names
-            String name = "Player"+id;
-            GlyphLayout nameGlyph = new GlyphLayout(gillsans, name);
+            GlyphLayout nameGlyph = new GlyphLayout(gillsans, player.getName());
             Color playerColor = game.getColor()[(id==0)?1:0][(id==1)?1:0][(id==2)?1:0];
             gillsans.setColor(playerColor);
-            gillsans.draw(batch, name, getX()+getWidth()*0.05f,
+            gillsans.draw(batch, player.getName(), getX()+getWidth()*0.05f,
                     getY()+getHeight()-i*(nameGlyph.height+getHeight()*0.2f)-y_margin);
 
             // Draw scores
-            String score = String.valueOf(game.getScores()[id]);
+            String score = String.valueOf(player.getScore());
             GlyphLayout scoreGlyph = new GlyphLayout(gillsans, score);
             gillsans.setColor(Color.WHITE);
             gillsans.draw(batch, score, getX()+getWidth()-scoreGlyph.width-getWidth()*0.05f,
@@ -74,7 +86,7 @@ public class ScoreBoard extends Actor {
             GlyphLayout timeGlyph = new GlyphLayout(gillsans, timeLeft);
             gillsans.draw(batch, timeLeft, Gdx.graphics.getWidth()*0.05f,
                     0.95f*Gdx.graphics.getHeight() - timeGlyph.height);
-
+            i++;
         }
 
     }

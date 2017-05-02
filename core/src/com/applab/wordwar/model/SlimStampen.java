@@ -145,18 +145,32 @@ public class SlimStampen {
     /**
      * Add a novel item to the presentation set
      * This function should also be called if the user manually chooses a new item
-     * @param item the novel item
+     * @param i the novel item
      */
-    public void addNewItem(Item item) {
-        presentationSet.add(item);
-        itemSet.remove(item);
+    public void addNewItem(Item i) {
+        i = getRightItem(i);
+
+        presentationSet.add(i);
+        itemSet.remove(i);
     }
 
     /**
      * Call this to when the test trial is presented to the user to store the time point
      */
-    public void practiceEvent(Item i) {
-        t.get(i).add(getTime());
+    public void practiceEvent(Item i, long timestamp) {
+        i = getRightItem(i);
+
+        BigDecimal timepoint = BigDecimal.valueOf((double)(timestamp-startTime)/1000);
+        t.get(i).add(timepoint);
+    }
+
+    public Item getRightItem(Item i ) {
+        Item ii = null;
+        for (Item item : itemSet) {
+            if (item.equals(i))
+                ii = item;
+        }
+        return ii;
     }
 
     /**
@@ -165,10 +179,13 @@ public class SlimStampen {
      * @param i
      */
 
-    public void updateModel(Item i) {
+    public void updateModel(Item i, long timestamp) {
+        i = getRightItem(i);
+
         int n = t.get(i).size(); // Number of previous rehearsals
         int J = n-1; // Index of last rehearsal
-        BigDecimal T = getTime(); // The current time t
+        BigDecimal T = BigDecimal.valueOf((double)(timestamp-startTime)/1000);
+        //BigDecimal T = getTime(); // The current time t
 
         // Calculate a maximum reaction time as (2.11) [1.5*(F*e^(-threshold)+f)]
         BigDecimal RT_max = BigDecimal.valueOf(1.5).multiply(F.multiply(BigDecimalMath.exp(threshold.negate())).add(f));

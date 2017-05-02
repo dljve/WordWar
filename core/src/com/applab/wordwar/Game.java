@@ -32,7 +32,7 @@ public class Game implements Screen {
 	protected OrthographicCamera cam;
 	protected ArrayList<Rectangle> tiles; 	// Tile positions
 	protected ArrayList<Rectangle> frontier; 	// Tile frontier
-	private Map<Rectangle, Item> items; 	// Tile-Item pairs
+	protected Map<Rectangle, Item> items; 	// Tile-Item pairs
 	private Map<Rectangle, Color> colors; 	// Tile-Color pairs
 	private Map<Rectangle, int[]> captures;	// Tile-Capture pairs
 	private Stage HUD;
@@ -96,7 +96,6 @@ public class Game implements Screen {
 	private boolean inTrial = false;
 	private String answer = "";
 	private float feedbackTime;
-	protected String trialType; // "study" or "test"
 	private Vector3 prevPos; // Store the board position when in trial mode
 	private float prevZoom; // Store the zoom when in trial mode
 	protected int[] scores = {1,1,1};
@@ -129,6 +128,10 @@ public class Game implements Screen {
 
 	public boolean isGameEnd() {
 		return endTime < System.currentTimeMillis();
+	}
+
+	public MainClass getApp() {
+		return app;
 	}
 
 	/**
@@ -228,32 +231,40 @@ public class Game implements Screen {
 	}
 
 	public void getBoardState() {
-		// TODO: Receive captured status for each tile from server, hardcoded for now
-		for (int i = 0; i < tiles.size(); i++) {
-			int receivedId = i;
-			int[] receivedCapture = new int[] {0,0,0};
-			if (i == baseTiles[0]) receivedCapture = new int[] {1,0,0};
-			if (i == baseTiles[1]) receivedCapture = new int[] {0,1,0};
-			if (i == baseTiles[2]) receivedCapture = new int[] {0,0,1};
+		GameModel gm = app.getClient().getGameModel();
 
-			Rectangle tile = tiles.get(receivedId);
-			captures.put(tile, receivedCapture);
+		ArrayList<GameTile> map = gm.getMap();
+		int tileIdx = 0;
+		for (int i = 0; i < tiles.size(); i++) {
+			int[] capturedState = new int[]{0, 0, 0};
+			if (i == baseTiles[0]) {
+				capturedState = new int[]{1, 0, 0};
+			} else if (i == baseTiles[1]) {
+				capturedState = new int[]{0, 1, 0};
+			} else if (i == baseTiles[2]) {
+				capturedState = new int[]{0, 0, 1};
+			} else {
+				GameTile tile = map.get(tileIdx);
+				capturedState[0] = tile.isOwnedByBlue() ? 1: 0;
+				capturedState[1] = tile.isOwnedByRed() ? 1: 0;
+				capturedState[2] = tile.isOwnedByYellow() ? 1: 0;
+				tileIdx++;
+			}
+
+			Rectangle tile = tiles.get(i);
+			captures.put(tile, capturedState);
 			updateColor(tile);
 		}
+		app.getClient().setStateChanged(false);
 	}
 
 	public void giveTranslation() {
-		// TODO: give translation to server and receive feedback
-		// TODO: For study the model does not need to be updated
-		// TODO: For test, update model, (receive "correct"/"incorrect")
+		Item item = items.get(activeTile);
 
 		if (answer.equals(items.get(activeTile).getTranslation())) {
 			correctFeedback();
 		} else {
-			Gdx.app.log("a",trialType);
-			if (trialType == "study")
-				return;	// For the study the user should type the translation until it is correct
-			else
+			if (!item.isNovel())
 				incorrectFeedback();
 		}
 
@@ -268,11 +279,11 @@ public class Game implements Screen {
 	}
 
 	private void correctFeedback() {
-		if (trialType=="study")
-			items.get(activeTile).setNovel(false);
+		Item item = items.get(activeTile);
+		if (item.isNovel())
+			item.setNovel(false);
 		captureTile(activeTile);
 		feedbackTime = CORRECT_FEEDBACK_TIME;
-
 	}
 	private void incorrectFeedback() {
 		Gdx.app.log("a","incorrect feedback (test)");
@@ -281,15 +292,22 @@ public class Game implements Screen {
 	}
 
 	private void captureTile(Rectangle tile) {
-		captures.get(tile)[PLAYER_ID] = 1;
-		updateColor(tile);
-		scores[PLAYER_ID]++;
+		int tileID = tiles.indexOf(tile);
+		int offset = 0;
+		for(int i=0; i<baseTiles.length; i++){
+			if(tileID > baseTiles[i]){
+				offset++;
+			}
+		}
+		tileID -= offset;
+		app.getClient().captureTile(tileID);
+		//captures.get(tile)[PLAYER_ID] = 1;
+		//updateColor(tile);
 	}
 
 	private void looseTile(Rectangle tile) {
 		captures.get(tile)[PLAYER_ID] = 0;
 		updateColor(tile);
-		scores[PLAYER_ID]--;
 	}
 
 	/**
@@ -307,6 +325,7 @@ public class Game implements Screen {
 	 *
 	 */
 	public void updateFrontier() {
+		/* // Not in this version
 		// If there is a test trial you must click the corresponding tile
 		if (trialType=="test") {
 			frontier.clear();
@@ -315,6 +334,7 @@ public class Game implements Screen {
 			colors.put(activeTile, new Color(c.r, c.g, c.b, BOARD_OPACITY));
 			return;
 		}
+		*/
 		ArrayList<Rectangle> area = new ArrayList<Rectangle>();
 		ArrayList<Rectangle> neighbors = new ArrayList<Rectangle>();
 
@@ -349,7 +369,7 @@ public class Game implements Screen {
 				for (int i = 0; i < neighbors.size(); i++) {
 					if (neighbors.get(i) == neighbor) n++;
 				}
-				if (n>1 || area.size() == 1) {
+				if (n>0 || area.size() == 1) { // n>1 if it needs 2 adjacent tiles
 					frontier.add(neighbor);
 					Color c = colors.get(neighbor);
 					colors.put(neighbor, new Color(c.r, c.g, c.b, BOARD_OPACITY));
@@ -398,15 +418,9 @@ public class Game implements Screen {
 	}
 
 	public void assignWordsToTiles() {
-		// TODO: Receive server messages (tileID, word, translation) for each tile
 		GameModel gm = app.getClient().getGameModel();
 
 		ArrayList<GameTile> map = gm.getMap();
-
-		/* // Example
-		String[][] swen = new String[][] {
-				new String[] {"adhama","honor"},new String[] {"jicho","eye"},new String[] {"pombe","beer"},new String[] {"adui","enemy"},new String[] {"jioni","evening"},new String[] {"rafiki","friend"},new String[] {"afisi","office"},new String[] {"jiwe","stone"},new String[] {"rangi","color"},new String[] {"ajabu","wonder"},new String[] {"kamba","rope"},new String[] {"roho","soul"},new String[] {"anga","sky"},new String[] {"kanisa","church"},new String[] {"saduku","box"},new String[] {"askari","police"},new String[] {"kaputula","pants"},new String[] {"samaki","fish"},new String[] {"baba","father"},new String[] {"karamu","party"},new String[] {"sauti","voice"},new String[] {"bahari","sea"},new String[] {"kazi","work"},new String[] {"shukuru","thanks"},new String[] {"barua","letter"},new String[] {"keja","house"},new String[] {"siri","secret"},new String[] {"basi","bus"},new String[] {"kichwa","head"},new String[] {"skati","skirt"},new String[] {"baskeli","bike"},new String[] {"kijana","boy"},new String[] {"tabibu","doctor"},new String[] {"bibi","grandmother"},new String[] {"kioo","mirror"},new String[] {"tofaa","apple"},new String[] {"bustani","garden"},new String[] {"kisu","knife"},new String[] {"tumaini","hope"},new String[] {"chakula","food"},new String[] {"kitanda","bed"},new String[] {"tumbili","monkey"},new String[] {"chama","society"},new String[] {"kiti","chair"},new String[] {"tunda","fruit"},new String[] {"chanjo","scissors"},new String[] {"kofia","hat"},new String[] {"ufu","death"},new String[] {"chapati","bread"},new String[] {"kuku","chicken"},new String[] {"ujuzi","knowledge"},new String[] {"chunga","pot"},new String[] {"lango","door"},new String[] {"wakati","alarm"},new String[] {"degaga","glasses"},new String[] {"likizo","holidays"},new String[] {"wimbo","song"},new String[] {"dhoruba","storm"},new String[] {"limau","lemon"},new String[] {"wingu","cloud"},new String[] {"duara","wheel"}
-		}; */
 
 		int wordIndex = 0;
 		for (int i = 0; i < tiles.size(); i++) {
@@ -441,8 +455,7 @@ public class Game implements Screen {
 	}
 
 	public void promptTestTrial() {
-		// TODO: This will be triggered after receiving a test trial from the server
-		trialType = "test";
+		// TODO: (we dont this this in this version) This will be triggered after receiving a test trial from the server
 
 		// Example: set the test tile and decapture it
 		activeTile = tiles.get(8);
@@ -469,6 +482,15 @@ public class Game implements Screen {
 		}
 		colors.get(activeTile).a = BOARD_OPACITY;
 
+		// Add the item to the slim stampen model
+		Item activeItem = items.get(activeTile);
+		if (activeItem.isNovel()) {
+			app.getClient().sendAddNewItemMessage(activeItem);
+		} else {
+			// (test trial) Time when the event starts
+			app.getClient().sendPracticeEventMessage(items.get(activeTile), System.currentTimeMillis());
+		}
+
 		// Display the keyboard
 		Gdx.input.setOnscreenKeyboardVisible(true);
 	}
@@ -480,7 +502,6 @@ public class Game implements Screen {
 	 */
 	public void endTrial() {
 		answer = "";
-		trialType = "";
 		Gdx.input.setOnscreenKeyboardVisible(false);
 		for (Rectangle tile : tiles)
 			updateColor(tile);
@@ -488,6 +509,9 @@ public class Game implements Screen {
 		cam.zoom = prevZoom;
 		cam.position.set(prevPos);
 		scoreBoard.setVisible(true);
+
+
+		// TODO: nextTrial() from server???
 	}
 
 	public boolean isBaseTile(Rectangle tile) {
@@ -496,6 +520,7 @@ public class Game implements Screen {
 				tiles.get(baseTiles[2]) == tile);
 	}
 
+	private long time = 0;
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0.13f, 0.23f, 0.26f, 1);
@@ -505,6 +530,21 @@ public class Game implements Screen {
 		batch.setProjectionMatrix(cam.combined);
 		batch.begin();
 		batch.draw(bg, (WORLD_WIDTH-bg.getWidth())/2, (WORLD_HEIGHT-bg.getHeight())/2 );
+
+		if(app.getClient().stateChanged()) {
+			getBoardState();
+			updateFrontier();
+			ArrayList<Player> players = app.getClient().getGameModel().getPlayers();
+			for(int i=0; i < players.size(); i++) {
+				scores[i] = players.get(i).getScore();
+			}
+		}
+
+		// Check slim stampen for items below threshold every second
+		if (System.currentTimeMillis() - time > 1000) {
+			app.getClient().sendRequestTrialMessage();
+			time = System.currentTimeMillis();
+		}
 
 		// Draw the tiles of the board
 		for (Rectangle tile : tiles) {

@@ -1,14 +1,19 @@
 package com.applab.wordwar;
 
+import com.applab.wordwar.model.GameModel;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 
@@ -21,15 +26,18 @@ public class GameTableDataStructure {
     private Table leftTable;
     private Table rightTable;
     private int id;
+    private MainClass app;
+    TextButton joinButton;
+    private LobbyScreen lobbyScreen;
 
 
 
 
-    public GameTableDataStructure(Table rootTable, int id, BitmapFont font) {
-        super();
+    public GameTableDataStructure(Table rootTable, GameModel game, BitmapFont font, MainClass app1, LobbyScreen lobbyScreen1) {
+        this.lobbyScreen = lobbyScreen1;
         parentTable = new Table();
-        this.id = id;
-
+        this.id = game.getId();
+        this.app = app1;
 
         // to get the design from presentation, I need three tables
         leftTable = new Table();
@@ -56,13 +64,31 @@ public class GameTableDataStructure {
         textButtonStyle.font = skin.getFont("default-font");
         textButtonStyle.font.getData().setScale(2);
 
+        //Hi . I'm here
+
         skin.add("default", textButtonStyle);
-        TextButton joinButton = new TextButton("Join", skin, "default");
+        joinButton = new TextButton("Join", skin, "default");
 
+        joinButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                app.getClient().joinGame(id);
 
-        Label languagesLabel = new Label("English - Romanian", labelStyle);
+                Gdx.app.postRunnable(new Runnable() {
+                    @Override
+                    public void run() {
+                        while(app.getClient().getGameModel() == null);
+                        // TODO Go to waiting room instead
+                        app.setScreen(new Game(app));
+                        lobbyScreen.dispose();
+                    }
+                });
+            }
+        });
+        // TODO Get the language from the game ==> GameModel game is a variable
+        Label languagesLabel = new Label("English - Swahili", labelStyle);
         //languagesLabel.setFontScale(1.3f);
-        Label noPlayersLabel = new Label("1/4 Players", labelStyle);
+        Label noPlayersLabel = new Label(game.getPlayers().size() + "/3 Players", labelStyle);
 
 
         //leftTable.debug();

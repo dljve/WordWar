@@ -30,7 +30,8 @@ public class MainClass extends Game  {
 		HEIGHT_DISTANCE_UNIT = deviceHeight / 18;
 
 		try {
-			client = new TempRivialClient("172.20.10.2", 8888);
+			// 172.20.10.2
+			client = new TempRivialClient("192.168.0.101", 8888);
 			(new Thread(client)).start();
 		} catch (IOException e) {
 			e.printStackTrace();

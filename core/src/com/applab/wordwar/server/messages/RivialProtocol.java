@@ -11,7 +11,8 @@ import java.io.Serializable;
 public abstract class RivialProtocol implements Serializable {
 
     enum messageType{
-        INIT, GET_GAMES, JOIN_GAME, CREATE_GAME, START_GAME, END_GAME, CAPTURED_TILE, FORGOT_TILE, GAME_STATE_REQUEST
+        INIT, GET_GAMES, JOIN_GAME, CREATE_GAME, START_GAME, END_GAME, CAPTURED_TILE, FORGOT_TILE,
+        GAME_STATE_REQUEST, REQUEST_TRIAL, PRACTICE_EVENT, ADD_NEW_ITEM, UPDATE_MODEL
     }
 
     public abstract messageType getMessageType();
