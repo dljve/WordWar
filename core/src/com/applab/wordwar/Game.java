@@ -34,7 +34,7 @@ public class Game implements Screen {
 	protected ArrayList<Rectangle> frontier; 	// Tile frontier
 	protected Map<Rectangle, Item> items; 	// Tile-Item pairs
 	private Map<Rectangle, Color> colors; 	// Tile-Color pairs
-	private Map<Rectangle, int[]> captures;	// Tile-Capture pairs
+	protected Map<Rectangle, int[]> captures;	// Tile-Capture pairs
 	private Stage HUD;
 	private Actor scoreBoard, endScreen;
 
@@ -94,6 +94,7 @@ public class Game implements Screen {
 
 	// Variables
 	private boolean inTrial = false;
+	protected boolean firstKeyPressed = false;
 	private String answer = "";
 	private float feedbackTime;
 	private Vector3 prevPos; // Store the board position when in trial mode
@@ -509,7 +510,7 @@ public class Game implements Screen {
 		cam.zoom = prevZoom;
 		cam.position.set(prevPos);
 		scoreBoard.setVisible(true);
-
+		firstKeyPressed = false;
 
 		// TODO: nextTrial() from server???
 	}

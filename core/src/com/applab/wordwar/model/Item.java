@@ -62,4 +62,9 @@ public class Item implements Serializable {
         return (this.getWord().equals(item.getWord()) && this.getTranslation().equals(item.getTranslation()));
     }
 
+    @Override
+    public String toString() {
+        return "(" + getWord() + "," + getTranslation() + ")";
+    }
+
 }

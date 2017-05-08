@@ -16,17 +16,16 @@ public class wwInputProcessor implements InputProcessor {
             return false;
         }
 
-        private boolean firstKeyTyped = false;
         public boolean keyUp (int keycode) {
             if (game.isInTrial()) {
                 if (keycode == Input.Keys.ENTER) {
                     game.giveTranslation();
                 } else if (keycode == Input.Keys.BACKSPACE && game.getAnswer().length() > 0) {
-                    // Key press, measure reaction time
-                    if (!firstKeyTyped) {
+                    // On test: Key press, measure reaction time
+                    if (!game.firstKeyPressed && !game.items.get(game.activeTile).isNovel()) {
                         Item item = game.items.get(game.activeTile);
                         game.getApp().getClient().sendUpdateModelMessage(item, System.currentTimeMillis());
-                        firstKeyTyped = true;
+                        game.firstKeyPressed = true;
                     }
                     game.setAnswer(game.getAnswer().substring(0, game.getAnswer().length() - 1));
                 }

@@ -112,6 +112,7 @@ public class RivialServer implements Runnable{
     }
 
     public void handleForgottenTile(int game, int player, int tile) throws TileNotFoundException, GameNotFoundException, PlayerNotFoundException{
+        System.out.println("handle forgotten tile");
         this.getGameWithID(game).tileForgotten(tile, player);
     }
 

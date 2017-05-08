@@ -34,9 +34,10 @@ public class RequestTrialHandler extends RivialHandler {
                                 if (tile.getItem().equals(trial.getItem())) {
                                     ReplyProtocol replyProtocol = new ReplyProtocol();
                                     for (Player player : game.getPlayers()) {
+                                        System.out.println("Forgotten " + trial.getItem().toString() + " for " + player.getId());
                                         replyProtocol.addReply(new ForgottenTileMessage(game.getId(), tile.getId(), message.getPlayerId()), player.getSocket());
                                     }
-                                    System.out.println("Forgotten " + trial.getItem().toString());
+
                                 }
                             }
                         }

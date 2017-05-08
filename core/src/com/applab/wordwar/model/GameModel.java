@@ -90,6 +90,7 @@ public class GameModel implements Serializable {
     }
 
     public void tileForgotten(int tile, int player) throws TileNotFoundException, PlayerNotFoundException {
+        System.out.println("change ");
         changeTile(tile, player, false);
     }
 
@@ -108,6 +109,7 @@ public class GameModel implements Serializable {
                 gameTile.setOwnedByYellow(isOwned);
                 break;
         }
+        System.out.println("change tile called");
     }
 
     private Player getPlayerById(int id) throws PlayerNotFoundException{
