@@ -5,16 +5,23 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 /**
  * Created by root on 24.04.2017.
  */
 
 public class SplashScreen implements Screen {
-    private Texture texture;
-    private SpriteBatch batch;
+
     private MainClass app;
+    private Table rootTable;
+    private Stage stage;
 
 
     private long startTime;
@@ -28,9 +35,24 @@ public class SplashScreen implements Screen {
     //this method is like create(), only once called
     @Override
     public void show() {
+        stage = new Stage(new ScreenViewport());
 
-        batch = new SpriteBatch();
-        texture = new Texture("wordWarLogo.jpg");
+        rootTable = new Table();
+        rootTable.setFillParent(true);
+        rootTable.setBackground(new TextureRegionDrawable(new TextureRegion(new Texture("bgScreens.png"))));
+
+        Texture logoTexture = new Texture("wordWarLogo.jpg");
+        TextureRegion appLogoRegion = new TextureRegion(logoTexture);
+        Image logoImage = new Image(appLogoRegion);
+
+
+        float imageWidth = logoImage.getImageWidth();
+        float imageHeight = logoImage.getImageHeight();
+        float centerImageOnWidth = MainClass.deviceWidth / 2 - imageWidth / 2;
+        float centerImageOnHeight = MainClass.deviceHeight / 2 -  imageHeight / 2;
+        rootTable.add(logoImage).setActorBounds(centerImageOnWidth,centerImageOnHeight, imageWidth, imageHeight);
+
+        stage.addActor(rootTable);
         startTime = TimeUtils.millis();
 
     }
@@ -44,9 +66,8 @@ public class SplashScreen implements Screen {
         currentTime = TimeUtils.millis();
 
         if (currentTime - startTime < app.getSplashScreenDisplayTime()) {
-            batch.begin();
-            batch.draw(texture, 0, 0, app.deviceWidth, app.deviceHeight);
-            batch.end();
+            stage.act(Gdx.graphics.getDeltaTime());
+            stage.draw();
         } else{
             app.setScreen(new LobbyScreen(app));
             dispose(); //dispose the current instance of the screen
@@ -76,8 +97,8 @@ public class SplashScreen implements Screen {
 
     @Override
     public void dispose() {
-        texture.dispose();
-        batch.dispose();
+
+
 
     }
 }
