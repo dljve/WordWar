@@ -1,6 +1,7 @@
 package com.applab.wordwar;
 
 import com.applab.wordwar.model.Item;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 
@@ -21,12 +22,6 @@ public class wwInputProcessor implements InputProcessor {
                 if (keycode == Input.Keys.ENTER) {
                     game.giveTranslation();
                 } else if (keycode == Input.Keys.BACKSPACE && game.getAnswer().length() > 0) {
-                    // On test: Key press, measure reaction time
-                    if (!game.firstKeyPressed && !game.items.get(game.activeTile).isNovel()) {
-                        Item item = game.items.get(game.activeTile);
-                        game.getApp().getClient().sendUpdateModelMessage(item, System.currentTimeMillis());
-                        game.firstKeyPressed = true;
-                    }
                     game.setAnswer(game.getAnswer().substring(0, game.getAnswer().length() - 1));
                 }
             } else {
@@ -38,8 +33,21 @@ public class wwInputProcessor implements InputProcessor {
         }
 
         public boolean keyTyped (char character) {
-            if (character == ' ' || 'A' <= character && character <= 'Z' || 'a' <= character && character <= 'z')
+            if (character == ' ' || 'A' <= character && character <= 'Z' || 'a' <= character && character <= 'z') {
                 game.setAnswer(game.getAnswer() + character);
+
+                // On test: Key press, measure second time point and reaction time
+                boolean isTestTrial = game.items.get(game.activeTile).isNovel();
+                Gdx.app.log("INFO", String.valueOf(game.firstKeyPressed) );
+                Gdx.app.log("INFO", String.valueOf(isTestTrial) );
+                if (!game.firstKeyPressed && !isTestTrial) {
+                    Gdx.app.log("INFO", "update model");
+                    Item item = game.items.get(game.activeTile);
+                    game.getApp().getClient().sendUpdateModelMessage(item, System.currentTimeMillis());
+                    game.firstKeyPressed = true;
+                }
+
+            }
             return false;
         }
 

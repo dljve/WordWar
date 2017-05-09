@@ -42,7 +42,9 @@ public class ForgottenTileHandler extends RivialHandler {
             }
         } else {
             try {
+
                 client.handleForgottenTile(message.getGame(), message.getPlayer(), message.getTile());
+
             } catch (PlayerNotFoundException e){
                 e.printStackTrace();
             } catch (TileNotFoundException e){

@@ -20,6 +20,7 @@ public class UpdateModelHandler extends RivialHandler {
     public void run() {
         if (serverSide){
             try{
+                System.out.println("Update model");
                 server.updateModel(message.getGameId(), message.getPlayerId(), message.getItem(), message.getTimestamp());
             } catch (GameNotFoundException e){
                 e.printStackTrace();

@@ -15,11 +15,12 @@ public class Item implements Serializable {
         this.novel = novel;
     }
 
-    private boolean novel = true;
+    private boolean novel;
 
     public Item(String word, String translation) {
         this.word = word;
         this.translation = translation;
+        novel = true;
     }
 
     public Rectangle getWordPosition() {

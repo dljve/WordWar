@@ -10,6 +10,8 @@ import com.applab.wordwar.server.exceptions.PlayerNotFoundException;
 import com.applab.wordwar.server.messages.ForgottenTileMessage;
 import com.applab.wordwar.server.messages.RequestTrialMessage;
 
+import java.io.IOException;
+
 /**
  * Created by Douwe on 2-5-2017.
  */
@@ -27,16 +29,19 @@ public class RequestTrialHandler extends RivialHandler {
         if(serverSide){
             try {
                 Trial trial = server.handleTrialRequest(message.getGameId(), message.getPlayerId());
+
                 if (trial.getTrialType() == Trial.TrialType.TEST) {
                     for (GameModel game : server.getGames()) {
                         if (game.getId() == message.getGameId()) {
                             for (GameTile tile : game.getMap()) {
                                 if (tile.getItem().equals(trial.getItem())) {
+
                                     ReplyProtocol replyProtocol = new ReplyProtocol();
                                     for (Player player : game.getPlayers()) {
-                                        System.out.println("Forgotten " + trial.getItem().toString() + " for " + player.getId());
+                                        System.out.println("forget tile");
                                         replyProtocol.addReply(new ForgottenTileMessage(game.getId(), tile.getId(), message.getPlayerId()), player.getSocket());
                                     }
+                                    replyProtocol.sendReplies();
 
                                 }
                             }
@@ -46,6 +51,8 @@ public class RequestTrialHandler extends RivialHandler {
             } catch (GameNotFoundException e){
                 e.printStackTrace();
             } catch (PlayerNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         } else {

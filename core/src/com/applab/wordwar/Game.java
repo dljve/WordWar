@@ -36,7 +36,7 @@ public class Game implements Screen {
 	private Map<Rectangle, Color> colors; 	// Tile-Color pairs
 	protected Map<Rectangle, int[]> captures;	// Tile-Capture pairs
 	private Stage HUD;
-	private Actor scoreBoard, endScreen;
+	private Actor scoreBoard, endScreen, helpLabel;
 
 	// Textures
 	private Texture tileW;
@@ -96,13 +96,14 @@ public class Game implements Screen {
 	private boolean inTrial = false;
 	protected boolean firstKeyPressed = false;
 	private String answer = "";
-	private float feedbackTime;
 	private Vector3 prevPos; // Store the board position when in trial mode
 	private float prevZoom; // Store the zoom when in trial mode
 	protected int[] scores = {1,1,1};
 	private long endTime = 0;
 	protected Rectangle activeTile = null; // The tile active during a trial
 	private MainClass app;
+	protected String helpText;
+	protected Color helpColor;
 
 	public int[] getScores() {
 		return scores;
@@ -213,6 +214,13 @@ public class Game implements Screen {
 		endScreen.setPosition(0.15f*w, 0.15f*h);
 		endScreen.setVisible(false);
 		HUD.addActor(endScreen);
+		helpLabel = new HelpLabel(this);
+		helpLabel.setSize(w, 0.1f * h);
+		helpLabel.setPosition(0, h - helpLabel.getHeight());
+		helpLabel.setVisible(true);
+		helpText = "Click a tile";
+		helpColor = new Color(1f,0f,0f,0.8f);
+		HUD.addActor(helpLabel);
 
 		// Input Processors
 		GestureDetector gestureDetector = new GestureDetector(new wwGestureListener(this));
@@ -262,12 +270,19 @@ public class Game implements Screen {
 	public void giveTranslation() {
 		Item item = items.get(activeTile);
 
-		if (answer.equals(items.get(activeTile).getTranslation())) {
+		if (answer.equals(item.getTranslation())) {
 			correctFeedback();
 		} else {
 			if (!item.isNovel())
 				incorrectFeedback();
 		}
+	}
+
+	private void correctFeedback() {
+		Item item = items.get(activeTile);
+		if (item.isNovel())
+			item.setNovel(false);
+		captureTile(activeTile);
 
 		// End the trial only after the feedback
 		Timer.schedule(new Timer.Task(){
@@ -276,20 +291,19 @@ public class Game implements Screen {
 				endTrial();
 				updateFrontier();
 			}
-		}, feedbackTime);
-	}
+		}, CORRECT_FEEDBACK_TIME);
 
-	private void correctFeedback() {
-		Item item = items.get(activeTile);
-		if (item.isNovel())
-			item.setNovel(false);
-		captureTile(activeTile);
-		feedbackTime = CORRECT_FEEDBACK_TIME;
 	}
 	private void incorrectFeedback() {
-		Gdx.app.log("a","incorrect feedback (test)");
 		answer = items.get(activeTile).getTranslation();
-		feedbackTime = INCORRECT_FEEDBACK_TIME;
+
+		Timer.schedule(new Timer.Task(){
+			@Override
+			public void run() {
+				endTrial();
+				updateFrontier();
+			}
+		}, INCORRECT_FEEDBACK_TIME);
 	}
 
 	private void captureTile(Rectangle tile) {
@@ -483,6 +497,9 @@ public class Game implements Screen {
 		}
 		colors.get(activeTile).a = BOARD_OPACITY;
 
+		// Display the keyboard
+		Gdx.input.setOnscreenKeyboardVisible(true);
+
 		// Add the item to the slim stampen model
 		Item activeItem = items.get(activeTile);
 		if (activeItem.isNovel()) {
@@ -491,9 +508,6 @@ public class Game implements Screen {
 			// (test trial) Time when the event starts
 			app.getClient().sendPracticeEventMessage(items.get(activeTile), System.currentTimeMillis());
 		}
-
-		// Display the keyboard
-		Gdx.input.setOnscreenKeyboardVisible(true);
 	}
 
 	/**
@@ -512,7 +526,7 @@ public class Game implements Screen {
 		scoreBoard.setVisible(true);
 		firstKeyPressed = false;
 
-		// TODO: nextTrial() from server???
+		// TODO: Study trial should immediately follow a test trial
 	}
 
 	public boolean isBaseTile(Rectangle tile) {
@@ -542,7 +556,7 @@ public class Game implements Screen {
 		}
 
 		// Check slim stampen for items below threshold every second
-		if (System.currentTimeMillis() - time > 1000) {
+		if (System.currentTimeMillis() - time > 1000 && !inTrial) {
 			app.getClient().sendRequestTrialMessage();
 			time = System.currentTimeMillis();
 		}

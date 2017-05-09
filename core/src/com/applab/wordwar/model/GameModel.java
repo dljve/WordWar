@@ -48,7 +48,7 @@ public class GameModel implements Serializable {
             player.initializeSlimStampen(itemSet, false,
                     BigDecimal.valueOf(15),
                     BigDecimal.valueOf(0.25),
-                    BigDecimal.valueOf(0.3),
+                    BigDecimal.valueOf(0.5), // time to read tile + wait for keyboard + press first key
                     BigDecimal.valueOf(0.8),
                     BigDecimal.valueOf(-0.5));
         }
@@ -90,29 +90,35 @@ public class GameModel implements Serializable {
     }
 
     public void tileForgotten(int tile, int player) throws TileNotFoundException, PlayerNotFoundException {
-        System.out.println("change ");
         changeTile(tile, player, false);
     }
 
     private void changeTile(int tile, int playerId, boolean isOwned) throws TileNotFoundException, PlayerNotFoundException {
         GameTile gameTile = this.getTileWithId(tile);
         Player player = this.getPlayerById(playerId);
-        player.incrementScore(isOwned?1:-1);
         switch (player.getColor()) {
             case Player.BLUE:
-                gameTile.setOwnedByBlue(isOwned);
+                if (gameTile.isOwnedByBlue() != isOwned) {
+                    player.incrementScore(isOwned ? 1 : -1);
+                    gameTile.setOwnedByBlue(isOwned);
+                }
                 break;
             case Player.RED:
-                gameTile.setOwnedByRed(isOwned);
+                if (gameTile.isOwnedByRed() != isOwned) {
+                    player.incrementScore(isOwned ? 1 : -1);
+                    gameTile.setOwnedByRed(isOwned);
+                }
                 break;
             case Player.YELLOW:
-                gameTile.setOwnedByYellow(isOwned);
+                if (gameTile.isOwnedByYellow() != isOwned) {
+                    player.incrementScore(isOwned ? 1 : -1);
+                    gameTile.setOwnedByYellow(isOwned);
+                }
                 break;
         }
-        System.out.println("change tile called");
     }
 
-    private Player getPlayerById(int id) throws PlayerNotFoundException{
+    private Player getPlayerById(int id) throws PlayerNotFoundException {
         for(Player player : players){
             if(player.getId() == id){
                 return player;

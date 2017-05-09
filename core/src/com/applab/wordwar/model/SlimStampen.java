@@ -71,12 +71,10 @@ public class SlimStampen {
         mc = new MathContext(20, RoundingMode.HALF_UP);
 
         // Initialize lists
-        d = new LinkedHashMap<Item,ArrayList<BigDecimal>>();
         a = new LinkedHashMap<Item,ArrayList<BigDecimal>>();
         t = new LinkedHashMap<Item,ArrayList<BigDecimal>>();
         RT = new LinkedHashMap<Item,ArrayList<BigDecimal>>();
         for ( Item item : itemSet ) {
-            d.put(item, new ArrayList());
             a.put(item, new ArrayList());
             t.put(item, new ArrayList());
             RT.put(item, new ArrayList());
@@ -99,6 +97,7 @@ public class SlimStampen {
         Trial.TrialType type;
 
         // Find the item with the lowest activation time over n seconds
+        System.out.println("_____________________________________");
         BigDecimal T = getTime(), lookahead = T.add(n), m_item, m_lowest = null;
         Item lowest = null;
         for (int i = 0; i < presentationSet.size(); i++) {
@@ -112,19 +111,20 @@ public class SlimStampen {
                         m_item.compareTo(m_lowest) < 0) // smaller than lowest item
                     lowest = item;
             }
-            System.out.println(item + " = " + m(item, lookahead));
-        }
 
-        if (lowest != null) System.out.println("*" + lowest + " = " + m(lowest, lookahead));
+            BigDecimal m = m(lowest, lookahead);
+            System.out.println(item + "\t\t" + (m==null?"-∞":m));
+        }
+        System.out.println("_____________________________________");
 
         // Below threshold? (if there is a lowest item AND it's -infinity or below threshold)
         if (lowest != null) m_lowest = m(lowest, lookahead);
         if (lowest != null && (m_lowest == null || m_lowest.compareTo(threshold) < 0) ) {
-            System.out.println("below threshold");
+            //System.out.println("below threshold");
             type = Trial.TrialType.TEST;
             item = lowest;
         } else if (!itemSet.isEmpty()) {  // Any new items remaining?
-            System.out.println("new item");
+            //System.out.println("new item");
             // Add a new item to the presentation set
             type = Trial.TrialType.STUDY;
             if (randomNovel) { // Select a random new item
@@ -132,7 +132,7 @@ public class SlimStampen {
                 addNewItem(item);
             } else item = null; // The user can select a new item and call addNewItem() later
         } else {
-            System.out.println("get lowest item");
+            //System.out.println("get lowest item");
             // Get the item with the lowest activation
             type = Trial.TrialType.TEST;
             item = lowest;
@@ -148,8 +148,7 @@ public class SlimStampen {
      * @param i the novel item
      */
     public void addNewItem(Item i) {
-        i = getRightItem(i);
-
+        i = findItem(i);
         presentationSet.add(i);
         itemSet.remove(i);
     }
@@ -158,19 +157,22 @@ public class SlimStampen {
      * Call this to when the test trial is presented to the user to store the time point
      */
     public void practiceEvent(Item i, long timestamp) {
-        i = getRightItem(i);
-
+        i = findItem(i);
         BigDecimal timepoint = BigDecimal.valueOf((double)(timestamp-startTime)/1000);
         t.get(i).add(timepoint);
     }
 
-    public Item getRightItem(Item i ) {
-        Item ii = null;
+    public Item findItem(Item i) {
+        Item found = null;
         for (Item item : itemSet) {
             if (item.equals(i))
-                ii = item;
+                found = item;
         }
-        return ii;
+        for (Item item : presentationSet) {
+            if (item.equals(i))
+                found = item;
+        }
+        return found;
     }
 
     /**
@@ -180,7 +182,7 @@ public class SlimStampen {
      */
 
     public void updateModel(Item i, long timestamp) {
-        i = getRightItem(i);
+        i = findItem(i);
 
         int n = t.get(i).size(); // Number of previous rehearsals
         int J = n-1; // Index of last rehearsal
@@ -198,16 +200,15 @@ public class SlimStampen {
         BigDecimal m_obs = BigDecimalMath.log(RT_obs.subtract(f).divide(F, mc).max(BigDecimal.ZERO)).negate();
         m_obs.setScale(p, BigDecimal.ROUND_HALF_UP);
 
-        // Activation not contributing to the previous rehearsal
+        // Activation not contributing to the previous rehearsal (Up to t_n-1)
         BigDecimal m = BigDecimal.ZERO;
         m.setScale(p, BigDecimal.ROUND_HALF_UP);
-        for (int j = 0; j < n-1 && t.get(i).get(j).compareTo(T) < 0; j++) {
-            m = m.add( BigDecimalMath.pow( T.subtract(t.get(i).get(j)), d.get(i).get(j).negate() ) );
-        }
+        m = m(i, t.get(i).get(n-1) );
+        m = (m==null) ? BigDecimal.ZERO : BigDecimalMath.exp(m); // exp.
+
         // Calculate the decay (2.9)
         BigDecimal decay = BigDecimalMath.log( BigDecimalMath.exp(m_obs).subtract(m) )
                 .divide( BigDecimalMath.log( T.subtract(t.get(i).get(J)) ), mc).negate();
-        d.get(i).add(decay);
 
         // Alpha optimization
         // See Figure 2.2 in Van Thiel (2010) for a flowchart of the basic process
@@ -217,11 +218,11 @@ public class SlimStampen {
             alpha = BigDecimal.valueOf(0.3);
         } else {
             // Calculate the alpha (2.10)
-            alpha = d.get(i).get(J).subtract( c.multiply(BigDecimalMath.exp( m(i,t.get(i).get(J)) ) ) );
+            alpha = decay.subtract( c.multiply(BigDecimalMath.exp( m(i,t.get(i).get(J)) ) ) );
 
             // New method to estimate new alpha by Nijboer (2011)
             // Slow estimated reaction time means too high decay, so alpha should be lowered
-            BigDecimal RT_est = F.multiply( c.divide(d.get(i).get(J).subtract(alpha), mc) ).add(f); // or F*Math.exp(-m(i,t.get(i).get(J)))+f;
+            BigDecimal RT_est = F.multiply( c.divide( decay.subtract(alpha), mc) ).add(f); // or F*Math.exp(-m(i,t.get(i).get(J)))+f;
 
             a1 = a.get(i).get(J - 1);
             a2 = (RT.get(i).get(J).compareTo(RT_est) < 0) ?
@@ -240,9 +241,9 @@ public class SlimStampen {
                 // times for the last 4 rehearsals (i.e. a window size of 4, see Nijboer (2011)).
                 // The first test trial (j=0) is not used as it contains no useful information.
                 for (int j = J; j > 0 && j > J - window_size; j--) {
-                    RT_a1 = F.multiply( c.divide(d.get(i).get(J).subtract(a1),mc) ).add(f);
+                    RT_a1 = F.multiply( c.divide(decay.subtract(a1),mc) ).add(f);
                     E_a1 = E_a1.add( RT_a1.subtract(RT.get(i).get(j)).abs() );
-                    RT_a2 = F.multiply( c.divide(d.get(i).get(J).subtract(a2),mc) ).add(f);
+                    RT_a2 = F.multiply( c.divide(decay.subtract(a2),mc) ).add(f);
                     E_a2 = E_a2.add( RT_a2.subtract(RT.get(i).get(j)).abs() );
                 }
                 a1 = (E_a1.compareTo(E_a2) < 0) ? a1 : a2; // Get a1 = min_arg(E_a1, E_a2)
@@ -315,12 +316,10 @@ public class SlimStampen {
         String strt = "", stra="", strRT="", strd="";
         for (int j=0;j<t.get(i).size();j++) strt += t.get(i).get(j).toPlainString() + " ";
         for (int j=0;j<RT.get(i).size();j++) strRT += RT.get(i).get(j).toPlainString() + " ";
-        for (int j=0;j<d.get(i).size();j++) strd += d.get(i).get(j).toPlainString() + " ";
         for (int j=0;j<a.get(i).size();j++) stra += a.get(i).get(j).toPlainString() + " ";
         System.out.println("-----------------------------");
         System.out.println("t: " + strt + " ");
         System.out.println("RT: " + strRT  + " ");
-        System.out.println("d: " + strd  + " ");
         System.out.println("a: " + stra  + " ");
     }
 

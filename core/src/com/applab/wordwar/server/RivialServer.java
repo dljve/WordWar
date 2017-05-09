@@ -112,7 +112,6 @@ public class RivialServer implements Runnable{
     }
 
     public void handleForgottenTile(int game, int player, int tile) throws TileNotFoundException, GameNotFoundException, PlayerNotFoundException{
-        System.out.println("handle forgotten tile");
         this.getGameWithID(game).tileForgotten(tile, player);
     }
 
@@ -156,6 +155,7 @@ public class RivialServer implements Runnable{
             e.printStackTrace();
         }
     }
+
     // Slimstampen functions
     public Trial handleTrialRequest(int gameId, int playerId) throws GameNotFoundException, PlayerNotFoundException {
         return this.getGameWithID(gameId).getNextTrial(playerId);
