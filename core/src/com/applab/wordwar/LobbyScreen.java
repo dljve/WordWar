@@ -35,7 +35,7 @@ public class LobbyScreen implements Screen {
     private Table rootTable;// occupies the whole device screen
     private ScrollPane scrollPane;
     private Table scrollPaneTable;
-    private BitmapFont gillsansFont;
+
 
 
     public LobbyScreen(MainClass app) {
@@ -45,9 +45,6 @@ public class LobbyScreen implements Screen {
     @Override
     public void show() {
 
-        gillsansFont = new BitmapFont(Gdx.files.internal("gillsans72.fnt"), false);
-        gillsansFont.getData().setScale(0.6f);
-        gillsansFont.setColor(Color.BLACK);
 
         //skin = new Skin(Gdx.files.internal("uiskin.json"));
         skin = new Skin(Gdx.files.internal("uiskin.json"));
@@ -96,7 +93,7 @@ public class LobbyScreen implements Screen {
 
         rootTable.pad(30f);
         rootTable.setFillParent(true);
-        rootTable.setBackground(new TextureRegionDrawable(new TextureRegion(new Texture("bgLobby.png"))));
+        rootTable.setBackground(new TextureRegionDrawable(new TextureRegion(new Texture("bgScreens.png"))));
 
         //adding the top label of this screen
         Texture lobbyLabelTexture = new Texture("topLabelLobby.png");
@@ -109,7 +106,7 @@ public class LobbyScreen implements Screen {
 
     public void initializeScrollPane() {
         scrollPaneTable = new Table();
-        scrollPaneTable.setBackground(new TextureRegionDrawable(new TextureRegion(new Texture("bgLobby.png"))));
+        scrollPaneTable.setBackground(new TextureRegionDrawable(new TextureRegion(new Texture("bgScreens.png"))));
         scrollPaneTable.defaults().expandX();
         scrollPaneTable.center().top();
         //scrollPaneTable.setDebug(true);
@@ -129,7 +126,7 @@ public class LobbyScreen implements Screen {
 
 
     private GameTableDataStructure newGameToList(GameModel game) {
-        GameTableDataStructure newGameTableDataStructure = new GameTableDataStructure(scrollPaneTable, game, gillsansFont, app, this);
+        GameTableDataStructure newGameTableDataStructure = new GameTableDataStructure(scrollPaneTable, game, app.getGillsansFont(), app, this);
 
 
         Table gameTable = newGameTableDataStructure.parentTable;

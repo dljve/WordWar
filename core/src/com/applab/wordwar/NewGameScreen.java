@@ -96,7 +96,7 @@ public class NewGameScreen implements Screen {
 
         rootTable.setFillParent(true);
 
-        rootTable.setBackground(new TextureRegionDrawable(new TextureRegion(new Texture("bgLobby.png"))));
+        rootTable.setBackground(new TextureRegionDrawable(new TextureRegion(new Texture("bgScreens.png"))));
 
         // rootTable.debug();
 
@@ -104,6 +104,16 @@ public class NewGameScreen implements Screen {
         Texture lobbyLabelTexture = new Texture("newGameLabelLobby.png");
         TextureRegion lobbyLabelRegion = new TextureRegion(lobbyLabelTexture);
         Image lobbyLabelImage = new Image(lobbyLabelRegion);
+
+
+        lobbyLabelImage.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                app.setScreen(new LobbyScreen(app));
+                dispose();
+            }
+        });
+
         rootTable.add(lobbyLabelImage).width(app.deviceWidth).height(2 * MainClass.HEIGHT_DISTANCE_UNIT).padBottom(MainClass.HEIGHT_DISTANCE_UNIT).align(Align.top);
         rootTable.row();
 
@@ -111,11 +121,11 @@ public class NewGameScreen implements Screen {
         Texture infoTexture = new Texture("infoNewGame.png");
         TextureRegion infoTextureRegion = new TextureRegion(infoTexture);
         Image infoImage = new Image(infoTextureRegion);
-        rootTable.add(infoImage).width(app.deviceWidth).height(3 * MainClass.HEIGHT_DISTANCE_UNIT).padBottom(MainClass.HEIGHT_DISTANCE_UNIT);
+        rootTable.add(infoImage).width(2 * app.deviceWidth / 3).height(3 * MainClass.HEIGHT_DISTANCE_UNIT).padBottom(MainClass.HEIGHT_DISTANCE_UNIT);
         rootTable.row();
 
         createWordlistTable();
-        createNumberOfPlayersTable();
+        //createNumberOfPlayersTable();
         createGameButton();
 
     }
@@ -150,7 +160,7 @@ public class NewGameScreen implements Screen {
         smallTable.add(wordlistSelectBox).expandX().fill().padBottom(MainClass.HEIGHT_DISTANCE_UNIT / 5);
         smallTable.row();
 
-        rootTable.add(smallTable).height(3 * MainClass.HEIGHT_DISTANCE_UNIT).padBottom(MainClass.HEIGHT_DISTANCE_UNIT);
+        rootTable.add(smallTable).height(3 * MainClass.HEIGHT_DISTANCE_UNIT).padBottom(5 * MainClass.HEIGHT_DISTANCE_UNIT );
         rootTable.row();
     }
 
@@ -210,8 +220,11 @@ public class NewGameScreen implements Screen {
        */
 
                 final Dialog myDialog = new Dialog("Waiting for the other players...", skin);
+                myDialog.setScale(1.3f);
+
 
                 myDialog.text("The new game was created, \n please wait for the players to join :)");
+
                 TextButton cancelButton = new TextButton("Cancel", skin);
                 cancelButton.addListener(new ClickListener() {
                     @Override
