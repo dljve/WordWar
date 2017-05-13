@@ -1,10 +1,10 @@
-.idea/
-android/android.iml
-core/core.iml
+*.iml
+# android/android.iml	# Not caught by *.iml for some reason
+.gradle
 local.properties
-wordwar.iml
-.gradle/
-android/build
+.idea/
 android/libs
-build/
-core/build
+.DS_Store
+build
+captures
+.externalNativeBuild
