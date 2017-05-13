@@ -1,0 +1,10 @@
+.idea/
+android/android.iml
+core/core.iml
+local.properties
+wordwar.iml
+.gradle/
+android/build
+android/libs
+build/
+core/build
