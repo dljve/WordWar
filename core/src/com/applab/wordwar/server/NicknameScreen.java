@@ -1,5 +1,6 @@
 package com.applab.wordwar.server;
 
+import com.applab.wordwar.LobbyScreen;
 import com.applab.wordwar.MainClass;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -10,7 +11,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -18,6 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -34,6 +38,7 @@ public class NicknameScreen implements Screen {
     private Skin skin;
     private TextField nicknameTextField;
     private Button imageButton;
+    private Dialog myDialog;
 
     public NicknameScreen(MainClass app){
         this.app = app;
@@ -78,15 +83,32 @@ public class NicknameScreen implements Screen {
         Table smallTable = new Table();
         //smallTable.debug();
 
+
         smallTable.setBackground(new TextureRegionDrawable(new TextureRegion(new Texture("bgMiniTabel.png"))));
 
         Texture nextButtonTexture = new Texture("nextImg.jpg");
         TextureRegion nextButtonRegion = new TextureRegion(nextButtonTexture);
         Image nextImage = new Image(nextButtonRegion);
 
+        initializeDialog();
+
         imageButton = new Button(nextImage,skin);
+        imageButton.addListener(new ClickListener(){
 
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+                String playerName = "";
+                playerName = nicknameTextField.getText();
+                if (playerName.length() == 0){
+                    myDialog.show(stage);
+                    //Gdx.input.setOnscreenKeyboardVisible(false);
+                }else{
+                    app.setScreen(new LobbyScreen(app));
+                    dispose();
+                }
 
+            }
+        });
 
         TextField.TextFieldStyle textFieldStyle = skin.get(TextField.TextFieldStyle.class);
         textFieldStyle.font.getData().setScale(2f);
@@ -100,6 +122,28 @@ public class NicknameScreen implements Screen {
         smallTable.add(nicknameTextField).expandX().fillX().pad(20);
 
         smallTable.add(imageButton).pad(20);
+    }
+
+    private void initializeDialog() {
+        myDialog = new Dialog("No name picked :( !", skin);
+        myDialog.setScale(1.3f);
+
+
+        myDialog.text("Please type a name \n and then hit next :) ");
+
+        TextButton cancelButton = new TextButton("Cancel", skin);
+        cancelButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                myDialog.cancel();
+            }
+        });
+
+        myDialog.button(cancelButton);
+
+        myDialog.getStyle().background.setMinWidth(2 / 3 * app.deviceWidth);
+        myDialog.getStyle().background.setMinHeight(2 * MainClass.HEIGHT_DISTANCE_UNIT);
+
     }
 
 

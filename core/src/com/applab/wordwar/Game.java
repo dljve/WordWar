@@ -280,8 +280,11 @@ public class Game implements Screen {
 
 	private void correctFeedback() {
 		Item item = items.get(activeTile);
-		if (item.isNovel())
+		if (item.isNovel()) {
+			answer = "";
 			item.setNovel(false);
+			firstKeyPressed = false;
+		}
 		captureTile(activeTile);
 
 		// End the trial only after the feedback

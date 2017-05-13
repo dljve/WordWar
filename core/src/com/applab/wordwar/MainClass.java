@@ -37,15 +37,18 @@ public class MainClass extends Game  {
 		splashScreenDisplayTime = 10000l;
 		HEIGHT_DISTANCE_UNIT = deviceHeight / 18;
 
+
 		try {
 			// 172.20.10.2
-			client = new TempRivialClient("192.168.43.107", 8888); //8888
+			client = new TempRivialClient("192.168.0.105", 8888); //8888
 			(new Thread(client)).start();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		setScreen(new NewGameScreen(this));
+
+		//setScreen(new NewGameScreen(this));
+		setScreen(new NicknameScreen(this));
 	}
 
 	public BitmapFont getGillsansFont() {
