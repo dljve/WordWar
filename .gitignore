@@ -1,5 +1,5 @@
 *.iml
-# android/android.iml	# Not caught by *.iml for some reason
+android/android.iml	# Not caught by *.iml for some reason
 .gradle
 local.properties
 .idea/
