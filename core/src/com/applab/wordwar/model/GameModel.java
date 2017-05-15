@@ -33,6 +33,10 @@ public class GameModel implements Serializable {
         for (int i = 0; i < words.getItemCount(); i++) {
             map.add(new GameTile(words.getItem(i), i));
         }
+
+
+
+
     }
 
     public boolean addPlayer(Player player) {
@@ -48,8 +52,8 @@ public class GameModel implements Serializable {
             player.initializeSlimStampen(itemSet, false,
                     BigDecimal.valueOf(15),
                     BigDecimal.valueOf(0.25),
-                    BigDecimal.valueOf(0.5), // time to read tile + wait for keyboard + press first key
-                    BigDecimal.valueOf(0.8),
+                    BigDecimal.valueOf(0.3), // time to read tile + wait for keyboard + press first key
+                    BigDecimal.valueOf(0.7),
                     BigDecimal.valueOf(-0.5));
         }
         return false;
