@@ -281,25 +281,36 @@ public class Game implements Screen {
 
 	private void correctFeedback() {
 		Item item = items.get(activeTile);
+
 		if (item.isNovel()) {
+			// For a study trial, stay for the test trial
 			answer = "";
 			item.setNovel(false);
 			firstKeyPressed = false;
+			startTrial(); // Start the test trial
+		} else {
+			// Feedback text
+			helpColor = new Color(0f,1f,0f,0.5f);
+			helpText = "Correct!";
+
+			// End the trial only after the feedback
+			Timer.schedule(new Timer.Task(){
+				@Override
+				public void run() {
+					endTrial();
+					updateFrontier();
+				}
+			}, CORRECT_FEEDBACK_TIME);
+			captureTile(activeTile);
 		}
-		captureTile(activeTile);
-
-		// End the trial only after the feedback
-		Timer.schedule(new Timer.Task(){
-			@Override
-			public void run() {
-				endTrial();
-				updateFrontier();
-			}
-		}, CORRECT_FEEDBACK_TIME);
-
 	}
 	private void incorrectFeedback() {
 		answer = items.get(activeTile).getTranslation();
+		Gdx.input.setOnscreenKeyboardVisible(false);
+
+		// Feedback text
+		helpColor = new Color(1f,0f,0f,0.5f);
+		helpText = "Incorrect!";
 
 		Timer.schedule(new Timer.Task(){
 			@Override
@@ -516,7 +527,6 @@ public class Game implements Screen {
 		helpLabel.setVisible(true);
 		helpText = (activeItem.isNovel()) ? "Study Trial" : "Rehearsal";
 
-
 	}
 
 	/**
@@ -533,6 +543,8 @@ public class Game implements Screen {
 		cam.zoom = prevZoom;
 		cam.position.set(prevPos);
 		scoreBoard.setVisible(true);
+		helpLabel.setVisible(false);
+		helpColor = new Color(0f,0f,0f,0.5f);
 		firstKeyPressed = false;
 
 		// TODO: Study trial should immediately follow a test trial

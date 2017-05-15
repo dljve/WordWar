@@ -3,6 +3,7 @@ package com.applab.wordwar.server;
 
 import com.applab.wordwar.Game;
 import com.applab.wordwar.model.GameModel;
+import com.applab.wordwar.model.GameTile;
 import com.applab.wordwar.model.Item;
 import com.applab.wordwar.model.Player;
 import com.applab.wordwar.model.SlimStampen;
@@ -89,7 +90,7 @@ public class RivialServer implements Runnable{
         return getGameWithID(game).isEndGame();
     }
 
-    private GameModel getGameWithID(int gameID) throws GameNotFoundException{
+    public GameModel getGameWithID(int gameID) throws GameNotFoundException{
         for(GameModel game : games){
             if(game.getId() == gameID){
                 return game;
@@ -157,8 +158,32 @@ public class RivialServer implements Runnable{
     }
 
     // Slimstampen functions
-    public Trial handleTrialRequest(int gameId, int playerId) throws GameNotFoundException, PlayerNotFoundException {
-        return this.getGameWithID(gameId).getNextTrial(playerId);
+    public ArrayList<GameTile> handleTrialRequest(int gameId, int playerId) throws GameNotFoundException, PlayerNotFoundException {
+        GameModel game = this.getGameWithID(gameId);
+        ArrayList<Item> forgotten = game.getNextTrial(playerId);
+        ArrayList<GameTile> newlyForgotten = new ArrayList<GameTile>();
+        int color = this.getPlayerWithId(playerId).getColor();
+        for(Item item: forgotten){
+            for(GameTile tile: game.getMap()){
+                if(item.equals(tile.getItem())){
+                    // Check if we new it was forgotten
+                    boolean tileIsOwned;
+                    switch (color){
+                        case Player.BLUE : tileIsOwned = tile.isOwnedByBlue();
+                            break;
+                        case Player.RED: tileIsOwned = tile.isOwnedByRed();
+                            break;
+                        case Player.YELLOW: tileIsOwned = tile.isOwnedByYellow();
+                            break;
+                        default: tileIsOwned = false;
+                    }
+                    if(tileIsOwned){
+                        newlyForgotten.add(tile);
+                    }
+                }
+            }
+        }
+        return  newlyForgotten;
     }
 
     public void handlePracticeEvent(int gameId, int playerId, Item item, long timestamp) throws GameNotFoundException, PlayerNotFoundException{

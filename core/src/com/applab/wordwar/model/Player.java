@@ -32,8 +32,8 @@ public class Player implements Serializable{
         this.learningModel = new SlimStampen(itemSet, randomNovel, n, c, f, F, threshold);
     }
 
-    public Trial getNextTrial(){
-        return learningModel.nextTrial();
+    public ArrayList<Item> getNextTrial(){
+        return learningModel.getForgottenTrials();
     }
 
     public void practiceEvent(Item item, long timestamp){
