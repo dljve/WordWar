@@ -220,6 +220,7 @@ public class Game implements Screen {
 		helpLabel.setVisible(true);
 		helpText = "Click a tile";
 		helpColor = new Color(1f,0f,0f,0.8f);
+		helpLabel.setVisible(false);
 		HUD.addActor(helpLabel);
 
 		// Input Processors
@@ -511,6 +512,11 @@ public class Game implements Screen {
 			// (test trial) Time when the event starts
 			app.getClient().sendPracticeEventMessage(items.get(activeTile), System.currentTimeMillis());
 		}
+
+		helpLabel.setVisible(true);
+		helpText = (activeItem.isNovel()) ? "Study Trial" : "Rehearsal";
+
+
 	}
 
 	/**

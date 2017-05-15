@@ -40,7 +40,7 @@ public class MainClass extends Game  {
 
 		try {
 			// 172.20.10.2
-			client = new TempRivialClient("192.168.0.105", 8888); //8888
+			client = new TempRivialClient("192.168.43.47", 8888); //8888
 			(new Thread(client)).start();
 		} catch (IOException e) {
 			e.printStackTrace();
