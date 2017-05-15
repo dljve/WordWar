@@ -127,7 +127,7 @@ public class GameModel implements Serializable {
         throw new PlayerNotFoundException();
     }
 
-    public Trial getNextTrial(int playerId) throws PlayerNotFoundException{
+    public ArrayList<Item> getNextTrial(int playerId) throws PlayerNotFoundException{
         return this.getPlayerById(playerId).getNextTrial();
     }
 

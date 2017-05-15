@@ -87,6 +87,23 @@ public class SlimStampen {
         }
     }
 
+    public ArrayList<Item> getForgottenTrials() {
+        ArrayList<Item> forgotten = new ArrayList<Item>();
+
+        BigDecimal T = getTime();
+        for (int i = 0; i < presentationSet.size(); i++) {
+            Item item = presentationSet.get(i);
+            BigDecimal m_item = m(item, T); // Get activation value at current time
+            // Negative infinity or below threshold
+            if (m_item != null ) {
+                if (m_item.compareTo(threshold) < 0) {
+                    forgotten.add(item);
+                }
+            }
+        }
+        return forgotten;
+    }
+
     /**
      * Returns the next trial the user should attempt
      * See also Figure 2.5 in Nijboer (2011)
@@ -322,5 +339,6 @@ public class SlimStampen {
         System.out.println("RT: " + strRT  + " ");
         System.out.println("a: " + stra  + " ");
     }
+
 
 }
