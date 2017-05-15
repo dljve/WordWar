@@ -36,6 +36,7 @@ public class AIModel implements Runnable{
     }
 
     private void makeMove(){
+        // TODO call slimstampen etc!
         ArrayList<GameTile>  possibleTiles = this.getFrontier();
         GameTile tile = possibleTiles.get(randomGenerator.nextInt(possibleTiles.size()));
         client.captureTile(tile.getId());
