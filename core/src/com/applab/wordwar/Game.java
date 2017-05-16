@@ -567,7 +567,7 @@ public class Game implements Screen {
 		cam.update();
 		batch.setProjectionMatrix(cam.combined);
 		batch.begin();
-		//batch.draw(bg, (WORLD_WIDTH-bg.getWidth())/2, (WORLD_HEIGHT-bg.getHeight())/2 );
+		batch.draw(bg, (WORLD_WIDTH-bg.getWidth())/2, (WORLD_HEIGHT-bg.getHeight())/2 );
 
 		if(app.getClient().stateChanged()) {
 			getBoardState();
