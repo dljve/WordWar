@@ -90,8 +90,7 @@ public class AIModel implements Runnable{
     }
 
     private ArrayList<GameTile> getFrontier(){
-// TODO       return client.getGameModel().getFrontier(client.getPlayer().getColor());
-        return new ArrayList<GameTile>();
+        return client.getGameModel().getFrontier(client.getPlayer().getColor());
     }
 
     public int createGame(){
