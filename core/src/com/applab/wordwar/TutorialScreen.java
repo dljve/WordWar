@@ -135,7 +135,7 @@ public class TutorialScreen implements Screen {
 
         rootTable.setBackground(new TextureRegionDrawable(new TextureRegion(new Texture("bgScreens.png"))));
 
-        
+
         Texture labelTutorialTexture = new Texture("wordWarTutorial.png");
         TextureRegion labelTutReg = new TextureRegion(labelTutorialTexture);
         Image labelImgTut = new Image(labelTutReg);
