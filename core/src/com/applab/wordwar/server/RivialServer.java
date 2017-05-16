@@ -2,6 +2,7 @@ package com.applab.wordwar.server;
 // How to get the server running seperately: https://docs.oracle.com/javase/tutorial/networking/sockets/clientServer.html
 
 import com.applab.wordwar.Game;
+import com.applab.wordwar.ai.AIModel;
 import com.applab.wordwar.model.GameModel;
 import com.applab.wordwar.model.GameTile;
 import com.applab.wordwar.model.Item;
@@ -148,11 +149,24 @@ public class RivialServer implements Runnable{
     public static void main(String[] args) throws IOException {
         String filename = "C:\\Users\\dljva\\Desktop\\App-lab\\swahili-english.txt"; // Also change at clientside
         int port = 8888;
+        String ip = "localhost"; // TODO, set proper ip adress
         System.out.println(port);
         try {
             RivialServer server = new RivialServer(port, filename );
             (new Thread(server)).start();
+            AIModel ai1 = new AIModel(ip, port);
+            AIModel ai2 = new AIModel(ip, port);
+            int gameid = ai1.createGame();
+            ai2.joinGame(gameid);
+            boolean gameStarted = false;
+            while(!gameStarted){
+                gameStarted = server.getPlayers(gameid).size() == 3;
+            }
+            ai1.startGame();
+            ai2.startGame();
         }catch (IOException e){
+            e.printStackTrace();
+        } catch (GameNotFoundException e) {
             e.printStackTrace();
         }
     }

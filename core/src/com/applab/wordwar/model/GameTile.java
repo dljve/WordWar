@@ -57,4 +57,13 @@ public class GameTile implements Serializable{
     public void setOwnedByYellow(boolean ownedByYellow) {
         this.ownedByYellow = ownedByYellow;
     }
+
+    public boolean isOwnedBy(int color) {
+        switch (color){
+            case Player.BLUE: return isOwnedByBlue();
+            case Player.RED: return isOwnedByRed();
+            case Player.YELLOW: return isOwnedByYellow();
+            default: return false;
+        }
+    }
 }
