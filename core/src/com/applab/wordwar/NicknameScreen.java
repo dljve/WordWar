@@ -1,4 +1,4 @@
-package com.applab.wordwar.server;
+package com.applab.wordwar;
 
 import com.applab.wordwar.LobbyScreen;
 import com.applab.wordwar.MainClass;

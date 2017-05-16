@@ -1,6 +1,6 @@
 package com.applab.wordwar;
 
-import com.applab.wordwar.server.NicknameScreen;
+import com.applab.wordwar.NicknameScreen;
 import com.applab.wordwar.server.TempRivialClient;
 import com.applab.wordwar.server.handlers.RivialHandler;
 import com.badlogic.gdx.Game;
@@ -48,7 +48,7 @@ public class MainClass extends Game  {
 
 
 		//setScreen(new NewGameScreen(this));
-		setScreen(new NicknameScreen(this));
+		setScreen(new TutorialScreen(this));
 	}
 
 	public BitmapFont getGillsansFont() {
