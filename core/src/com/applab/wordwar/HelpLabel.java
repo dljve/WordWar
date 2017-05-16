@@ -1,6 +1,5 @@
 package com.applab.wordwar;
 
-import com.applab.wordwar.model.Player;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -10,15 +9,10 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-
 public class HelpLabel extends Actor {
 
     private Game game;
     private ShapeRenderer renderer = new ShapeRenderer();
-    private Color background = new Color(0,0,0,0.5f);
     private BitmapFont gillsans;
 
     public HelpLabel(Game game) {
@@ -40,7 +34,7 @@ public class HelpLabel extends Actor {
         renderer.translate(getX(), getY(), 0);
 
         renderer.begin(ShapeRenderer.ShapeType.Filled);
-        renderer.setColor(background);
+        renderer.setColor(game.helpColor);
         renderer.rect(0, 0, getWidth(), getHeight());
         renderer.end();
 
@@ -51,7 +45,7 @@ public class HelpLabel extends Actor {
         GlyphLayout textGlyph = new GlyphLayout(gillsans, game.helpText);
         gillsans.draw(batch, game.helpText,
                 getX()+(getWidth()-textGlyph.width)/2,
-                getY()-(getHeight()-textGlyph.height)/2);
+                getY()+(getHeight()+textGlyph.height)/2);
 
 
     }

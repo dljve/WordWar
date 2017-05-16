@@ -2,7 +2,9 @@ package com.applab.wordwar.server;
 // How to get the server running seperately: https://docs.oracle.com/javase/tutorial/networking/sockets/clientServer.html
 
 import com.applab.wordwar.Game;
+import com.applab.wordwar.ai.AIModel;
 import com.applab.wordwar.model.GameModel;
+import com.applab.wordwar.model.GameTile;
 import com.applab.wordwar.model.Item;
 import com.applab.wordwar.model.Player;
 import com.applab.wordwar.model.SlimStampen;
@@ -89,7 +91,7 @@ public class RivialServer implements Runnable{
         return getGameWithID(game).isEndGame();
     }
 
-    private GameModel getGameWithID(int gameID) throws GameNotFoundException{
+    public GameModel getGameWithID(int gameID) throws GameNotFoundException{
         for(GameModel game : games){
             if(game.getId() == gameID){
                 return game;
@@ -147,18 +149,55 @@ public class RivialServer implements Runnable{
     public static void main(String[] args) throws IOException {
         String filename = "C:\\Users\\dljva\\Desktop\\App-lab\\swahili-english.txt"; // Also change at clientside
         int port = 8888;
+        String ip = "localhost"; // TODO, set proper ip adress
         System.out.println(port);
         try {
             RivialServer server = new RivialServer(port, filename );
             (new Thread(server)).start();
+            AIModel ai1 = new AIModel(ip, port);
+            AIModel ai2 = new AIModel(ip, port);
+            int gameid = ai1.createGame();
+            ai2.joinGame(gameid);
+            boolean gameStarted = false;
+            while(!gameStarted){
+                gameStarted = server.getPlayers(gameid).size() == 3;
+            }
+            ai1.startGame();
+            ai2.startGame();
         }catch (IOException e){
+            e.printStackTrace();
+        } catch (GameNotFoundException e) {
             e.printStackTrace();
         }
     }
 
     // Slimstampen functions
-    public Trial handleTrialRequest(int gameId, int playerId) throws GameNotFoundException, PlayerNotFoundException {
-        return this.getGameWithID(gameId).getNextTrial(playerId);
+    public ArrayList<GameTile> handleTrialRequest(int gameId, int playerId) throws GameNotFoundException, PlayerNotFoundException {
+        GameModel game = this.getGameWithID(gameId);
+        ArrayList<Item> forgotten = game.getNextTrial(playerId);
+        ArrayList<GameTile> newlyForgotten = new ArrayList<GameTile>();
+        int color = this.getPlayerWithId(playerId).getColor();
+        for(Item item: forgotten){
+            for(GameTile tile: game.getMap()){
+                if(item.equals(tile.getItem())){
+                    // Check if we new it was forgotten
+                    boolean tileIsOwned;
+                    switch (color){
+                        case Player.BLUE : tileIsOwned = tile.isOwnedByBlue();
+                            break;
+                        case Player.RED: tileIsOwned = tile.isOwnedByRed();
+                            break;
+                        case Player.YELLOW: tileIsOwned = tile.isOwnedByYellow();
+                            break;
+                        default: tileIsOwned = false;
+                    }
+                    if(tileIsOwned){
+                        newlyForgotten.add(tile);
+                    }
+                }
+            }
+        }
+        return  newlyForgotten;
     }
 
     public void handlePracticeEvent(int gameId, int playerId, Item item, long timestamp) throws GameNotFoundException, PlayerNotFoundException{
