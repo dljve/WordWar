@@ -106,7 +106,9 @@ public class TutorialScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (currentTexture == 2){
-                    currentTexture = 0;
+                    //when the user is watching the third tutorial photo and hits right it will be redirected to the screen where he has to pick a name
+                    app.setScreen(new NicknameScreen(app));
+                    dispose();
                 }else{
                     currentTexture++;
                 }
