@@ -28,7 +28,8 @@ public class AIModel implements Runnable{
     Random randomGenerator = new Random(945933);
     ArrayList<Item> memory;
 
-    public AIModel(String ip, int port){
+    public AIModel(String ip, int port){ // "192.168.43.47", 8888;
+
         this.meanResponseTime = 1200;
         this.stdResponseTime = 250;
         this.meanBetweenTrialTime = 5000;
@@ -39,9 +40,11 @@ public class AIModel implements Runnable{
         this.memory = new ArrayList<Item>();
         try {
             this.client = new TempRivialClient(ip, port);
+            (new Thread(client)).start();
         } catch (IOException e){
             e.printStackTrace();
         }
+        // TODO Set nickname!
     }
 
     private long randomTime(long mean, long std){
@@ -91,27 +94,57 @@ public class AIModel implements Runnable{
         return new ArrayList<GameTile>();
     }
 
-    public void CreateGame(){
+    public int createGame(){
         client.createGame();
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                boolean gameNotCreated = true;
+                while(gameNotCreated) {
+                    gameNotCreated = (client.getGameModel() == null);
+                }
+            }
+        });
+        t.start();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return client.getGameModel().getId();
     }
 
     public void joinRandomGame(){
         client.getGames();
-        // TODO Wait for the games to return
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                boolean gamesReceived = false;
+                while(!gamesReceived){
+                    gamesReceived = client.getGamesToJoin() == null;
+                }
+            }
+        });
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         ArrayList<GameModel> games = client.getGamesToJoin();
         client.joinGame(games.get(randomGenerator.nextInt(games.size())).getId());
 
+    }
+
+    public void joinGame(int gameid){
+        client.joinGame(gameid);
     }
 
     public Thread startGame(){
         Thread thread = new Thread(this);
         thread.start();
         return thread;
-    }
-
-    private void updateGameSate(){
-        client.requestGameState(client.getGameModel().getId());
-        // TODO wait for gamestate to arrive
     }
 
     @Override
@@ -121,7 +154,6 @@ public class AIModel implements Runnable{
         while(running){
             long now = System.currentTimeMillis();
             if(!client.getGameModel().canAddPlayer()) { //Start playing when 3 players are there!
-                this.updateGameSate();
                 if (now - previousTime > this.randomBetweenTrialTime()) {
                     this.makeMove();
                 }
