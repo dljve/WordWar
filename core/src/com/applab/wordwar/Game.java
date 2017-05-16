@@ -238,45 +238,6 @@ public class Game implements Screen {
 		getBoardState();
 		assignWordsToTiles();
 		updateFrontier();
-
-		Gdx.app.log("matrix", "test");
-
-		int[][] neighbors = new int[58][58];
-
-		for (int i = 0; i < tiles.size(); i++) {
-			Rectangle tile = tiles.get(i);
-
-			for (int j = 0; j < tiles.size(); j++) {
-				Rectangle neighbor = tiles.get(j);
-
-				if (	tile.x + TILE_WIDTH == neighbor.x && tile.y == neighbor.y ||
-						tile.x - TILE_WIDTH == neighbor.x && tile.y == neighbor.y ||
-						(tile.x + TILE_WIDTH/2 == neighbor.x || tile.x - TILE_WIDTH/2 == neighbor.x) &&
-								(tile.y + TILE_HEIGHT == neighbor.y || tile.y - TILE_HEIGHT == neighbor.y)
-						)
-				{
-					neighbors[i][j] = 1;
-
-				} else {
-					neighbors[i][j] = 0;
-				}
-			}
-		}
-
-		Gdx.app.log("matrix", "test");
-
-		String str = "[";
-		for (int row = 0; row < 58; row++) {
-			str += "[";
-			for (int col = 0; col < 58; col++) {
-				str += String.valueOf(neighbors[row][col]);
-				if (col != 57) str += ",";
-			}
-			str += "]";
-			if (row != 57) str += ",";
-		}
-		str += "]";
-		Gdx.app.log("matrix", str);
 	}
 
 	public void getBoardState() {
@@ -606,7 +567,7 @@ public class Game implements Screen {
 		cam.update();
 		batch.setProjectionMatrix(cam.combined);
 		batch.begin();
-		batch.draw(bg, (WORLD_WIDTH-bg.getWidth())/2, (WORLD_HEIGHT-bg.getHeight())/2 );
+		//batch.draw(bg, (WORLD_WIDTH-bg.getWidth())/2, (WORLD_HEIGHT-bg.getHeight())/2 );
 
 		if(app.getClient().stateChanged()) {
 			getBoardState();
