@@ -14,6 +14,8 @@ public class HelpLabel extends Actor {
     private Game game;
     private ShapeRenderer renderer = new ShapeRenderer();
     private BitmapFont gillsans;
+    private Color background;
+    private String text;
 
     public HelpLabel(Game game) {
         this.game = game;
@@ -21,6 +23,13 @@ public class HelpLabel extends Actor {
         gillsans = new BitmapFont(Gdx.files.internal("gillsans72.fnt"), false);
         gillsans.getData().setScale(1f);
         gillsans.setColor(Color.WHITE);
+        text = "Long press a tile";
+        background = new Color(0f,0f,0f,0.8f);
+    }
+
+    public void setLabel(String message, Color color) {
+        text = message;
+        background = color;
     }
 
     @Override
@@ -34,7 +43,7 @@ public class HelpLabel extends Actor {
         renderer.translate(getX(), getY(), 0);
 
         renderer.begin(ShapeRenderer.ShapeType.Filled);
-        renderer.setColor(game.helpColor);
+        renderer.setColor(background);
         renderer.rect(0, 0, getWidth(), getHeight());
         renderer.end();
 
@@ -42,8 +51,8 @@ public class HelpLabel extends Actor {
 
         batch.begin();
 
-        GlyphLayout textGlyph = new GlyphLayout(gillsans, game.helpText);
-        gillsans.draw(batch, game.helpText,
+        GlyphLayout textGlyph = new GlyphLayout(gillsans, text);
+        gillsans.draw(batch, text,
                 getX()+(getWidth()-textGlyph.width)/2,
                 getY()+(getHeight()+textGlyph.height)/2);
 

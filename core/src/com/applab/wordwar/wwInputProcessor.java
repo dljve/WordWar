@@ -1,7 +1,6 @@
 package com.applab.wordwar;
 
 import com.applab.wordwar.model.Item;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 
@@ -33,15 +32,13 @@ public class wwInputProcessor implements InputProcessor {
         }
 
         public boolean keyTyped (char character) {
+            // Only allow letters and space
             if (character == ' ' || 'A' <= character && character <= 'Z' || 'a' <= character && character <= 'z') {
                 game.setAnswer(game.getAnswer() + character);
 
                 // On test: Key press, measure second time point and reaction time
                 boolean isTestTrial = game.items.get(game.activeTile).isNovel();
-                Gdx.app.log("INFO", String.valueOf(game.firstKeyPressed) );
-                Gdx.app.log("INFO", String.valueOf(isTestTrial) );
                 if (!game.firstKeyPressed && !isTestTrial) {
-                    Gdx.app.log("INFO", "update model");
                     Item item = game.items.get(game.activeTile);
                     game.getApp().getClient().sendUpdateModelMessage(item, System.currentTimeMillis());
                     game.firstKeyPressed = true;

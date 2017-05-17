@@ -102,8 +102,6 @@ public class Game implements Screen {
 	private long endTime = 0;
 	protected Rectangle activeTile = null; // The tile active during a trial
 	private MainClass app;
-	protected String helpText;
-	protected Color helpColor;
 
 	public int[] getScores() {
 		return scores;
@@ -218,8 +216,6 @@ public class Game implements Screen {
 		helpLabel.setSize(w, 0.1f * h);
 		helpLabel.setPosition(0, h - helpLabel.getHeight());
 		helpLabel.setVisible(true);
-		helpText = "Click a tile";
-		helpColor = new Color(0f,0f,0f,0.8f);
 		helpLabel.setVisible(false);
 		HUD.addActor(helpLabel);
 
@@ -274,8 +270,11 @@ public class Game implements Screen {
 		if (answer.equals(item.getTranslation())) {
 			correctFeedback();
 		} else {
-			if (!item.isNovel())
+			if (!item.isNovel()) {
 				incorrectFeedback();
+			} else {
+				((HelpLabel)helpLabel).setLabel("Incorrect!", new Color(1f,0f,0f,0.5f));
+			}
 		}
 	}
 
@@ -290,8 +289,7 @@ public class Game implements Screen {
 			startTrial(false); // Start the test trial
 		} else {
 			// Feedback text
-			helpColor = new Color(0f,1f,0f,0.5f);
-			helpText = "Correct!";
+			((HelpLabel)helpLabel).setLabel("Correct!", new Color(0f,1f,0f,0.5f));
 
 			// End the trial only after the feedback
 			Timer.schedule(new Timer.Task(){
@@ -309,8 +307,7 @@ public class Game implements Screen {
 		Gdx.input.setOnscreenKeyboardVisible(false);
 
 		// Feedback text
-		helpColor = new Color(1f,0f,0f,0.5f);
-		helpText = "Incorrect!";
+		((HelpLabel)helpLabel).setLabel("Incorrect!", new Color(1f,0f,0f,0.5f));
 
 		Timer.schedule(new Timer.Task(){
 			@Override
@@ -528,9 +525,8 @@ public class Game implements Screen {
 		}
 
 		helpLabel.setVisible(true);
-		helpColor = new Color(0f,0f,0f,0.5f);
-		helpText = (activeItem.isNovel()) ? "Study Trial" : "Rehearsal";
-
+		String message = (activeItem.isNovel()) ? "Study Trial" : "Rehearsal";
+		((HelpLabel)helpLabel).setLabel(message, new Color(0f,0f,0f,0.5f));
 	}
 
 	/**
@@ -548,7 +544,7 @@ public class Game implements Screen {
 		cam.position.set(prevPos);
 		scoreBoard.setVisible(true);
 		helpLabel.setVisible(false);
-		helpColor = new Color(0f,0f,0f,0.5f);
+		((HelpLabel)helpLabel).setLabel("", new Color(0f,0f,0f,0.5f));
 		firstKeyPressed = false;
 
 		// TODO: Study trial should immediately follow a test trial
