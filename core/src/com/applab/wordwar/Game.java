@@ -287,7 +287,7 @@ public class Game implements Screen {
 			answer = "";
 			item.setNovel(false);
 			firstKeyPressed = false;
-			startTrial(); // Start the test trial
+			startTrial(false); // Start the test trial
 		} else {
 			// Feedback text
 			helpColor = new Color(0f,1f,0f,0.5f);
@@ -494,13 +494,15 @@ public class Game implements Screen {
 		updateColor(activeTile);
 	}
 
-	public void startTrial() {
+	public void startTrial(boolean savePosZoom) {
 		inTrial = true;
 		scoreBoard.setVisible(false);
 
 		// Center on trial tile and zoom in
-		prevPos = cam.position;
-		prevZoom = cam.zoom;
+		if (savePosZoom) {
+			prevPos = cam.position;
+			prevZoom = cam.zoom;
+		}
 		cam.position.set(activeTile.x + TILE_SIZE / 2, activeTile.y + 32, 0);
 		cam.zoom = 0.4f;
 

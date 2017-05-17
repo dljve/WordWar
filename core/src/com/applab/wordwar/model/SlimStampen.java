@@ -224,8 +224,15 @@ public class SlimStampen {
         m = (m==null) ? BigDecimal.ZERO : BigDecimalMath.exp(m); // exp.
 
         // Calculate the decay (2.9)
-        BigDecimal decay = BigDecimalMath.log( BigDecimalMath.exp(m_obs).subtract(m) )
-                .divide( BigDecimalMath.log( T.subtract(t.get(i).get(J)) ), mc).negate();
+        BigDecimal decay;
+        try {
+            decay = BigDecimalMath.log( BigDecimalMath.exp(m_obs).subtract(m) )
+                    .divide( BigDecimalMath.log( T.subtract(t.get(i).get(J)) ), mc).negate();
+        } catch (ArithmeticException e) {
+            // TODO: debug this. Sometimes due to negative log in nominator, else div by zero in denominator
+            decay = BigDecimal.valueOf(0.5);
+        }
+
 
         // Alpha optimization
         // See Figure 2.2 in Van Thiel (2010) for a flowchart of the basic process

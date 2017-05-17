@@ -47,7 +47,7 @@ public class wwGestureListener implements GestureDetector.GestureListener{
             if ( tile.contains(worldCoords.x,worldCoords.y) &&
                     game.frontier.contains(tile) && !game.isBaseTile(tile) ) {
                 game.activeTile = tile;
-                game.startTrial();
+                game.startTrial(true);
                 break;
             }
         }
