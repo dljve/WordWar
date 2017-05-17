@@ -69,7 +69,7 @@ public class Game implements Screen {
 				new Color(0.12f, 0.62f, 0.12f, BOARD_OPACITY)	// Player 0 & 2
 			},
 			new Color[] {
-				new Color(0.29f, 0.00f, 0.51f, BOARD_OPACITY),	// Player 0 & 1
+				new Color(0.35f, 0.00f, 0.64f, BOARD_OPACITY),	// Player 0 & 1
 				new Color(0.47f, 0.30f, 0.07f, BOARD_OPACITY)	// Player 0 & 1 & 2
 			}
 		}
