@@ -101,8 +101,9 @@ public class NicknameScreen implements Screen {
                 playerName = nicknameTextField.getText();
                 if (playerName.length() == 0){
                     myDialog.show(stage);
-                    //Gdx.input.setOnscreenKeyboardVisible(false);
+
                 }else{
+                    Gdx.input.setOnscreenKeyboardVisible(false);
                     app.setScreen(new LobbyScreen(app));
                     dispose();
                 }
