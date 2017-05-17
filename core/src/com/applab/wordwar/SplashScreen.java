@@ -69,7 +69,7 @@ public class SplashScreen implements Screen {
             stage.act(Gdx.graphics.getDeltaTime());
             stage.draw();
         } else{
-            app.setScreen(new LobbyScreen(app));
+            app.setScreen(new TutorialScreen(app));
             dispose(); //dispose the current instance of the screen
         }
 

@@ -34,7 +34,7 @@ public class MainClass extends Game  {
 
 		deviceWidth = Gdx.graphics.getWidth();
 		deviceHeight = Gdx.graphics.getHeight();
-		splashScreenDisplayTime = 10000l;
+		splashScreenDisplayTime = 1000l;
 		HEIGHT_DISTANCE_UNIT = deviceHeight / 18;
 
 
@@ -48,7 +48,8 @@ public class MainClass extends Game  {
 
 
 		//setScreen(new NewGameScreen(this));
-		setScreen(new TutorialScreen(this));
+		//setScreen(new TutorialScreen(this));
+		setScreen(new SplashScreen(this));
 	}
 
 	public BitmapFont getGillsansFont() {
