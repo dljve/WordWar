@@ -482,15 +482,6 @@ public class Game implements Screen {
 		}
 	}
 
-	public void promptTestTrial() {
-		// TODO: (we dont this this in this version) This will be triggered after receiving a test trial from the server
-
-		// Example: set the test tile and decapture it
-		activeTile = tiles.get(8);
-		captures.get(activeTile)[PLAYER_ID] = 0;
-		updateColor(activeTile);
-	}
-
 	public void startTrial(boolean savePosZoom) {
 		inTrial = true;
 		scoreBoard.setVisible(false);
@@ -595,7 +586,7 @@ public class Game implements Screen {
 			Rectangle wordPos = item.getWordPosition();
 			Rectangle transPos = item.getTranslationPosition();
 			gillsans.draw(batch, item.getWord(), wordPos.x, wordPos.y);
-			if (item.isNovel())
+			if (inTrial && item.isNovel() && items.get(activeTile).equals(item))
 				gillsans.draw(batch, item.getTranslation(), transPos.x, transPos.y);
 		}
 
