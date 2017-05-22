@@ -90,7 +90,7 @@ public class Game implements Screen {
 	private final float INCORRECT_FEEDBACK_TIME = 4; // Time to show the correct answer after a trial
 	private final float CORRECT_FEEDBACK_TIME = 0.6f;
 	private boolean showNumbersOnTiles = false; // For developer purposes
-	private final long GAME_DURATION = 10; //600 Game duration in seconds
+	private final long GAME_DURATION = 600; // Game duration in seconds
 
 	// Variables
 	private boolean inTrial = false;
