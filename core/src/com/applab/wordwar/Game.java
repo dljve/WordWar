@@ -90,7 +90,7 @@ public class Game implements Screen {
 	private final float INCORRECT_FEEDBACK_TIME = 4; // Time to show the correct answer after a trial
 	private final float CORRECT_FEEDBACK_TIME = 0.6f;
 	private boolean showNumbersOnTiles = false; // For developer purposes
-	private final long GAME_DURATION = 600; // Game duration in seconds
+	private final long GAME_DURATION = 10; //600 Game duration in seconds
 
 	// Variables
 	private boolean inTrial = false;
@@ -132,32 +132,6 @@ public class Game implements Screen {
 
 	public MainClass getApp() {
 		return app;
-	}
-
-	/**
-	 * Return array of player IDs sorted by score
-	 * @return
-     */
-	public int[] getPlayerPlaces() {
-		if (scores[0] >= scores[1] && scores[0] >= scores[2]) {
-			if (scores[1] >= scores[2]) {
-				return new int[] {0,1,2};
-			} else {
-				return new int[] {0,2,1};
-			}
-		} else if (scores[1] >= scores[0] && scores[1] >= scores[2]) {
-			if (scores[0] >= scores[2]) {
-				return new int[] {1,0,2};
-			} else {
-				return new int[] {1,2,0};
-			}
-		} else {
-			if (scores[0] >= scores[1]) {
-				return new int[] {2,0,1};
-			} else {
-				return new int[] {2,1,0};
-			}
-		}
 	}
 
 	public boolean isInTrial() {
@@ -208,8 +182,8 @@ public class Game implements Screen {
 		scoreBoard.setPosition(w-scoreBoard.getWidth()-0.05f*w, h-scoreBoard.getHeight()-0.05f*h);
 		HUD.addActor(scoreBoard);
 		endScreen = new EndScreen(this);
-		endScreen.setSize(0.7f * w, 0.35f * h);
-		endScreen.setPosition(0.15f*w, 0.15f*h);
+		endScreen.setSize(0.8f * w, 0.35f * h);
+		endScreen.setPosition(0.1f * w, h/2 - endScreen.getHeight()/2);
 		endScreen.setVisible(false);
 		HUD.addActor(endScreen);
 		helpLabel = new HelpLabel(this);
