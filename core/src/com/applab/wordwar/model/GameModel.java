@@ -8,6 +8,7 @@ import com.applab.wordwar.server.exceptions.TileNotFoundException;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by arian on 9-4-2017.
@@ -18,11 +19,13 @@ public class GameModel implements Serializable {
     private int id;
     private ArrayList<GameTile> map;
     private ArrayList<Player> players;
+    private Random rnd;
 
     public GameModel(WordList words, int id) {
         this.id = id;
         this.players = new ArrayList<Player>();
         this.generateMap(words);
+        rnd = new Random();
     }
 
     public ArrayList<GameTile> getMap() {
@@ -34,17 +37,33 @@ public class GameModel implements Serializable {
         for (int i = 0; i < words.getItemCount(); i++) {
             map.add(new GameTile(words.getItem(i), i));
         }
+    }
 
+    private int getRandomColor() {
+        ArrayList<Integer> colors = new ArrayList<Integer>();
+        boolean available;
 
-
-
+        // Add all available colors
+        for (int i=0; i<3; i++) {
+            available = true;
+            for (Player player : players) {
+                if (player.getColor() == i) {
+                    available = false;
+                    break;
+                }
+            }
+            if (available)
+                colors.add(i);
+        }
+        return colors.get(rnd.nextInt(colors.size()));
     }
 
     public boolean addPlayer(Player player) {
         if (this.canAddPlayer()) {
-            player.setColor(players.size());
+
+            player.setColor(getRandomColor()); // players.size()
             System.out.println(players.size());
-            // TODO add random color to player
+
             this.players.add(player);
             ArrayList<Item> itemSet = new ArrayList<Item>();
             for(GameTile tile:map){

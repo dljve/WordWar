@@ -64,7 +64,7 @@ public class ScoreBoard extends Actor {
         });
         int i = 0;
         for (Player player : players) {
-            int id = player.getId();
+            int id = player.getColor();
             float y_margin = getHeight()*0.1f;
 
             // Draw names

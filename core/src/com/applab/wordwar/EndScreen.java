@@ -64,7 +64,7 @@ public class EndScreen extends Actor {
         });
         int i = 0;
         for (Player player : players) {
-            int id = player.getId();
+            int id = player.getColor();
             float y_margin = getHeight()*0.3f;
 
             // Draw high-scores of players in gold, silver, bronze

@@ -22,7 +22,8 @@ public class wwGestureListener implements GestureDetector.GestureListener{
 
         Vector3 worldCoords = game.cam.unproject(new Vector3(x,y,0));
 
-        if (game.isInTrial() && game.activeTile.contains(worldCoords.x,worldCoords.y)) {
+        if (game.isInTrial() && !game.isInFeedback()
+                && game.activeTile.contains(worldCoords.x,worldCoords.y)) {
            Gdx.input.setOnscreenKeyboardVisible(true);
         }
 

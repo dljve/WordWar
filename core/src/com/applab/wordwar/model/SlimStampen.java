@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Random;
@@ -91,16 +92,20 @@ public class SlimStampen {
         ArrayList<Item> forgotten = new ArrayList<Item>();
 
         BigDecimal T = getTime();
-        for (int i = 0; i < presentationSet.size(); i++) {
-            Item item = presentationSet.get(i);
-            BigDecimal m_item = m(item, T); // Get activation value at current time
-            // Negative infinity or below threshold
-            if (m_item != null ) {
-                if (m_item.compareTo(threshold) < 0) {
-                    forgotten.add(item);
+        try {
+            for (Item item : presentationSet) {
+                BigDecimal m_item = m(item, T); // Get activation value at current time
+                // Negative infinity or below threshold
+                if (m_item != null) {
+                    if (m_item.compareTo(threshold) < 0) {
+                        forgotten.add(item);
+                        System.out.println(m_item.toPlainString() + "\t" + item.toString());
+                    }
                 }
             }
+        } catch (ConcurrentModificationException e) {
         }
+
         return forgotten;
     }
 
@@ -312,8 +317,10 @@ public class SlimStampen {
             }
             m = m.add( BigDecimalMath.pow( T.subtract(t.get(i).get(j)), decay.negate() ) );
         }
+
         if (m.equals(BigDecimal.ZERO))
             return null; // Negative infinity
+
         return BigDecimalMath.log(m);
     }
 

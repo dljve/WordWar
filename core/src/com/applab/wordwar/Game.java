@@ -33,7 +33,6 @@ public class Game implements Screen {
 	protected ArrayList<Rectangle> tiles; 	// Tile positions
 	protected ArrayList<Rectangle> frontier; 	// Tile frontier
 	protected Map<Rectangle, Item> items; 	// Tile-Item pairs
-	private Map<Rectangle, Color> colors; 	// Tile-Color pairs
 	protected Map<Rectangle, int[]> captures;	// Tile-Capture pairs
 	private Stage HUD;
 	private Actor scoreBoard, endScreen, helpLabel;
@@ -45,9 +44,11 @@ public class Game implements Screen {
 	// Fonts
 	private BitmapFont gillsans;
 
-	private float BOARD_OPACITY = 0.95f;
+	private float DEFAULT_OPACITY = 0.85f;	// Opacity of all non-captured tiles (fog of war)
+	private float BOARD_OPACITY = 0.95f;	// Opacity of captured or frontier tiles
+	private float TRIAL_OPACITY = 0.3f;		// Opacity of all non-active tiles during trial
 
-	Color[][][] getColor() {
+	public Color[][][] getColor() {
 		return color;
 	}
 
@@ -55,7 +56,7 @@ public class Game implements Screen {
 	private Color[][][] color = new Color[][][] {
 		new Color[][] {
 			new Color[] {
-				new Color(1.00f, 1.00f, 1.00f, 0.85f),	// Default color
+				new Color(1.00f, 1.00f, 1.00f, DEFAULT_OPACITY),// Default color
 				new Color(1.00f, 0.85f, 0.00f, BOARD_OPACITY)	// Player 2
 			},
 			new Color[] {
@@ -94,6 +95,7 @@ public class Game implements Screen {
 
 	// Variables
 	private boolean inTrial = false;
+	private boolean inFeedback = false;
 	protected boolean firstKeyPressed = false;
 	private String answer = "";
 	private Vector3 prevPos; // Store the board position when in trial mode
@@ -101,8 +103,9 @@ public class Game implements Screen {
 	protected int[] scores = {1,1,1};
 	private long endTime = 0;
 	protected Rectangle activeTile = null; // The tile active during a trial
-	private MainClass app;
+	private Rectangle disabledTile = null; // The tile after incorrect feedback will be disabled for one trial
 
+	private MainClass app;
 	public int[] getScores() {
 		return scores;
 	}
@@ -138,6 +141,10 @@ public class Game implements Screen {
 		return inTrial;
 	}
 
+	public boolean isInFeedback() {
+		return inFeedback;
+	}
+
 	public void setAnswer(String answer) {
 		this.answer = answer;
 	}
@@ -153,7 +160,6 @@ public class Game implements Screen {
 		tiles = new ArrayList<Rectangle>();
 		frontier = new ArrayList<Rectangle>();
 		items = new HashMap<Rectangle, Item>();
-		colors = new HashMap<Rectangle, Color>();
 		captures = new HashMap<Rectangle, int[]>();
 
 		// Load Fonts
@@ -210,6 +216,10 @@ public class Game implements Screen {
 		updateFrontier();
 	}
 
+	/**
+	 * Get the owner status of tiles and color them
+	 * TODO: maybe use same format as server
+	 */
 	public void getBoardState() {
 		GameModel gm = app.getClient().getGameModel();
 
@@ -233,7 +243,6 @@ public class Game implements Screen {
 
 			Rectangle tile = tiles.get(i);
 			captures.put(tile, capturedState);
-			updateColor(tile);
 		}
 		app.getClient().setStateChanged(false);
 	}
@@ -241,6 +250,7 @@ public class Game implements Screen {
 	public void giveTranslation() {
 		Item item = items.get(activeTile);
 
+		// Give feedback
 		if (answer.equals(item.getTranslation())) {
 			correctFeedback();
 		} else {
@@ -248,6 +258,7 @@ public class Game implements Screen {
 				incorrectFeedback();
 			} else {
 				((HelpLabel)helpLabel).setLabel("Incorrect!", new Color(1f,0f,0f,0.5f));
+				answer = "";
 			}
 		}
 	}
@@ -264,6 +275,8 @@ public class Game implements Screen {
 		} else {
 			// Feedback text
 			((HelpLabel)helpLabel).setLabel("Correct!", new Color(0f,1f,0f,0.5f));
+			inFeedback = true;
+			captureTile(activeTile);
 
 			// End the trial only after the feedback
 			Timer.schedule(new Timer.Task(){
@@ -273,7 +286,6 @@ public class Game implements Screen {
 					updateFrontier();
 				}
 			}, CORRECT_FEEDBACK_TIME);
-			captureTile(activeTile);
 		}
 	}
 	private void incorrectFeedback() {
@@ -282,11 +294,13 @@ public class Game implements Screen {
 
 		// Feedback text
 		((HelpLabel)helpLabel).setLabel("Incorrect!", new Color(1f,0f,0f,0.5f));
+		inFeedback = true;
 
 		Timer.schedule(new Timer.Task(){
 			@Override
 			public void run() {
 				endTrial();
+				disabledTile = activeTile;
 				updateFrontier();
 			}
 		}, INCORRECT_FEEDBACK_TIME);
@@ -302,40 +316,37 @@ public class Game implements Screen {
 		}
 		tileID -= offset;
 		app.getClient().captureTile(tileID);
-		//captures.get(tile)[PLAYER_ID] = 1;
-		//updateColor(tile);
-	}
-
-	private void looseTile(Rectangle tile) {
-		captures.get(tile)[PLAYER_ID] = 0;
-		updateColor(tile);
 	}
 
 	/**
-	 * Update the color for a tile
+	 * Get the color for a tile
+	 * The color is correlated to the activation value of the tile
 	 * @param tile
      */
-	public void updateColor(Rectangle tile) {
+	public Color getTileColor(Rectangle tile) {
 		int[] c = captures.get(tile);
-		colors.put(tile, color[c[0]][c[1]][c[2]] );
+
+		// Get the default color for the captured state
+		Color col = color[c[0]][c[1]][c[2]];
+
+		// Set tile opacity
+		float opacity;
+		if (inTrial && tile != activeTile) {
+			opacity = TRIAL_OPACITY;
+		} else if (frontier.contains(tile)) {
+			opacity = BOARD_OPACITY;
+		} else {
+			opacity = col.a;
+		}
+
+		return new Color(col.r, col.g, col.b, opacity);
 	}
 
 	/**
-	 * Update the frontier for the player
+	 * Update the frontier for the player and color the tiles
 	 * The frontier contains all the tiles that the player can capture
-	 *
 	 */
 	public void updateFrontier() {
-		/* // Not in this version
-		// If there is a test trial you must click the corresponding tile
-		if (trialType=="test") {
-			frontier.clear();
-			frontier.add(activeTile);
-			Color c = colors.get(activeTile);
-			colors.put(activeTile, new Color(c.r, c.g, c.b, BOARD_OPACITY));
-			return;
-		}
-		*/
 		ArrayList<Rectangle> area = new ArrayList<Rectangle>();
 		ArrayList<Rectangle> neighbors = new ArrayList<Rectangle>();
 
@@ -359,22 +370,17 @@ public class Game implements Screen {
 			}
 		}
 
-
-		// Add the uncaptured neighbors to the frontier
+		// Add the non-captured neighbors to the frontier
 		frontier.clear();
 		for (Rectangle neighbor : neighbors) {
-			if (captures.get(neighbor)[PLAYER_ID]==0) {
-				// Make sure it neighbors at least two tiles or the base tile
-				// TODO: Maybe do this different because it could result in no frontier when test trial are incorrect
-				// TODO: Solution: Frontier must contain at least one tile
+			if (captures.get(neighbor)[PLAYER_ID]==0 && neighbor != disabledTile) {
+				// Determine how many captured tiles the neighbor is adjacent to
 				int n = 0;
 				for (int i = 0; i < neighbors.size(); i++) {
 					if (neighbors.get(i) == neighbor) n++;
 				}
 				if (n>0 || area.size() == 1) { // n>1 if it needs 2 adjacent tiles
 					frontier.add(neighbor);
-					Color c = colors.get(neighbor);
-					colors.put(neighbor, new Color(c.r, c.g, c.b, BOARD_OPACITY));
 				}
 			}
 		}
@@ -468,15 +474,6 @@ public class Game implements Screen {
 		cam.position.set(activeTile.x + TILE_SIZE / 2, activeTile.y + 32, 0);
 		cam.zoom = 0.4f;
 
-		// Grey out other tiles
-		for (Rectangle tile2 : tiles) {
-			if (activeTile != tile2) {
-				Color c = colors.get(tile2);
-				colors.put(tile2, new Color(c.r, c.g, c.b, 0.3f));
-			}
-		}
-		colors.get(activeTile).a = BOARD_OPACITY;
-
 		// Display the keyboard
 		Gdx.input.setOnscreenKeyboardVisible(true);
 
@@ -502,17 +499,15 @@ public class Game implements Screen {
 	public void endTrial() {
 		answer = "";
 		Gdx.input.setOnscreenKeyboardVisible(false);
-		for (Rectangle tile : tiles)
-			updateColor(tile);
 		inTrial = false;
+		inFeedback = false;
 		cam.zoom = prevZoom;
 		cam.position.set(prevPos);
 		scoreBoard.setVisible(true);
 		helpLabel.setVisible(false);
 		((HelpLabel)helpLabel).setLabel("", new Color(0f,0f,0f,0.5f));
 		firstKeyPressed = false;
-
-		// TODO: Study trial should immediately follow a test trial
+		disabledTile = null;
 	}
 
 	public boolean isBaseTile(Rectangle tile) {
@@ -542,14 +537,14 @@ public class Game implements Screen {
 		}
 
 		// Check slim stampen for items below threshold every second
-		if (System.currentTimeMillis() - time > 1000 && !inTrial) {
+		if (System.currentTimeMillis() - time > 1000) { // && !inTrial
 			app.getClient().sendRequestTrialMessage();
 			time = System.currentTimeMillis();
 		}
 
 		// Draw the tiles of the board
 		for (Rectangle tile : tiles) {
-			batch.setColor(colors.get(tile));
+			batch.setColor(getTileColor(tile)); // colors.get(tile)
 			batch.draw(tileW, tile.x, tile.y);
 		}
 		batch.setColor(1, 1, 1, 1);

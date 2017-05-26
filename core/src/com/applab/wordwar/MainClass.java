@@ -1,8 +1,6 @@
 package com.applab.wordwar;
 
-import com.applab.wordwar.NicknameScreen;
 import com.applab.wordwar.server.TempRivialClient;
-import com.applab.wordwar.server.handlers.RivialHandler;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -39,16 +37,12 @@ public class MainClass extends Game  {
 
 
 		try {
-			// 172.20.10.2
-			client = new TempRivialClient("10.0.1.15", 8888); //8888
+			client = new TempRivialClient("192.168.0.100", 8888);
 			(new Thread(client)).start();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-
-		//setScreen(new NewGameScreen(this));
-		//setScreen(new TutorialScreen(this));
 		setScreen(new SplashScreen(this));
 	}
 
