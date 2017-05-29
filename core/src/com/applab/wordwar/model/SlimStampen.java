@@ -9,6 +9,7 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Random;
@@ -330,11 +331,45 @@ public class SlimStampen {
         return true;
     }
 
-    private void endSession() throws IOException {
+    private void endSession() {
         // TODO: Save final alpha values for user? See Nijboer discussion
         // See eq. 2.16 on page 20. Maybe in later version, not prototype
+        String dataPath = "";
 
+        FileWriter csv;
+        try {
+            csv = new FileWriter(dataPath + "a.csv");
+            for (Map.Entry<Item, ArrayList<BigDecimal>> entry : a.entrySet()) {
+                csv.append(entry.getKey().toString() + ',');
+                for (BigDecimal bd : entry.getValue())
+                    csv.append(bd.toPlainString() + ',');
+                csv.append('\n');
+            }
+            csv.flush();
+            csv.close();
 
+            csv = new FileWriter(dataPath + "RT.csv");
+            for (Map.Entry<Item, ArrayList<BigDecimal>> entry : RT.entrySet()) {
+                csv.append(entry.getKey().toString() + ',');
+                for (BigDecimal bd : entry.getValue())
+                    csv.append(bd.toPlainString() + ',');
+                csv.append('\n');
+            }
+            csv.flush();
+            csv.close();
+
+            csv = new FileWriter(dataPath + "t.csv");
+            for (Map.Entry<Item, ArrayList<BigDecimal>> entry : t.entrySet()) {
+                csv.append(entry.getKey().toString() + ',');
+                for (BigDecimal bd : entry.getValue())
+                    csv.append(bd.toPlainString() + ',');
+                csv.append('\n');
+            }
+            csv.flush();
+            csv.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         return;
     }
