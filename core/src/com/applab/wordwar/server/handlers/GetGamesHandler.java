@@ -17,6 +17,11 @@ public class GetGamesHandler extends RivialHandler {
     public GetGamesHandler(GetGamesMessage message){
         this.message = message;
     }
+
+    public String logMessage(){
+        return message.logMessage();
+    }
+
     @Override
     public void run(){
         try {

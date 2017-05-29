@@ -41,4 +41,9 @@ public class AddNewItemMessage extends RivialProtocol {
     public RivialHandler getHandler() {
         return new AddNewItemHandler(this);
     }
+
+    @Override
+    public String logMessage(){
+        return super.logMessage() + ", Game: " + gameId + ", Player:" + playerId + ", Item: " + item.toString();
+    }
 }

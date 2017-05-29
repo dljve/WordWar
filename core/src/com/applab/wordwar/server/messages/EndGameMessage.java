@@ -29,4 +29,11 @@ public class EndGameMessage extends RivialProtocol {
     public RivialHandler getHandler() {
         return new EndGameHandler(this);
     }
+
+
+    @Override
+    public String logMessage(){
+        return super.logMessage() + ", Game: " + game;
+    }
+
 }

@@ -21,6 +21,10 @@ public class StartGameHandler extends RivialHandler {
         this.message = message;
     }
 
+    public String logMessage(){
+        return message.logMessage();
+    }
+
     @Override
     public void run() {
         try {

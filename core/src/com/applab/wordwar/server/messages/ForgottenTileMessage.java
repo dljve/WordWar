@@ -40,4 +40,9 @@ public class ForgottenTileMessage extends RivialProtocol {
     public RivialHandler getHandler() {
         return new ForgottenTileHandler(this);
     }
+
+    @Override
+    public String logMessage(){
+        return super.logMessage() + ", Game: " + game + ", Player:" + player + ", Tile: " + tile;
+    }
 }

@@ -2,6 +2,7 @@ package com.applab.wordwar.server.handlers;
 
 import com.applab.wordwar.server.RivialServer;
 import com.applab.wordwar.server.TempRivialClient;
+import com.applab.wordwar.server.messages.RivialProtocol;
 import com.badlogic.gdx.Gdx;
 
 import java.net.Socket;
@@ -36,6 +37,6 @@ public abstract class RivialHandler implements Runnable{
         (new Thread(this)).start();
     }
 
-
+    public abstract String logMessage();
 
 }

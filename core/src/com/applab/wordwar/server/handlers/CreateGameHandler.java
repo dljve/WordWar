@@ -19,6 +19,11 @@ public class CreateGameHandler extends RivialHandler {
     public CreateGameHandler(CreateGameMessage message){
         this.message = message;
     }
+
+    public String logMessage(){
+        return message.logMessage();
+    }
+
     @Override
     public void run() {
         if (serverSide) {

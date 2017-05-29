@@ -19,6 +19,11 @@ public class EndGameHandler extends RivialHandler {
     public EndGameHandler(EndGameMessage message){
         this.message = message;
     }
+
+    public String logMessage(){
+        return message.logMessage();
+    }
+
     @Override
     public void run(){
         if(serverSide){

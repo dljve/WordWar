@@ -16,6 +16,9 @@ import com.applab.wordwar.server.exceptions.TileNotFoundException;
 import com.applab.wordwar.server.handlers.RivialHandler;
 import com.applab.wordwar.server.messages.RivialProtocol;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.ServerSocket;
@@ -29,6 +32,7 @@ public class RivialServer implements Runnable{
     private ServerSocket serverSocket;
     private ArrayList<Player> clients;
     private WordList words;
+    private String filename;
 
     public RivialServer(int portNumber, String filename) throws IOException{
         this.games = new ArrayList<GameModel>();
@@ -36,6 +40,7 @@ public class RivialServer implements Runnable{
         this.clients = new ArrayList<Player>();
         this.portNumber = portNumber;
         this.words = new WordList(filename);
+        this.filename = "ServerLogging_" + System.currentTimeMillis() + ".txt";
     }
 
     public ServerSocket getServerSocket(){
@@ -120,27 +125,52 @@ public class RivialServer implements Runnable{
     @Override
     public void run() {
         System.out.println("Server listening...");
-        while(true){
-            try {
-                Socket currentClient = this.getServerSocket().accept();
-                System.out.println("Server: NEW CONNECTION " + currentClient.toString());
-                ObjectInputStream in = new ObjectInputStream(
-                        currentClient.getInputStream());
+        // Create logging file
+        FileWriter fw = null;
+        BufferedWriter bw = null;
+        try {
+            File file = new File(this.filename);
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            fw = new FileWriter(file.getAbsoluteFile(), true);
+            bw = new BufferedWriter(fw);
+            while (true) {
                 try {
-                    // Read protocol
-                    Object input = in.readObject();
-                    RivialProtocol protocol = (RivialProtocol) input;
-                    // Handle message
-                    RivialHandler handler = protocol.getHandler();
-                    handler.handleServerSide(this, currentClient);
-                    this.addClient(currentClient);
-                    Thread.yield();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
+                    Socket currentClient = this.getServerSocket().accept();
+                    System.out.println("Server: NEW CONNECTION " + currentClient.toString());
+                    ObjectInputStream in = new ObjectInputStream(
+                            currentClient.getInputStream());
+                    try {
+                        // Read protocol
+                        Object input = in.readObject();
+                        RivialProtocol protocol = (RivialProtocol) input;
+                        // Handle message
+                        RivialHandler handler = protocol.getHandler();
+                        handler.handleServerSide(this, currentClient);
+                        this.addClient(currentClient);
+                        fw.write(handler.logMessage() + "\n");
+                        Thread.yield();
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                } catch (IOException e) {
+                    System.out.println("Exception caught when trying to listen for a connection");
+                    System.out.println(e.getMessage());
+                }
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        } finally {
+            try {
+                if (bw != null) {
+                    bw.close();
+                }
+                if (fw != null) {
+                    fw.close();
                 }
             } catch (IOException e){
-                System.out.println("Exception caught when trying to listen for a connection");
-                System.out.println(e.getMessage());
+                e.printStackTrace();
             }
         }
 
@@ -155,16 +185,19 @@ public class RivialServer implements Runnable{
             RivialServer server = new RivialServer(port, filename );
             (new Thread(server)).start();
             /*
-            /AIModel ai1 = new AIModel(ip, port);
+            AIModel ai1 = new AIModel(ip, port);
             AIModel ai2 = new AIModel(ip, port);
+            AIModel ai3 = new AIModel(ip, port);
             int gameid = ai1.createGame();
             ai2.joinGame(gameid);
+            ai3.joinGame(gameid);
             boolean gameStarted = false;
             while(!gameStarted){
                 gameStarted = server.getPlayers(gameid).size() == 3;
             }
             ai1.startGame();
             ai2.startGame();
+            ai3.startGame();
             */
         }catch (IOException e){
             e.printStackTrace();
@@ -238,17 +271,35 @@ public class RivialServer implements Runnable{
         @Override
         public void run() {
             while(connected) {
+                FileWriter fw = null;
+                BufferedWriter bw = null;
                 try {
+                    File file = new File(filename);
+                    fw = new FileWriter(file.getAbsoluteFile(), true);
+                    bw = new BufferedWriter(fw);
                     ObjectInputStream in = new ObjectInputStream(client.getInputStream());
                     Object input = in.readObject();
                     RivialProtocol protocol = (RivialProtocol) input;
                     // Handle message
                     RivialHandler handler = protocol.getHandler();
                     handler.handleServerSide(server, client);
+                    bw.write(handler.logMessage() + "\n");
+                    Thread.yield();
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
                     e.printStackTrace();
+                } finally {
+                    try {
+                        if (bw != null) {
+                            bw.close();
+                        }
+                        if (fw != null) {
+                            fw.close();
+                        }
+                    }catch (IOException e){
+                        e.printStackTrace();
+                    }
                 }
             }
         }

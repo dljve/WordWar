@@ -30,4 +30,8 @@ public class AddNewItemHandler extends RivialHandler {
 
         }
     }
+
+    public String logMessage(){
+        return message.logMessage();
+    }
 }

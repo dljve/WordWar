@@ -34,5 +34,11 @@ public class RequestTrialMessage extends RivialProtocol {
     public RivialHandler getHandler() {
         return new RequestTrialHandler(this);
     }
+
+    @Override
+    public String logMessage(){
+        return super.logMessage() + ", Game: " + gameId + ", Player:" + playerId;
+    }
+
 }
 

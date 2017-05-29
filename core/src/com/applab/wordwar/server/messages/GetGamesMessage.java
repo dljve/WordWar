@@ -33,4 +33,18 @@ public class GetGamesMessage extends RivialProtocol {
     public RivialHandler getHandler() {
         return new GetGamesHandler(this);
     }
+
+
+    @Override
+    public String logMessage(){
+        return super.logMessage() + ", Games: " + this.gamesToString();
+    }
+
+    private String gamesToString(){
+        String string = "[";
+        for(GameModel game : games){
+            string = string + game.getId() + ", ";
+        }
+        return string + "]";
+    }
 }

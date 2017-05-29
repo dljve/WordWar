@@ -40,4 +40,9 @@ public class CapturedTileMessage extends RivialProtocol {
     public RivialHandler getHandler() {
         return new CapturedTileHandler(this);
     }
+
+    @Override
+    public String logMessage(){
+        return super.logMessage() + ", Game: " + gameId + ", Player:" + playerId + ", Tile: " + tileId;
+    }
 }

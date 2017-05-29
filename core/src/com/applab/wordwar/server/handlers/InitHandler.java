@@ -15,6 +15,11 @@ public class InitHandler extends RivialHandler {
     public InitHandler(InitMessage message){
         this.message = message;
     }
+
+    public String logMessage(){
+        return message.logMessage();
+    }
+
     @Override
     public void run(){
         try{

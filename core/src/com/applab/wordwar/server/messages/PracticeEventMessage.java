@@ -47,4 +47,10 @@ public class PracticeEventMessage extends RivialProtocol {
     public RivialHandler getHandler() {
         return new PracticeEventHandler(this);
     }
+
+
+    @Override
+    public String logMessage(){
+        return super.logMessage() + ", Game: " + gameId + ", Player:" + playerId + ", Item: " + item.toString() + ", Time: " + timestamp;
+    }
 }

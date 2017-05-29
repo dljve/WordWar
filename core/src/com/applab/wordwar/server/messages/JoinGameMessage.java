@@ -34,4 +34,10 @@ public class JoinGameMessage extends RivialProtocol {
     public RivialHandler getHandler() {
         return new JoinGameHandler(this);
     }
+
+
+    @Override
+    public String logMessage(){
+        return super.logMessage() + ", Game: " + game + ", Player:" + player;
+    }
 }

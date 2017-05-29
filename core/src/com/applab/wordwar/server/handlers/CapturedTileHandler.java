@@ -52,4 +52,7 @@ public class CapturedTileHandler extends RivialHandler {
         }
 
     }
+    public String logMessage(){
+        return message.logMessage();
+    }
 }

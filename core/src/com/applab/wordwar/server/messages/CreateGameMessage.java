@@ -32,4 +32,10 @@ public class CreateGameMessage extends RivialProtocol {
     public RivialHandler getHandler() {
         return new CreateGameHandler(this);
     }
+
+
+    @Override
+    public String logMessage(){
+        return super.logMessage() + ", Game: " + game;
+    }
 }

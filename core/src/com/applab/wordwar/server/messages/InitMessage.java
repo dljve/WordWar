@@ -31,4 +31,8 @@ public class InitMessage extends RivialProtocol {
         return new InitHandler(this);
     }
 
+    @Override
+    public String logMessage(){
+        return super.logMessage() + ", Player:" + player.toString();
+    }
 }

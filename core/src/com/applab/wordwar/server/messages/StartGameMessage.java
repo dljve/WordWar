@@ -44,4 +44,9 @@ public class StartGameMessage extends RivialProtocol {
     public RivialHandler getHandler() {
         return new StartGameHandler(this);
     }
+
+    @Override
+    public String logMessage(){
+        return super.logMessage() + ", Game: " + game + ", Player:" + player + ", Started: " + started;
+    }
 }

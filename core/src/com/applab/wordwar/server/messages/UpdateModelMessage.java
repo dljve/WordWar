@@ -47,4 +47,9 @@ public class UpdateModelMessage extends RivialProtocol {
     public RivialHandler getHandler() {
         return new UpdateModelHandler(this);
     }
+
+    @Override
+    public String logMessage(){
+        return super.logMessage() + ", Game: " + gameId + ", Player:" + playerId + ", Item: " + item.toString() + ", Timestamp: " + timestamp;
+    }
 }
