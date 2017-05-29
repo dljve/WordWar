@@ -177,7 +177,7 @@ public class RivialServer implements Runnable{
     }
 
     public static void main(String[] args) throws IOException, GameNotFoundException {
-        String filename = "C:\\Users\\dljva\\Desktop\\App-lab\\swahili-english.txt"; // Also change at clientside
+        String filename = "swahili-english.txt"; // Also change at clientside
         int port = 8888;
         String ip = "localhost"; // TODO, set proper ip adress
         System.out.println(port);

@@ -32,6 +32,11 @@ public class GameModel implements Serializable {
         return map;
     }
 
+    private float getActivationScale(int playerId, int tile) {
+
+        return 0f;
+    }
+
     private void generateMap(WordList words) {
         this.map = new ArrayList<GameTile>();
         for (int i = 0; i < words.getItemCount(); i++) {
@@ -111,6 +116,7 @@ public class GameModel implements Serializable {
 
     public void tileCaptured(int tile, int player) throws TileNotFoundException, PlayerNotFoundException {
         changeTile(tile, player, true);
+        // TODO: get activation of tile, for player, and save it
     }
 
     public void tileForgotten(int tile, int player) throws TileNotFoundException, PlayerNotFoundException {
