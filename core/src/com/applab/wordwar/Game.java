@@ -325,6 +325,7 @@ public class Game implements Screen {
      */
 	public Color getTileColor(Rectangle tile) {
 		int[] c = captures.get(tile);
+		float r, g, b;
 
 		// Get the default color for the captured state
 		Color col = color[c[0]][c[1]][c[2]];
@@ -338,6 +339,26 @@ public class Game implements Screen {
 		} else {
 			opacity = col.a;
 		}
+
+		/*
+		// apply activation scale if captured
+		if (c[PLAYER_ID] == 1) {
+			int i = tiles.indexOf(tile);
+			//app.getClient().getGameModel().
+			// current in int array for tile ids
+			// current = max(0,current+0.5)
+			// s = current/(A+0.5)
+
+			float s = 0.5f;
+			r = 1-s*(1-col.r);
+			g = 1-s*(1-col.g);
+			b = 1-s*(1-col.b);
+		} else {
+			r = col.r;
+			g = col.g;
+			b = col.b;
+		}
+		*/
 
 		return new Color(col.r, col.g, col.b, opacity);
 	}
