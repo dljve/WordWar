@@ -40,7 +40,7 @@ public class GetGamesMessage extends RivialProtocol {
 
     @Override
     public String logMessage(){
-        return super.logMessage() + ", Games: " + this.gamesToString();
+        return super.logMessage() ;
     }
 
     private String gamesToString(){

@@ -33,7 +33,7 @@ public abstract class RivialHandler implements Runnable{
         System.out.print("Handling clientside: ");
         System.out.print(this.toString());
         System.out.print("\n");
-        Gdx.app.log("Client", "Handling clientside: " + this.toString());
+        //Gdx.app.log("Client", "Handling clientside: " + this.toString());
         (new Thread(this)).start();
     }
 

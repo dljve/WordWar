@@ -152,7 +152,10 @@ public class RivialServer implements Runnable{
                         RivialHandler handler = protocol.getHandler();
                         handler.handleServerSide(this, currentClient);
                         this.addClient(currentClient);
-                        fw.write(handler.logMessage() + "\n");
+                        String log = handler.logMessage();
+                        if(!log.isEmpty()) {
+                            fw.write(log + "\n");
+                        }
                         Thread.yield();
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();
@@ -305,7 +308,10 @@ public class RivialServer implements Runnable{
                     // Handle message
                     RivialHandler handler = protocol.getHandler();
                     handler.handleServerSide(server, client);
-                    bw.write(handler.logMessage() + "\n");
+                    String log = handler.logMessage();
+                    if(!log.isEmpty()) {
+                        fw.write(log + "\n");
+                    }
                     Thread.yield();
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();

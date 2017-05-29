@@ -47,6 +47,6 @@ public class StartGameMessage extends RivialProtocol {
 
     @Override
     public String logMessage(){
-        return super.logMessage() + ", Game: " + game + ", Player:" + player + ", Started: " + started;
+        return super.logMessage() + ", Game: " + game + ", Player:" + player;
     }
 }

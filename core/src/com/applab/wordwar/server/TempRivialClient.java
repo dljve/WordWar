@@ -124,7 +124,7 @@ public class TempRivialClient implements Runnable {
         this.stateChanged = true;
     }
     public void handleGame(int gameId){
-        Gdx.app.log("Client", "In HandleGame");
+        //Gdx.app.log("Client", "In HandleGame");
         this.requestGameState(gameId);
     }
 
