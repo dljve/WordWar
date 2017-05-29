@@ -79,4 +79,9 @@ public class Player implements Serializable{
     public ObjectInputStream getStream() {
         return stream;
     }*/
+
+    @Override
+    public String toString(){
+        return "(" + id + ", " + name + ")";
+    }
 }

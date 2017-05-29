@@ -66,4 +66,9 @@ public class GameTile implements Serializable{
             default: return false;
         }
     }
+
+    @Override
+    public String toString(){
+        return "(" + id + ", " + wordPair.toString() + ")";
+    }
 }

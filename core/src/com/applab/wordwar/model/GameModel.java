@@ -245,4 +245,25 @@ public class GameModel implements Serializable {
         };
         return neighborMatrix[i][j] == 1;
     }
+
+    @Override
+    public String toString(){
+        return "(" + id + ", Players: " + this.printPlayers() + ", Map: " + this.printMap() + ")";
+    }
+
+    private String printPlayers(){
+        String string = "[";
+        for(Player player: players){
+            string = string + player.toString() + ", ";
+        }
+        return string + "]";
+    }
+
+    private String printMap(){
+        String string = "[";
+        for(GameTile tile : map){
+            string = string + tile.toString() + ", ";
+        }
+        return string + "]";
+    }
 }
