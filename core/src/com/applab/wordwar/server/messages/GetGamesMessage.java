@@ -13,6 +13,9 @@ import java.util.ArrayList;
 
 public class GetGamesMessage extends RivialProtocol {
 
+    public GetGamesMessage() {
+        this.games = new ArrayList<GameModel>();
+    }
 
     private ArrayList<GameModel> games;
 

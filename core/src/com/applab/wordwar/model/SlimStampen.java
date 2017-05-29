@@ -2,6 +2,8 @@ package com.applab.wordwar.model;
 
 import org.nevec.rjm.BigDecimalMath;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
@@ -328,9 +330,12 @@ public class SlimStampen {
         return true;
     }
 
-    private void endSession() {
+    private void endSession() throws IOException {
         // TODO: Save final alpha values for user? See Nijboer discussion
         // See eq. 2.16 on page 20. Maybe in later version, not prototype
+
+
+
         return;
     }
 
