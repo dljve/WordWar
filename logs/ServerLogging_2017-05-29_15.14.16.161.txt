@@ -1,0 +1,3 @@
+2017-05-29 15:14:16.194, CREATE_GAME, Game: 0
+2017-05-29 15:14:16.177, INIT, Player:(0, Add name)
+2017-05-29 15:14:16.191, INIT, Player:(1, Add name)

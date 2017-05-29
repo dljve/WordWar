@@ -3,6 +3,8 @@ package com.applab.wordwar.server.messages;
 import com.applab.wordwar.server.handlers.RivialHandler;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by arian on 9-4-2017.
@@ -47,7 +49,7 @@ public abstract class RivialProtocol implements Serializable {
     public abstract messageType getMessageType();
     public abstract RivialHandler getHandler();
     public String logMessage(){
-        return time + ", " + getMessageType().toString();
+        return (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS")).format(new Date(time)).toString() + ", " + getMessageType().toString();
     }
 
 }
