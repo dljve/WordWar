@@ -23,7 +23,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class RivialServer implements Runnable{
 
@@ -40,7 +42,8 @@ public class RivialServer implements Runnable{
         this.clients = new ArrayList<Player>();
         this.portNumber = portNumber;
         this.words = new WordList(filename);
-        this.filename = "ServerLogging_" + System.currentTimeMillis() + ".txt";
+        this.filename = "./logs/ServerLogging_" + (new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss.SSS")).format(new Date(System.currentTimeMillis())).toString() + ".txt";
+        System.out.println(this.filename);
     }
 
     public ServerSocket getServerSocket(){
@@ -184,7 +187,7 @@ public class RivialServer implements Runnable{
         try {
             RivialServer server = new RivialServer(port, filename );
             (new Thread(server)).start();
-            /*
+            //*
             AIModel ai1 = new AIModel(ip, port);
             AIModel ai2 = new AIModel(ip, port);
             AIModel ai3 = new AIModel(ip, port);
@@ -198,7 +201,7 @@ public class RivialServer implements Runnable{
             ai1.startGame();
             ai2.startGame();
             ai3.startGame();
-            */
+            //*/
         }catch (IOException e){
             e.printStackTrace();
         }

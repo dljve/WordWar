@@ -1,2 +1,0 @@
-1496051042979, INIT, Player:com.applab.wordwar.model.Player@276c0ab
-1496051043011, CREATE_GAME, Game: 0
