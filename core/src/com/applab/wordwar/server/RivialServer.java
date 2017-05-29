@@ -245,6 +245,25 @@ public class RivialServer implements Runnable{
         this.getGameWithID(gameId).updateModel(playerId, item, timestamp);
     }
 
+    public ArrayList<Player> handleNameChange(int id, String name) throws PlayerNotFoundException {
+        this.getPlayerWithId(id).setName(name);
+        ArrayList<Player> toNotify = new ArrayList<Player>();
+        for(GameModel game: getGames()){
+            boolean inGame = true;
+            try{
+                game.changeName(id, name);
+            } catch (PlayerNotFoundException e){
+                inGame = false;
+            }
+            if(inGame){
+                for(Player player: game.getPlayers()){
+                    toNotify.add(player);
+                }
+            }
+        }
+        return toNotify;
+    }
+
     private class ReadThread implements Runnable {
 
         private RivialServer server;

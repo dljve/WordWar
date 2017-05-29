@@ -12,6 +12,7 @@ import com.applab.wordwar.server.exceptions.TileNotFoundException;
 import com.applab.wordwar.server.handlers.RivialHandler;
 import com.applab.wordwar.server.messages.AddNewItemMessage;
 import com.applab.wordwar.server.messages.CapturedTileMessage;
+import com.applab.wordwar.server.messages.ChangeNameMessage;
 import com.applab.wordwar.server.messages.CreateGameMessage;
 import com.applab.wordwar.server.messages.GameStateRequestMessage;
 import com.applab.wordwar.server.messages.GetGamesMessage;
@@ -82,6 +83,17 @@ public class TempRivialClient implements Runnable {
     public void getGames(){
         this.gamesToJoin = null;
         this.sendMessageToServer(new GetGamesMessage());
+    }
+
+    public void changeName(String name){
+        this.sendMessageToServer(new ChangeNameMessage(this.player.getId(), name));
+    }
+
+    public void playerChangedName(int id, String name) throws PlayerNotFoundException{
+        if(id == this.player.getId()){
+            this.player.setName(name);
+        }
+        this.game.changeName(id, name);
     }
 
     public void handleGames(ArrayList<GameModel> games){

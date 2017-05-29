@@ -23,7 +23,8 @@ public abstract class RivialProtocol implements Serializable {
         REQUEST_TRIAL("REQUEST_TRIAL"),
         PRACTICE_EVENT("PRACTICE_EVENT"),
         ADD_NEW_ITEM("ADD_NEW_ITEM"),
-        UPDATE_MODEL("UPDATE_MODEL");
+        UPDATE_MODEL("UPDATE_MODEL"),
+        CHANGE_NAME("CHANGE_NAME");
 
         private String name;
 

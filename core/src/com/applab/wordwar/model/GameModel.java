@@ -251,6 +251,10 @@ public class GameModel implements Serializable {
         return "(" + id + ", Players: " + this.printPlayers() + ", Map: " + this.printMap() + ")";
     }
 
+    public void changeName(int id, String name) throws PlayerNotFoundException{
+        this.getPlayerById(id).setName(name);
+    }
+
     private String printPlayers(){
         String string = "[";
         for(Player player: players){
