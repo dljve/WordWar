@@ -93,11 +93,12 @@ public class SlimStampen {
 
     public ArrayList<Item> getForgottenTrials() {
         ArrayList<Item> forgotten = new ArrayList<Item>();
+        if (updating) return forgotten;
 
-        BigDecimal T = getTime();
+        BigDecimal T = getTime().add(BigDecimal.valueOf(0.1f)); // small lookahead to prevent immediate decay
         try {
             for (Item item : presentationSet) {
-                BigDecimal m_item = m(item, T); // Get activation value at current time
+                BigDecimal m_item = m( item, T ); // Get activation value at current time
                 // Negative infinity or below threshold
                 if (m_item != null) {
                     if (m_item.compareTo(threshold) < 0) {
@@ -206,13 +207,14 @@ public class SlimStampen {
      * @param i
      */
 
+    private boolean updating = false;
     public void updateModel(Item i, long timestamp) {
+        updating = true;
         i = findItem(i);
 
         int n = t.get(i).size(); // Number of previous rehearsals
         int J = n-1; // Index of last rehearsal
-        BigDecimal T = BigDecimal.valueOf((double)(timestamp-startTime)/1000);
-        //BigDecimal T = getTime(); // The current time t
+        BigDecimal T = BigDecimal.valueOf((double)(timestamp-startTime)/1000); // Time T the message was send
 
         // Calculate a maximum reaction time as (2.11) [1.5*(F*e^(-threshold)+f)]
         BigDecimal RT_max = BigDecimal.valueOf(1.5).multiply(F.multiply(BigDecimalMath.exp(threshold.negate())).add(f));
@@ -246,8 +248,8 @@ public class SlimStampen {
         // See Figure 2.2 in Van Thiel (2010) for a flowchart of the basic process
         BigDecimal alpha, a1, a2, a_mean;
         if (n < 2) {
-            // After the first rehearsal, the standard alpha of 0.3 is returned
-            alpha = BigDecimal.valueOf(0.3);
+            // After the first rehearsal, the standard alpha is returned
+            alpha = BigDecimal.valueOf(0.250000f);
         } else {
             // Calculate the alpha (2.10)
             alpha = decay.subtract( c.multiply(BigDecimalMath.exp( m(i,t.get(i).get(J)) ) ) );
@@ -285,7 +287,10 @@ public class SlimStampen {
             alpha = a_mean; // Use the last mean alpha
         }
         a.get(i).add(alpha);
-        printItem(i);
+        updating = false;
+        //BigDecimal mmm = m(i,getTime());
+        //System.out.println("Activation after update of " + i.toString() +": " + mmm.toPlainString());
+        //printItem(i);
     }
     /* // Old method to estimate new alpha by Van Thiel (2010)
     if (n == 2) {
@@ -331,9 +336,7 @@ public class SlimStampen {
         return true;
     }
 
-    private void endSession() {
-        // TODO: Save final alpha values for user? See Nijboer discussion
-        // See eq. 2.16 on page 20. Maybe in later version, not prototype
+    public void endSession() {
         String dataPath = "";
 
         FileWriter csv;

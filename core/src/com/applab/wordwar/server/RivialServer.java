@@ -125,6 +125,10 @@ public class RivialServer implements Runnable{
         this.getGameWithID(game).tileForgotten(tile, player);
     }
 
+    public boolean handleEndGame(int game, int playerId) throws GameNotFoundException{
+        return getGameWithID(game).endGame(playerId);
+    }
+
     @Override
     public void run() {
         System.out.println("Server listening...");
@@ -190,7 +194,7 @@ public class RivialServer implements Runnable{
         try {
             RivialServer server = new RivialServer(port, filename );
             (new Thread(server)).start();
-            //*
+            /*
             AIModel ai1 = new AIModel(ip, port);
             AIModel ai2 = new AIModel(ip, port);
             AIModel ai3 = new AIModel(ip, port);
@@ -204,7 +208,7 @@ public class RivialServer implements Runnable{
             ai1.startGame();
             ai2.startGame();
             ai3.startGame();
-            //*/
+            */
         }catch (IOException e){
             e.printStackTrace();
         }

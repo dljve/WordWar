@@ -28,20 +28,15 @@ public class EndGameHandler extends RivialHandler {
     public void run(){
         if(serverSide){
             try {
-                if (server.isEndGame(message.getGame())) {
-                    try {
-                        ReplyProtocol reply = new ReplyProtocol();
-                        for (Player player : server.getPlayers(message.getGame())) {
-                            reply.addReply(message, player.getSocket());
-                        }
-                        reply.sendReplies();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (GameNotFoundException e) {
-                        e.printStackTrace();
-                    }
+                server.handleEndGame(message.getGame(), message.getPlayerId());
+                ReplyProtocol reply = new ReplyProtocol();
+                for (Player player : server.getPlayers(message.getGame())) {
+                    reply.addReply(message, player.getSocket());
                 }
-            } catch (GameNotFoundException e){
+                reply.sendReplies();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (GameNotFoundException e) {
                 e.printStackTrace();
             }
         } else {

@@ -11,14 +11,21 @@ import com.applab.wordwar.server.handlers.RivialHandler;
 public class EndGameMessage extends RivialProtocol {
 
     private int game;
+    private int playerid;
 
-    public EndGameMessage(int game){
+    public EndGameMessage(int game, int playerid){
         this.game = game;
+        this.playerid = playerid;
     }
 
     public int getGame() {
         return game;
     }
+
+    public int getPlayerId() {
+        return playerid;
+    }
+
 
     @Override
     public messageType getMessageType() {
