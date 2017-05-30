@@ -36,6 +36,6 @@ public class CreateGameMessage extends RivialProtocol {
 
     @Override
     public String logMessage(){
-        return super.logMessage() + ", Game: " + game;
+        return super.logMessage();
     }
 }

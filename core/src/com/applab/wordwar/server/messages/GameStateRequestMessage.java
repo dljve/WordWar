@@ -51,6 +51,6 @@ public class GameStateRequestMessage extends RivialProtocol {
 
     @Override
     public String logMessage(){
-        return super.logMessage() + ", Game: " + this.gameID; // + ", GameModel: " + gameModel.toString();
+        return "";
     }
 }
