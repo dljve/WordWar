@@ -91,12 +91,13 @@ public class Game implements Screen {
 	private final float INCORRECT_FEEDBACK_TIME = 4; // Time to show the correct answer after a trial
 	private final float CORRECT_FEEDBACK_TIME = 0.6f;
 	private boolean showNumbersOnTiles = false; // For developer purposes
-	private final long GAME_DURATION = 600; // Game duration in seconds
+	private final long GAME_DURATION = 60; // Game duration in seconds
 
 	// Variables
 	private boolean inTrial = false;
 	private boolean inFeedback = false;
 	protected boolean firstKeyPressed = false;
+	private boolean saveStats = false;
 	private String answer = "";
 	private Vector3 prevPos; // Store the board position when in trial mode
 	private float prevZoom; // Store the zoom when in trial mode
@@ -548,19 +549,34 @@ public class Game implements Screen {
 		batch.begin();
 		batch.draw(bg, (WORLD_WIDTH-bg.getWidth())/2, (WORLD_HEIGHT-bg.getHeight())/2 );
 
-		if(app.getClient().stateChanged()) {
-			getBoardState();
-			updateFrontier();
-			ArrayList<Player> players = app.getClient().getGameModel().getPlayers();
-			for(int i=0; i < players.size(); i++) {
-				scores[i] = players.get(i).getScore();
+		// Display the End Screen if there is no time left
+		if (isGameEnd()) {
+			scoreBoard.setVisible(false);
+			endScreen.setVisible(true);
+			Gdx.input.setCatchBackKey(false);
+			if (!saveStats) {
+				// Save player stats
+				app.getClient().sendEndGameMessage();
+				saveStats = true;
 			}
-		}
+		} else {
 
-		// Check slim stampen for items below threshold every second
-		if (System.currentTimeMillis() - time > 1000) { // && !inTrial
-			app.getClient().sendRequestTrialMessage();
-			time = System.currentTimeMillis();
+			// Update board and score from server
+			if (app.getClient().stateChanged()) {
+				getBoardState();
+				updateFrontier();
+				ArrayList<Player> players = app.getClient().getGameModel().getPlayers();
+				for (int i = 0; i < players.size(); i++) {
+					scores[i] = players.get(i).getScore();
+				}
+			}
+
+			// Check slim stampen for items below threshold every second
+			if (System.currentTimeMillis() - time > 1000 && !inTrial) { // && !inTrial 	else the word might have a missing alpha
+				app.getClient().sendRequestTrialMessage();
+				time = System.currentTimeMillis();
+			}
+
 		}
 
 		// Draw the tiles of the board
@@ -596,12 +612,7 @@ public class Game implements Screen {
 		}
 		batch.end();
 
-		// Display the End Screen if there is no time left
-		if (isGameEnd()) {
-			scoreBoard.setVisible(false);
-			endScreen.setVisible(true);
-			Gdx.input.setCatchBackKey(false);
-		}
+
 		HUD.draw();
 	}
 

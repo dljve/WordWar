@@ -14,6 +14,7 @@ import com.applab.wordwar.server.messages.AddNewItemMessage;
 import com.applab.wordwar.server.messages.CapturedTileMessage;
 import com.applab.wordwar.server.messages.ChangeNameMessage;
 import com.applab.wordwar.server.messages.CreateGameMessage;
+import com.applab.wordwar.server.messages.EndGameMessage;
 import com.applab.wordwar.server.messages.GameStateRequestMessage;
 import com.applab.wordwar.server.messages.GetGamesMessage;
 import com.applab.wordwar.server.messages.InitMessage;
@@ -166,7 +167,7 @@ public class TempRivialClient implements Runnable {
         }
     }
 
-    // Slimstampen funcitons
+    // Slimstampen functions
     public void sendRequestTrialMessage(){
         this.sendMessageToServer(new RequestTrialMessage(this.game.getId(), this.getPlayer().getId()));
     }
@@ -181,6 +182,10 @@ public class TempRivialClient implements Runnable {
 
     public void sendUpdateModelMessage(Item item, long timestamp){
         this.sendMessageToServer(new UpdateModelMessage(this.game.getId(), this.player.getId(), item, timestamp));
+    }
+
+    public void sendEndGameMessage(){
+        this.sendMessageToServer(new EndGameMessage(this.game.getId(),this.player.getId()));
     }
 
     // Networking funcitons

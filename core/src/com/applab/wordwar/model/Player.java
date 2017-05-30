@@ -48,6 +48,10 @@ public class Player implements Serializable{
         this.learningModel.updateModel(item, timestamp);
     }
 
+    public void saveModel() {
+        this.learningModel.endSession();
+    }
+
     public void setColor(int color){
         this.color = color;
     }

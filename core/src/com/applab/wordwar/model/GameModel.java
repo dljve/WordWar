@@ -78,7 +78,7 @@ public class GameModel implements Serializable {
                     BigDecimal.valueOf(15),
                     BigDecimal.valueOf(0.25),
                     BigDecimal.valueOf(0.3), // time to read tile + wait for keyboard + press first key
-                    BigDecimal.valueOf(0.7),
+                    BigDecimal.valueOf(1.0),
                     BigDecimal.valueOf(-0.5));
         }
         return false;
@@ -111,6 +111,16 @@ public class GameModel implements Serializable {
 
     public boolean isEndGame() {
         // TODO implement check if end game!
+        return false;
+    }
+
+    public boolean endGame(int playerId) {
+        try {
+
+            this.getPlayerById(playerId).saveModel();
+        } catch (PlayerNotFoundException e) {
+            e.printStackTrace();
+        }
         return false;
     }
 
