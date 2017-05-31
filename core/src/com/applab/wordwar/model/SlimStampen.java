@@ -288,9 +288,6 @@ public class SlimStampen {
         }
         a.get(i).add(alpha);
         updating = false;
-        //BigDecimal mmm = debug_m(i,getTime());
-        //System.out.println("Activation after update of " + i.toString() +": " + mmm.toPlainString());
-        //printItem(i);
     }
     /* // Old method to estimate new alpha by Van Thiel (2010)
     if (n == 2) {
@@ -328,41 +325,6 @@ public class SlimStampen {
 
         if (m.equals(BigDecimal.ZERO))
             return null; // Negative infinity
-
-        return BigDecimalMath.log(m);
-    }
-
-    private BigDecimal debug_m(Item i, BigDecimal T) {
-        System.out.println("");
-        BigDecimal m = BigDecimal.ZERO, decay, m_ij;
-        m.setScale(p, BigDecimal.ROUND_HALF_UP);
-        int n = t.get(i).size();
-
-        System.out.println(n + " timepoints (");
-        for (int j=0;j<t.get(i).size();j++) System.out.print( t.get(i).get(j).toPlainString() + ", "); System.out.print('\n');
-        for (int j=0;j<a.get(i).size();j++) System.out.print( a.get(i).get(j).toPlainString() + ", "); System.out.print('\n');
-
-        for (int j = 0; j < n && t.get(i).get(j).compareTo(T) < 0; j++) {
-            m_ij = m(i,t.get(i).get(j));
-            System.out.println("t_" + j + " (" + t.get(i).get(j) + "): a = " + m_ij);
-            if (m_ij == null) { // if the activation is -∞, just return the alpha
-                decay = a.get(i).get(j);
-            } else {
-                decay = c.multiply( BigDecimalMath.exp(m_ij) ).add(a.get(i).get(j));
-            }
-            m = m.add( BigDecimalMath.pow( T.subtract(t.get(i).get(j)), decay.negate() ) );
-            System.out.print("(" + T.toPlainString() + "-" + t.get(i).get(j).toPlainString() + ")^{" + decay.negate().toPlainString()+"}+");
-        }
-        System.out.print('\n');
-
-        if (m.equals(BigDecimal.ZERO)) {
-            System.out.println("negative infinity");
-            return null; // Negative infinity
-        } else {
-            System.out.println("ln(" + m.toPlainString() + ")=" + BigDecimalMath.log(m).toPlainString());
-        }
-
-        System.out.println("");
 
         return BigDecimalMath.log(m);
     }
@@ -419,18 +381,5 @@ public class SlimStampen {
     private BigDecimal getTime() {
         return BigDecimal.valueOf((double)(System.currentTimeMillis()-startTime)/1000);
     }
-
-    // TODO: remove this
-    private void printItem(Item i) {
-        String strt = "", stra="", strRT="", strd="";
-        for (int j=0;j<t.get(i).size();j++) strt += t.get(i).get(j).toPlainString() + " ";
-        for (int j=0;j<RT.get(i).size();j++) strRT += RT.get(i).get(j).toPlainString() + " ";
-        for (int j=0;j<a.get(i).size();j++) stra += a.get(i).get(j).toPlainString() + " ";
-        System.out.println("-----------------------------");
-        System.out.println("t: " + strt + " ");
-        System.out.println("RT: " + strRT  + " ");
-        System.out.println("a: " + stra  + " ");
-    }
-
 
 }
