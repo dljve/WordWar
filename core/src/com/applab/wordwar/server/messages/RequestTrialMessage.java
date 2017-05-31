@@ -11,10 +11,12 @@ public class RequestTrialMessage extends RivialProtocol {
 
     private int gameId;
     private int playerId;
+    private long timestamp; // client time
 
-    public RequestTrialMessage(int gameId, int playerId){
+    public RequestTrialMessage(int gameId, int playerId, long timestamp){
         this.gameId = gameId;
         this.playerId = playerId;
+        this.timestamp = timestamp;
     }
 
     public int getGameId() {
@@ -40,5 +42,8 @@ public class RequestTrialMessage extends RivialProtocol {
         return super.logMessage() + ", Game: " + gameId + ", Player:" + playerId;
     }
 
+    public long getTimestamp() {
+        return timestamp;
+    }
 }
 

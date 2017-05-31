@@ -72,7 +72,7 @@ public class GameTableDataStructure {
         joinButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                app.getClient().joinGame(id);
+                app.getClient().joinGame(id, System.currentTimeMillis());
 
                 Gdx.app.postRunnable(new Runnable() {
                     @Override

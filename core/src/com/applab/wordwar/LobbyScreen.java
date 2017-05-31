@@ -53,7 +53,7 @@ public class LobbyScreen implements Screen {
         // TODO: receive games information from server
 
 
-        MainClass.HEIGHT_DISTANCE_UNIT = app.deviceHeight / 18;
+        MainClass.HEIGHT_DISTANCE_UNIT = MainClass.deviceHeight / 18;
 
         initializeRootTable();
 
@@ -99,7 +99,7 @@ public class LobbyScreen implements Screen {
         Texture lobbyLabelTexture = new Texture("topLabelLobby.png");
         TextureRegion lobbyLabelRegion = new TextureRegion(lobbyLabelTexture);
         Image lobbyLabelImage = new Image(lobbyLabelRegion);
-        rootTable.add(lobbyLabelImage).width(app.deviceWidth).height(2 * MainClass.HEIGHT_DISTANCE_UNIT).padBottom(MainClass.HEIGHT_DISTANCE_UNIT);
+        rootTable.add(lobbyLabelImage).width(MainClass.deviceWidth).height(2 * MainClass.HEIGHT_DISTANCE_UNIT).padBottom(MainClass.HEIGHT_DISTANCE_UNIT);
         rootTable.row();
 
     }
@@ -120,7 +120,7 @@ public class LobbyScreen implements Screen {
 
         //Gdx.app.log("Rows: ", rootTable.getRows() + " " + rootTable.);
         scrollPaneTable.pad(10);
-        rootTable.add(scrollPane).width(6 * app.deviceWidth / 7).height(12 * MainClass.HEIGHT_DISTANCE_UNIT).padBottom(MainClass.HEIGHT_DISTANCE_UNIT);
+        rootTable.add(scrollPane).width(6 * MainClass.deviceWidth / 7).height(12 * MainClass.HEIGHT_DISTANCE_UNIT).padBottom(MainClass.HEIGHT_DISTANCE_UNIT);
         rootTable.row();
     }
 
@@ -147,7 +147,7 @@ public class LobbyScreen implements Screen {
 
         createGameButton.getLabel().setFontScale(2f);
 
-        rootTable.add(createGameButton).align(Align.bottom).width(2 * app.deviceWidth / 3).height(2 * MainClass.HEIGHT_DISTANCE_UNIT).padBottom(20);
+        rootTable.add(createGameButton).align(Align.bottom).width(2 * MainClass.deviceWidth / 3).height(2 * MainClass.HEIGHT_DISTANCE_UNIT).padBottom(20);
 
         createGameButton.addListener(new ClickListener() {
             @Override
@@ -161,7 +161,7 @@ public class LobbyScreen implements Screen {
                         e.printStackTrace();
                     }
                 }
-                app.getClient().createGame();
+                app.getClient().createGame(System.currentTimeMillis());
 
                 Gdx.app.postRunnable(new Runnable() {
                     @Override

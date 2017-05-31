@@ -67,8 +67,8 @@ public class RivialServer implements Runnable{
         return games;
     }
 
-    public boolean joinGame(Socket socket, int game) throws GameNotFoundException, PlayerNotFoundException {
-        return this.getGameWithID(game).addPlayer(getPlayerWithSocket(socket));
+    public boolean joinGame(Socket socket, int game, long timestamp) throws GameNotFoundException, PlayerNotFoundException {
+        return this.getGameWithID(game).addPlayer(getPlayerWithSocket(socket), timestamp);
     }
 
     private Player getPlayerWithSocket(Socket socket) throws PlayerNotFoundException{
@@ -215,9 +215,9 @@ public class RivialServer implements Runnable{
     }
 
     // Slimstampen functions
-    public ArrayList<GameTile> handleTrialRequest(int gameId, int playerId) throws GameNotFoundException, PlayerNotFoundException {
+    public ArrayList<GameTile> handleTrialRequest(int gameId, int playerId, long timestamp) throws GameNotFoundException, PlayerNotFoundException {
         GameModel game = this.getGameWithID(gameId);
-        ArrayList<Item> forgotten = game.getNextTrial(playerId);
+        ArrayList<Item> forgotten = game.getNextTrial(playerId,timestamp);
         ArrayList<GameTile> newlyForgotten = new ArrayList<GameTile>();
         int color = this.getPlayerWithId(playerId).getColor();
         for(Item item: forgotten){

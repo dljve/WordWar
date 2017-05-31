@@ -101,13 +101,13 @@ public class TempRivialClient implements Runnable {
         this.gamesToJoin = games;
     }
 
-    public void createGame(){
-        this.sendMessageToServer(new CreateGameMessage());
+    public void createGame(long timestamp){
+        this.sendMessageToServer(new CreateGameMessage(timestamp));
     }
 
-    public void joinGame(int gameID){
+    public void joinGame(int gameID, long timestamp){
         this.game = null;
-        this.sendMessageToServer(new JoinGameMessage(player.getId(), gameID));
+        this.sendMessageToServer(new JoinGameMessage(player.getId(), gameID, timestamp));
     }
 
     public void playerJoinedGame(int playerId, int gameId){
@@ -168,8 +168,8 @@ public class TempRivialClient implements Runnable {
     }
 
     // Slimstampen functions
-    public void sendRequestTrialMessage(){
-        this.sendMessageToServer(new RequestTrialMessage(this.game.getId(), this.getPlayer().getId()));
+    public void sendRequestTrialMessage(long timestamp){
+        this.sendMessageToServer(new RequestTrialMessage(this.game.getId(), this.getPlayer().getId(), timestamp));
     }
 
     public void sendPracticeEventMessage(Item item, long timestamp){
@@ -232,7 +232,7 @@ public class TempRivialClient implements Runnable {
                 Thread.sleep(1000);
                 temp.getGames();
                 Thread.sleep(1000);
-                temp.joinGame(0);
+                temp.joinGame(0, System.currentTimeMillis());
                 Thread.sleep(1000);
                 temp.initializeStartGame();
                 Thread.sleep(1000);

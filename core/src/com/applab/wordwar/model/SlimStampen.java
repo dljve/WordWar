@@ -63,7 +63,7 @@ public class SlimStampen {
      *                  (Van Woudenberg, 2008; Van Thiel, 2010). This gives the maximum spacing,
      *                  while retaining the benefit of the testing effect (Carrier and Pashler, 1992).
      */
-    public SlimStampen(ArrayList<Item> itemSet, boolean randomNovel,
+    public SlimStampen(ArrayList<Item> itemSet, boolean randomNovel, long startTime,
                        BigDecimal n, BigDecimal c, BigDecimal f, BigDecimal F, BigDecimal threshold) {
         random = new Random();
         this.randomNovel = randomNovel;
@@ -85,17 +85,17 @@ public class SlimStampen {
         }
 
         // First session?
-        startTime = System.currentTimeMillis();
+        this.startTime = startTime;
         if (isFirstSession()) {
             // Adjust all items according to psychological time
         }
     }
 
-    public ArrayList<Item> getForgottenTrials() {
+    public ArrayList<Item> getForgottenTrials(long timestamp) {
         ArrayList<Item> forgotten = new ArrayList<Item>();
         if (updating) return forgotten;
 
-        BigDecimal T = getTime().add(BigDecimal.valueOf(0.1f)); // small lookahead to prevent immediate decay
+        BigDecimal T = BigDecimal.valueOf((double)(timestamp-startTime)/1000);
         try {
             for (Item item : presentationSet) {
                 BigDecimal m_item = m( item, T ); // Get activation value at current time
@@ -249,7 +249,7 @@ public class SlimStampen {
         BigDecimal alpha, a1, a2, a_mean;
         if (n < 2) {
             // After the first rehearsal, the standard alpha is returned
-            alpha = BigDecimal.valueOf(0.250000f);
+            alpha = BigDecimal.valueOf(0.300000f);
         } else {
             // Calculate the alpha (2.10)
             alpha = decay.subtract( c.multiply(BigDecimalMath.exp( m(i,t.get(i).get(J)) ) ) );
@@ -288,7 +288,7 @@ public class SlimStampen {
         }
         a.get(i).add(alpha);
         updating = false;
-        //BigDecimal mmm = m(i,getTime());
+        //BigDecimal mmm = debug_m(i,getTime());
         //System.out.println("Activation after update of " + i.toString() +": " + mmm.toPlainString());
         //printItem(i);
     }
@@ -328,6 +328,41 @@ public class SlimStampen {
 
         if (m.equals(BigDecimal.ZERO))
             return null; // Negative infinity
+
+        return BigDecimalMath.log(m);
+    }
+
+    private BigDecimal debug_m(Item i, BigDecimal T) {
+        System.out.println("");
+        BigDecimal m = BigDecimal.ZERO, decay, m_ij;
+        m.setScale(p, BigDecimal.ROUND_HALF_UP);
+        int n = t.get(i).size();
+
+        System.out.println(n + " timepoints (");
+        for (int j=0;j<t.get(i).size();j++) System.out.print( t.get(i).get(j).toPlainString() + ", "); System.out.print('\n');
+        for (int j=0;j<a.get(i).size();j++) System.out.print( a.get(i).get(j).toPlainString() + ", "); System.out.print('\n');
+
+        for (int j = 0; j < n && t.get(i).get(j).compareTo(T) < 0; j++) {
+            m_ij = m(i,t.get(i).get(j));
+            System.out.println("t_" + j + " (" + t.get(i).get(j) + "): a = " + m_ij);
+            if (m_ij == null) { // if the activation is -∞, just return the alpha
+                decay = a.get(i).get(j);
+            } else {
+                decay = c.multiply( BigDecimalMath.exp(m_ij) ).add(a.get(i).get(j));
+            }
+            m = m.add( BigDecimalMath.pow( T.subtract(t.get(i).get(j)), decay.negate() ) );
+            System.out.print("(" + T.toPlainString() + "-" + t.get(i).get(j).toPlainString() + ")^{" + decay.negate().toPlainString()+"}+");
+        }
+        System.out.print('\n');
+
+        if (m.equals(BigDecimal.ZERO)) {
+            System.out.println("negative infinity");
+            return null; // Negative infinity
+        } else {
+            System.out.println("ln(" + m.toPlainString() + ")=" + BigDecimalMath.log(m).toPlainString());
+        }
+
+        System.out.println("");
 
         return BigDecimalMath.log(m);
     }

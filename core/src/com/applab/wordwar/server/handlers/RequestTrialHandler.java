@@ -35,7 +35,7 @@ public class RequestTrialHandler extends RivialHandler {
     public void run() {
         if(serverSide){
             try {
-                ArrayList<GameTile> forgottenTiles = server.handleTrialRequest(message.getGameId(), message.getPlayerId());
+                ArrayList<GameTile> forgottenTiles = server.handleTrialRequest(message.getGameId(), message.getPlayerId(), message.getTimestamp());
                 ReplyProtocol replyProtocol = new ReplyProtocol();
                 for (GameTile forgottenTile: forgottenTiles ){
                     GameModel game = server.getGameWithID(message.getGameId());

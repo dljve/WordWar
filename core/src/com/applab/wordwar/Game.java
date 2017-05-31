@@ -573,7 +573,7 @@ public class Game implements Screen {
 
 			// Check slim stampen for items below threshold every second
 			if (System.currentTimeMillis() - time > 1000 && !inTrial) { // && !inTrial 	else the word might have a missing alpha
-				app.getClient().sendRequestTrialMessage();
+				app.getClient().sendRequestTrialMessage(System.currentTimeMillis());
 				time = System.currentTimeMillis();
 			}
 

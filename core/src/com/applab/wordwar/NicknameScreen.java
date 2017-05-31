@@ -118,7 +118,7 @@ public class NicknameScreen implements Screen {
        // nicknameTextField = new TextField("", skin);
 
 
-        rootTable.add(smallTable).width(0.8f * app.deviceWidth).height(3 * MainClass.HEIGHT_DISTANCE_UNIT).padBottom(7 * MainClass.HEIGHT_DISTANCE_UNIT);
+        rootTable.add(smallTable).width(0.8f * MainClass.deviceWidth).height(3 * MainClass.HEIGHT_DISTANCE_UNIT).padBottom(7 * MainClass.HEIGHT_DISTANCE_UNIT);
         rootTable.row();
 
         smallTable.add(nicknameTextField).expandX().fillX().pad(20);
@@ -143,7 +143,7 @@ public class NicknameScreen implements Screen {
 
         myDialog.button(cancelButton);
 
-        myDialog.getStyle().background.setMinWidth(2 / 3 * app.deviceWidth);
+        myDialog.getStyle().background.setMinWidth(2 / 3 * MainClass.deviceWidth);
         myDialog.getStyle().background.setMinHeight(2 * MainClass.HEIGHT_DISTANCE_UNIT);
 
     }
