@@ -11,10 +11,12 @@ public class JoinGameMessage extends RivialProtocol {
 
     private int player;
     private int game;
+    private long timestamp; // client time
 
-    public JoinGameMessage(int player, int game){
+    public JoinGameMessage(int player, int game, long timestamp) {
         this.player = player;
         this.game = game;
+        this.timestamp = timestamp;
     }
 
     public int getPlayer() {
@@ -32,12 +34,16 @@ public class JoinGameMessage extends RivialProtocol {
 
     @Override
     public RivialHandler getHandler() {
-        return new JoinGameHandler(this);
+        return new JoinGameHandler(this, timestamp);
     }
 
 
     @Override
     public String logMessage(){
         return super.logMessage() + ", Game: " + game + ", Player:" + player;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
     }
 }

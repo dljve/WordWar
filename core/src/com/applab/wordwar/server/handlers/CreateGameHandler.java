@@ -16,7 +16,7 @@ public class CreateGameHandler extends RivialHandler {
 
     CreateGameMessage message;
 
-    public CreateGameHandler(CreateGameMessage message){
+    public CreateGameHandler(CreateGameMessage message, long timestamp){
         this.message = message;
     }
 
@@ -33,7 +33,7 @@ public class CreateGameHandler extends RivialHandler {
                 message.addGame(game);
                 replyProtocol.addReply(message, clientSocket);
                 replyProtocol.sendReplies();
-                server.joinGame(clientSocket, message.getGame());
+                server.joinGame(clientSocket, message.getGame(), message.getTimestamp());
             } catch (PlayerNotFoundException e){
                 e.printStackTrace();
             } catch (GameNotFoundException e){

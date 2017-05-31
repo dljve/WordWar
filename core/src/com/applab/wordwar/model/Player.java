@@ -28,12 +28,12 @@ public class Player implements Serializable{
         this.name = name;
     }
 
-    public void initializeSlimStampen(ArrayList<Item> itemSet, boolean randomNovel, BigDecimal n, BigDecimal c, BigDecimal f, BigDecimal F, BigDecimal threshold){
-        this.learningModel = new SlimStampen(itemSet, randomNovel, n, c, f, F, threshold);
+    public void initializeSlimStampen(ArrayList<Item> itemSet, boolean randomNovel, long startTime, BigDecimal n, BigDecimal c, BigDecimal f, BigDecimal F, BigDecimal threshold){
+        this.learningModel = new SlimStampen(itemSet, randomNovel, startTime, n, c, f, F, threshold);
     }
 
-    public ArrayList<Item> getNextTrial(){
-        return learningModel.getForgottenTrials();
+    public ArrayList<Item> getNextTrial(long timestamp){
+        return learningModel.getForgottenTrials(timestamp);
     }
 
     public void practiceEvent(Item item, long timestamp){

@@ -75,14 +75,14 @@ public class TutorialScreen implements Screen {
         rightArrowTexture = new Texture("rightArrow.png");
         rightArrowImg = new Image(rightArrowTexture);
 
-        textureWidth = 0.1f * app.deviceWidth;
+        textureWidth = 0.1f * MainClass.deviceWidth;
         textureHeight = 2 * MainClass.HEIGHT_DISTANCE_UNIT;
 
         x_position_LeftImg = 0;
-        y_position_LeftImg = app.deviceHeight / 2 - textureHeight / 2;
+        y_position_LeftImg = MainClass.deviceHeight / 2 - textureHeight / 2;
 
-        x_position_RightImg = app.deviceWidth - textureWidth;
-        y_position_RightImg = app.deviceHeight / 2 - textureHeight/2;
+        x_position_RightImg = MainClass.deviceWidth - textureWidth;
+        y_position_RightImg = MainClass.deviceHeight / 2 - textureHeight/2;
 
         leftArrowImg.setPosition(x_position_LeftImg,y_position_LeftImg);
         leftArrowImg.setWidth(textureWidth);
@@ -123,7 +123,7 @@ public class TutorialScreen implements Screen {
 
     }
 
-    private void initializeTutorialImages() {;
+    private void initializeTutorialImages() {
 
         currentTexture = 0;
 
@@ -142,7 +142,7 @@ public class TutorialScreen implements Screen {
         TextureRegion labelTutReg = new TextureRegion(labelTutorialTexture);
         Image labelImgTut = new Image(labelTutReg);
 
-        rootTable.add(labelImgTut).width(app.deviceWidth).height(2 * MainClass.HEIGHT_DISTANCE_UNIT).padBottom(16 * MainClass.HEIGHT_DISTANCE_UNIT);
+        rootTable.add(labelImgTut).width(MainClass.deviceWidth).height(2 * MainClass.HEIGHT_DISTANCE_UNIT).padBottom(16 * MainClass.HEIGHT_DISTANCE_UNIT);
         rootTable.row();
 
     }
@@ -161,7 +161,7 @@ public class TutorialScreen implements Screen {
     }
 
     private void drawTutorialImg(int currentTexture) {
-        float imageWidth = app.deviceWidth * 0.8f;
+        float imageWidth = MainClass.deviceWidth * 0.8f;
         float imageHeight = 14 * MainClass.HEIGHT_DISTANCE_UNIT;
         float x = MainClass.HEIGHT_DISTANCE_UNIT;
         float y =   MainClass.HEIGHT_DISTANCE_UNIT;

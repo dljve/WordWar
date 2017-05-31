@@ -63,7 +63,7 @@ public class GameModel implements Serializable {
         return colors.get(rnd.nextInt(colors.size()));
     }
 
-    public boolean addPlayer(Player player) {
+    public boolean addPlayer(Player player, long timestamp) {
         if (this.canAddPlayer()) {
 
             player.setColor(getRandomColor()); // players.size()
@@ -74,7 +74,7 @@ public class GameModel implements Serializable {
             for(GameTile tile:map){
                 itemSet.add(tile.getItem());
             }
-            player.initializeSlimStampen(itemSet, false,
+            player.initializeSlimStampen(itemSet, false, timestamp,
                     BigDecimal.valueOf(15),
                     BigDecimal.valueOf(0.25),
                     BigDecimal.valueOf(0.3), // time to read tile + wait for keyboard + press first key
@@ -167,8 +167,8 @@ public class GameModel implements Serializable {
         throw new PlayerNotFoundException();
     }
 
-    public ArrayList<Item> getNextTrial(int playerId) throws PlayerNotFoundException{
-        return this.getPlayerById(playerId).getNextTrial();
+    public ArrayList<Item> getNextTrial(int playerId, long timestamp) throws PlayerNotFoundException{
+        return this.getPlayerById(playerId).getNextTrial(timestamp);
     }
 
     public void practiceEvent(int playerId, Item item, long timestamp) throws PlayerNotFoundException{

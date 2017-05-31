@@ -30,7 +30,7 @@ public abstract class RivialProtocol implements Serializable {
 
         private String name;
 
-        private messageType(String name){
+        messageType(String name){
             this.name = name;
         }
 
