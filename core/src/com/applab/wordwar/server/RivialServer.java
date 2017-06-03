@@ -69,8 +69,8 @@ public class RivialServer implements Runnable{
         return games;
     }
 
-    public boolean joinGame(Socket socket, int game) throws GameNotFoundException, PlayerNotFoundException {
-        return this.getGameWithID(game).addPlayer(getPlayerWithSocket(socket));
+    public boolean joinGame(Socket socket, int game, long timestamp) throws GameNotFoundException, PlayerNotFoundException {
+        return this.getGameWithID(game).addPlayer(getPlayerWithSocket(socket), timestamp);
     }
 
     private Player getPlayerWithSocket(Socket socket) throws PlayerNotFoundException{
@@ -125,6 +125,10 @@ public class RivialServer implements Runnable{
 
     public void handleForgottenTile(int game, int player, int tile) throws TileNotFoundException, GameNotFoundException, PlayerNotFoundException{
         this.getGameWithID(game).tileForgotten(tile, player);
+    }
+
+    public boolean handleEndGame(int game, int playerId) throws GameNotFoundException{
+        return getGameWithID(game).endGame(playerId);
     }
 
     @Override
@@ -192,11 +196,18 @@ public class RivialServer implements Runnable{
         try {
             RivialServer server = new RivialServer(port, filename );
             (new Thread(server)).start();
+<<<<<<< HEAD
             //*
             AIModel ai1 = new AIModel(server, "Johan");
             //AIModel ai2 = new AIModel(server, "Danny");
             AIModel ai3 = new AIModel(server, "Anne");
             System.out.println("AI1 creating game");
+=======
+            /*
+            AIModel ai1 = new AIModel(ip, port);
+            AIModel ai2 = new AIModel(ip, port);
+            AIModel ai3 = new AIModel(ip, port);
+>>>>>>> 67551bbb19f4fdf19ab993f61a857d22fa0756fd
             int gameid = ai1.createGame();
             System.out.println(server.getGameWithID(gameid).getMap());
             System.out.println("Game created: " + gameid);
@@ -217,7 +228,7 @@ public class RivialServer implements Runnable{
             //ai2.startGame();
             System.out.println("AI3 starting game " + gameid);
             ai3.startGame();
-            //*/
+            */
         }catch (IOException e){
             e.printStackTrace();
         }catch (InterruptedException e){
@@ -230,9 +241,9 @@ public class RivialServer implements Runnable{
     }
 
     // Slimstampen functions
-    public ArrayList<GameTile> handleTrialRequest(int gameId, int playerId) throws GameNotFoundException, PlayerNotFoundException {
+    public ArrayList<GameTile> handleTrialRequest(int gameId, int playerId, long timestamp) throws GameNotFoundException, PlayerNotFoundException {
         GameModel game = this.getGameWithID(gameId);
-        ArrayList<Item> forgotten = game.getNextTrial(playerId);
+        ArrayList<Item> forgotten = game.getNextTrial(playerId,timestamp);
         ArrayList<GameTile> newlyForgotten = new ArrayList<GameTile>();
         int color = this.getPlayerWithId(playerId).getColor();
         for(Item item: forgotten){

@@ -17,7 +17,7 @@ public class JoinGameHandler extends RivialHandler {
 
     private JoinGameMessage message;
 
-    public JoinGameHandler(JoinGameMessage message){
+    public JoinGameHandler(JoinGameMessage message, long timestamp){
         this.message = message;
     }
 
@@ -30,7 +30,7 @@ public class JoinGameHandler extends RivialHandler {
         try {
             if (serverSide) {
                 try {
-                    server.joinGame(clientSocket, message.getGame());
+                    server.joinGame(clientSocket, message.getGame(), message.getTimestamp());
                     ReplyProtocol reply = new ReplyProtocol();
                     for (Player player : server.getPlayers(message.getGame())) {
                         reply.addReply(message, player.getSocket());

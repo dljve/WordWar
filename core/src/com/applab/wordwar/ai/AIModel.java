@@ -119,6 +119,7 @@ public class AIModel extends Socket implements Runnable{
         return server.getGameWithID(this.gameid).getFrontier(player.getColor());
     }
 
+<<<<<<< HEAD
     public int createGame() throws PlayerNotFoundException, GameNotFoundException{
         System.out.println("AI " + this.player + ": Creating game");
         this.gameid = server.createGame();
@@ -129,6 +130,53 @@ public class AIModel extends Socket implements Runnable{
     public void joinGame(int gameid) throws PlayerNotFoundException, GameNotFoundException{
         System.out.println("AI " + this.player.getName() + ": Joining game " + gameid);
         server.joinGame(this, gameid);
+=======
+    public int createGame(long timestamp){
+        client.createGame(timestamp);
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                boolean gameNotCreated = true;
+                while(gameNotCreated) {
+                    gameNotCreated = (client.getGameModel() == null);
+                }
+            }
+        });
+        t.start();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return client.getGameModel().getId();
+    }
+
+    public void joinRandomGame(long timestamp){
+        client.getGames();
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                boolean gamesReceived = false;
+                while(!gamesReceived){
+                    gamesReceived = client.getGamesToJoin() == null;
+                }
+            }
+        });
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        ArrayList<GameModel> games = client.getGamesToJoin();
+        client.joinGame(games.get(randomGenerator.nextInt(games.size())).getId(), timestamp);
+
+    }
+
+    public void joinGame(int gameid, long timestamp){
+        client.joinGame(gameid, timestamp);
+>>>>>>> 67551bbb19f4fdf19ab993f61a857d22fa0756fd
     }
 
     public Thread startGame(){

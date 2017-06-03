@@ -11,8 +11,10 @@ import com.applab.wordwar.server.handlers.RivialHandler;
 public class CreateGameMessage extends RivialProtocol {
 
     private int game;
+    private long timestamp; // client time
 
-    public CreateGameMessage(){
+    public CreateGameMessage(long timestamp){
+        this.timestamp = timestamp;
     }
 
     public int getGame() {
@@ -30,12 +32,16 @@ public class CreateGameMessage extends RivialProtocol {
 
     @Override
     public RivialHandler getHandler() {
-        return new CreateGameHandler(this);
+        return new CreateGameHandler(this,timestamp);
     }
 
 
     @Override
     public String logMessage(){
         return super.logMessage();
+    }
+
+    public long getTimestamp() {
+        return timestamp;
     }
 }

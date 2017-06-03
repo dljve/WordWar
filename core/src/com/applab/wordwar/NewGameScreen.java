@@ -114,14 +114,14 @@ public class NewGameScreen implements Screen {
             }
         });
 
-        rootTable.add(lobbyLabelImage).width(app.deviceWidth).height(2 * MainClass.HEIGHT_DISTANCE_UNIT).padBottom(MainClass.HEIGHT_DISTANCE_UNIT).align(Align.top);
+        rootTable.add(lobbyLabelImage).width(MainClass.deviceWidth).height(2 * MainClass.HEIGHT_DISTANCE_UNIT).padBottom(MainClass.HEIGHT_DISTANCE_UNIT).align(Align.top);
         rootTable.row();
 
         //adding the info about how to create the game
         Texture infoTexture = new Texture("infoNewGame.png");
         TextureRegion infoTextureRegion = new TextureRegion(infoTexture);
         Image infoImage = new Image(infoTextureRegion);
-        rootTable.add(infoImage).width(2 * app.deviceWidth / 3).height(3 * MainClass.HEIGHT_DISTANCE_UNIT).padBottom(MainClass.HEIGHT_DISTANCE_UNIT);
+        rootTable.add(infoImage).width(2 * MainClass.deviceWidth / 3).height(3 * MainClass.HEIGHT_DISTANCE_UNIT).padBottom(MainClass.HEIGHT_DISTANCE_UNIT);
         rootTable.row();
 
         createWordlistTable();
@@ -235,7 +235,7 @@ public class NewGameScreen implements Screen {
 
                 myDialog.button(cancelButton);
 
-                myDialog.getStyle().background.setMinWidth(2 / 3 * app.deviceWidth);
+                myDialog.getStyle().background.setMinWidth(2 / 3 * MainClass.deviceWidth);
                 myDialog.getStyle().background.setMinHeight(2 * MainClass.HEIGHT_DISTANCE_UNIT);
                 myDialog.show(stage);
             }
@@ -243,7 +243,7 @@ public class NewGameScreen implements Screen {
         });
 
 
-        rootTable.add(createGameButton).align(Align.bottom).width(2 * app.deviceWidth / 3).height(2 * MainClass.HEIGHT_DISTANCE_UNIT).padBottom(MainClass.HEIGHT_DISTANCE_UNIT);
+        rootTable.add(createGameButton).align(Align.bottom).width(2 * MainClass.deviceWidth / 3).height(2 * MainClass.HEIGHT_DISTANCE_UNIT).padBottom(MainClass.HEIGHT_DISTANCE_UNIT);
 
     }
 

@@ -9,6 +9,7 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Random;
@@ -62,7 +63,7 @@ public class SlimStampen {
      *                  (Van Woudenberg, 2008; Van Thiel, 2010). This gives the maximum spacing,
      *                  while retaining the benefit of the testing effect (Carrier and Pashler, 1992).
      */
-    public SlimStampen(ArrayList<Item> itemSet, boolean randomNovel,
+    public SlimStampen(ArrayList<Item> itemSet, boolean randomNovel, long startTime,
                        BigDecimal n, BigDecimal c, BigDecimal f, BigDecimal F, BigDecimal threshold) {
         random = new Random();
         this.randomNovel = randomNovel;
@@ -84,19 +85,20 @@ public class SlimStampen {
         }
 
         // First session?
-        startTime = System.currentTimeMillis();
+        this.startTime = startTime;
         if (isFirstSession()) {
             // Adjust all items according to psychological time
         }
     }
 
-    public ArrayList<Item> getForgottenTrials() {
+    public ArrayList<Item> getForgottenTrials(long timestamp) {
         ArrayList<Item> forgotten = new ArrayList<Item>();
+        if (updating) return forgotten;
 
-        BigDecimal T = getTime();
+        BigDecimal T = BigDecimal.valueOf((double)(timestamp-startTime)/1000);
         try {
             for (Item item : presentationSet) {
-                BigDecimal m_item = m(item, T); // Get activation value at current time
+                BigDecimal m_item = m( item, T ); // Get activation value at current time
                 // Negative infinity or below threshold
                 if (m_item != null) {
                     if (m_item.compareTo(threshold) < 0) {
@@ -205,13 +207,14 @@ public class SlimStampen {
      * @param i
      */
 
+    private boolean updating = false;
     public void updateModel(Item i, long timestamp) {
+        updating = true;
         i = findItem(i);
 
         int n = t.get(i).size(); // Number of previous rehearsals
         int J = n-1; // Index of last rehearsal
-        BigDecimal T = BigDecimal.valueOf((double)(timestamp-startTime)/1000);
-        //BigDecimal T = getTime(); // The current time t
+        BigDecimal T = BigDecimal.valueOf((double)(timestamp-startTime)/1000); // Time T the message was send
 
         // Calculate a maximum reaction time as (2.11) [1.5*(F*e^(-threshold)+f)]
         BigDecimal RT_max = BigDecimal.valueOf(1.5).multiply(F.multiply(BigDecimalMath.exp(threshold.negate())).add(f));
@@ -245,8 +248,8 @@ public class SlimStampen {
         // See Figure 2.2 in Van Thiel (2010) for a flowchart of the basic process
         BigDecimal alpha, a1, a2, a_mean;
         if (n < 2) {
-            // After the first rehearsal, the standard alpha of 0.3 is returned
-            alpha = BigDecimal.valueOf(0.3);
+            // After the first rehearsal, the standard alpha is returned
+            alpha = BigDecimal.valueOf(0.300000f);
         } else {
             // Calculate the alpha (2.10)
             alpha = decay.subtract( c.multiply(BigDecimalMath.exp( m(i,t.get(i).get(J)) ) ) );
@@ -284,7 +287,7 @@ public class SlimStampen {
             alpha = a_mean; // Use the last mean alpha
         }
         a.get(i).add(alpha);
-        printItem(i);
+        updating = false;
     }
     /* // Old method to estimate new alpha by Van Thiel (2010)
     if (n == 2) {
@@ -330,11 +333,43 @@ public class SlimStampen {
         return true;
     }
 
-    private void endSession() throws IOException {
-        // TODO: Save final alpha values for user? See Nijboer discussion
-        // See eq. 2.16 on page 20. Maybe in later version, not prototype
+    public void endSession() {
+        String dataPath = "";
 
+        FileWriter csv;
+        try {
+            csv = new FileWriter(dataPath + "a.csv");
+            for (Map.Entry<Item, ArrayList<BigDecimal>> entry : a.entrySet()) {
+                csv.append(entry.getKey().toString() + ',');
+                for (BigDecimal bd : entry.getValue())
+                    csv.append(bd.toPlainString() + ',');
+                csv.append('\n');
+            }
+            csv.flush();
+            csv.close();
 
+            csv = new FileWriter(dataPath + "RT.csv");
+            for (Map.Entry<Item, ArrayList<BigDecimal>> entry : RT.entrySet()) {
+                csv.append(entry.getKey().toString() + ',');
+                for (BigDecimal bd : entry.getValue())
+                    csv.append(bd.toPlainString() + ',');
+                csv.append('\n');
+            }
+            csv.flush();
+            csv.close();
+
+            csv = new FileWriter(dataPath + "t.csv");
+            for (Map.Entry<Item, ArrayList<BigDecimal>> entry : t.entrySet()) {
+                csv.append(entry.getKey().toString() + ',');
+                for (BigDecimal bd : entry.getValue())
+                    csv.append(bd.toPlainString() + ',');
+                csv.append('\n');
+            }
+            csv.flush();
+            csv.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         return;
     }
@@ -346,18 +381,5 @@ public class SlimStampen {
     private BigDecimal getTime() {
         return BigDecimal.valueOf((double)(System.currentTimeMillis()-startTime)/1000);
     }
-
-    // TODO: remove this
-    private void printItem(Item i) {
-        String strt = "", stra="", strRT="", strd="";
-        for (int j=0;j<t.get(i).size();j++) strt += t.get(i).get(j).toPlainString() + " ";
-        for (int j=0;j<RT.get(i).size();j++) strRT += RT.get(i).get(j).toPlainString() + " ";
-        for (int j=0;j<a.get(i).size();j++) stra += a.get(i).get(j).toPlainString() + " ";
-        System.out.println("-----------------------------");
-        System.out.println("t: " + strt + " ");
-        System.out.println("RT: " + strRT  + " ");
-        System.out.println("a: " + stra  + " ");
-    }
-
 
 }
