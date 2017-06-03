@@ -58,8 +58,10 @@ public class RivialServer implements Runnable{
         }
         Player player = new Player(client, clients.size(), "Add name");
         clients.add(player);
-        Thread thread = new Thread(new ReadThread(this, client));
-        thread.start();
+        if(! (client instanceof AIModel) ){
+            Thread thread = new Thread(new ReadThread(this, client));
+            thread.start();
+        }
         return player;
     }
 
@@ -89,7 +91,7 @@ public class RivialServer implements Runnable{
         throw new PlayerNotFoundException();
     }
 
-    public int createGame() throws PlayerNotFoundException{
+    public int createGame() {
         GameModel game = new GameModel(this.words, this.games.size());
         this.games.add(game);
         return game.getId();
@@ -185,27 +187,44 @@ public class RivialServer implements Runnable{
     public static void main(String[] args) throws IOException, GameNotFoundException {
         String filename = "swahili-english.txt"; // Also change at clientside
         int port = 8888;
-        String ip = "localhost"; // TODO, set proper ip adress
+        String ip = "192.168.0.1"; // TODO, set proper ip adress
         System.out.println(port);
         try {
             RivialServer server = new RivialServer(port, filename );
             (new Thread(server)).start();
             //*
-            AIModel ai1 = new AIModel(ip, port);
-            AIModel ai2 = new AIModel(ip, port);
-            AIModel ai3 = new AIModel(ip, port);
+            AIModel ai1 = new AIModel(server, "Johan");
+            //AIModel ai2 = new AIModel(server, "Danny");
+            AIModel ai3 = new AIModel(server, "Anne");
+            System.out.println("AI1 creating game");
             int gameid = ai1.createGame();
-            ai2.joinGame(gameid);
+            System.out.println(server.getGameWithID(gameid).getMap());
+            System.out.println("Game created: " + gameid);
+            Thread.sleep(3000);
+            System.out.println("AI2 joining game " + gameid);
+            //ai2.joinGame(gameid);
+            //System.out.println("AI3 joining game " + gameid);
             ai3.joinGame(gameid);
+            System.out.println(server.getPlayers(gameid));
             boolean gameStarted = false;
             while(!gameStarted){
                 gameStarted = server.getPlayers(gameid).size() == 3;
+                //System.out.println("Wainging for players " + server.getPlayers(gameid).size() + "/3");
             }
+            System.out.println("AI1 starting game " + gameid);
             ai1.startGame();
-            ai2.startGame();
+            //System.out.println("AI2 starting game " + gameid);
+            //ai2.startGame();
+            System.out.println("AI3 starting game " + gameid);
             ai3.startGame();
             //*/
         }catch (IOException e){
+            e.printStackTrace();
+        }catch (InterruptedException e){
+            e.printStackTrace();
+        } catch (GameNotFoundException e){
+            e.printStackTrace();
+        } catch (PlayerNotFoundException e){
             e.printStackTrace();
         }
     }

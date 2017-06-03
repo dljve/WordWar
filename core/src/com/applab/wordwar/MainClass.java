@@ -37,12 +37,11 @@ public class MainClass extends Game  {
 
 
 		try {
-			client = new TempRivialClient("192.168.0.100", 8888);
+			client = new TempRivialClient(" 192.168.0.1", 8888);
 			(new Thread(client)).start();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 		setScreen(new SplashScreen(this));
 	}
 

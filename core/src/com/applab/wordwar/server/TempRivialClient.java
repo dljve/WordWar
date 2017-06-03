@@ -27,6 +27,7 @@ import com.badlogic.gdx.Gdx;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.StreamCorruptedException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -41,6 +42,7 @@ public class TempRivialClient implements Runnable {
     private ArrayList<GameModel> gamesToJoin;
     private boolean gameStarted = false;
     private boolean stateChanged = false;
+    private RivialProtocol lastSendMessage;
 
     public TempRivialClient(String ip, int port) throws IOException{
         this.portNumber = port;
@@ -86,6 +88,8 @@ public class TempRivialClient implements Runnable {
     }
 
     public void changeName(String name){
+        System.out.print(this.player);
+        this.player.setName(name);
         this.sendMessageToServer(new ChangeNameMessage(this.player.getId(), name));
     }
 
@@ -185,9 +189,11 @@ public class TempRivialClient implements Runnable {
 
     // Networking funcitons
     public void sendMessageToServer(RivialProtocol message){
+        System.out.println("Sending a message!");
         try {
             ReplyProtocol reply = new ReplyProtocol();
             reply.addReply(message, socket);
+            this.lastSendMessage = message;
             reply.sendReplies();
         } catch (IOException e){
             e.printStackTrace();
@@ -195,7 +201,8 @@ public class TempRivialClient implements Runnable {
     }
 
     public void run(){
-        while(true) {
+        boolean running = true;
+        while(running) {
             try {
                 ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
                 try {
@@ -210,6 +217,10 @@ public class TempRivialClient implements Runnable {
                     e.printStackTrace();
                 }
 
+            } catch (StreamCorruptedException e){
+                System.err.println("ERROR: Exception caught at: " + System.currentTimeMillis() + " "+ this.getPlayer().getName()+ " " + this.lastSendMessage.logMessage());
+                e.printStackTrace();
+                running = false;
             } catch (UnknownHostException e) {
                 e.printStackTrace();
             } catch (IOException e) {
