@@ -200,28 +200,21 @@ public class GameModel implements Serializable {
     private ArrayList<GameTile> getBaseTileFrontier(int color){
         int[] idxs;
         switch (color){
-            case Player.BLUE : idxs = new int [] {17, 18, 33, 45};
+            case Player.BLUE : idxs = new int [] {17, 18, 32, 43};
                 break;
-            case Player.RED: idxs = new int[] {24,23,37,50};
+            case Player.RED: idxs = new int[] {23, 24, 36, 48};
                 break;
-            case Player.YELLOW: idxs = new int[] {52,54,41,42};
+            case Player.YELLOW: idxs = new int[] {39,40,50,51};
                 break;
             default : idxs = new int[]{};
         }
         ArrayList<GameTile> frontier = new ArrayList<GameTile>();
         for(int i : idxs){
-            if(!this.getFromMapWithBaseTiles(i).isOwnedBy(color)){
+            if(!map.get(i).isOwnedBy(color)){
                 frontier.add(map.get(i));
             }
         }
         return frontier;
-    }
-
-    private GameTile getFromMapWithBaseTiles(int i) {
-        if (i > 53) i--;
-        if (i > 32) i--;
-        if (i > 38) i--;
-        return map.get(i);
     }
 
     private boolean areNeighbors(int i, int j) {
@@ -289,7 +282,22 @@ public class GameModel implements Serializable {
                 {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,1,0}
         };
         //System.out.println("Checking if " + i + " and " + j + " are neighbors: " + neighborMatrix[i][j]);
+        i = this.transformIndex(i, false);
+        j = this.transformIndex(j, false);
         return neighborMatrix[i][j] == 1;
+    }
+
+    private int transformIndex(int i, boolean withToWithoutBaseTile) {
+        int transform;
+        if (withToWithoutBaseTile){
+            transform = -1;
+        } else {
+            transform = +1;
+        }
+        if (i > 31) i+=transform;
+        if (i > 37) i+=transform;
+        if (i > 52) i+=transform;
+        return i;
     }
 
     @Override
