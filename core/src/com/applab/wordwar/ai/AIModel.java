@@ -49,8 +49,8 @@ public class AIModel extends Socket implements Runnable{
     public AIModel(RivialServer server, String name) { // "192.168.43.47", 8888;
         this.meanResponseTime = 1200;
         this.stdResponseTime = 250;
-        this.meanBetweenTrialTime = 5000;
-        this.stdBetweenTrialTime = 1500;
+        this.meanBetweenTrialTime = 500;
+        this.stdBetweenTrialTime = 250;
         this.meanTypeDuration = 500;
         this.stdTypeDuration = 50;
 
@@ -150,16 +150,17 @@ public class AIModel extends Socket implements Runnable{
 
     @Override
     public void run() {
+        System.out.println("AI " + this.player.getName() + ": Starting to play the Game!!!");
         long previousTime = System.currentTimeMillis();
         running = true;
-        long waitBetwenTrial = this.randomBetweenTrialTime();
+        long waitBetweenTrial = 0L;
         while(running){
  //           System.out.println("AI " + this.name + ": Tick");
             long now = System.currentTimeMillis();
-            if (now - previousTime > waitBetwenTrial) {
+            if (now - previousTime > waitBetweenTrial) {
                 this.requestTrial();
                 this.makeMove();
-                waitBetwenTrial = this.randomBetweenTrialTime();
+                waitBetweenTrial = this.randomBetweenTrialTime();
                 previousTime = now;
             }
             Thread.yield();
