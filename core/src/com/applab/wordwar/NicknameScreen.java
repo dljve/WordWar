@@ -105,6 +105,7 @@ public class NicknameScreen implements Screen {
 
                 }else{
                     Gdx.input.setOnscreenKeyboardVisible(false);
+                    Gdx.app.log("NickNameScreen", "App : " + app + ", Client: " + app.getClient());
                     app.getClient().changeName(playerName);
                     app.setScreen(new LobbyScreen(app));
                     dispose();

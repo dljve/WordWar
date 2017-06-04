@@ -191,23 +191,14 @@ public class RivialServer implements Runnable{
     public static void main(String[] args) throws IOException, GameNotFoundException {
         String filename = "swahili-english.txt"; // Also change at clientside
         int port = 8888;
-        String ip = "192.168.0.1"; // TODO, set proper ip adress
         System.out.println(port);
         try {
             RivialServer server = new RivialServer(port, filename );
             (new Thread(server)).start();
-<<<<<<< HEAD
-            //*
             AIModel ai1 = new AIModel(server, "Johan");
             //AIModel ai2 = new AIModel(server, "Danny");
             AIModel ai3 = new AIModel(server, "Anne");
             System.out.println("AI1 creating game");
-=======
-            /*
-            AIModel ai1 = new AIModel(ip, port);
-            AIModel ai2 = new AIModel(ip, port);
-            AIModel ai3 = new AIModel(ip, port);
->>>>>>> 67551bbb19f4fdf19ab993f61a857d22fa0756fd
             int gameid = ai1.createGame();
             System.out.println(server.getGameWithID(gameid).getMap());
             System.out.println("Game created: " + gameid);
@@ -228,7 +219,6 @@ public class RivialServer implements Runnable{
             //ai2.startGame();
             System.out.println("AI3 starting game " + gameid);
             ai3.startGame();
-            */
         }catch (IOException e){
             e.printStackTrace();
         }catch (InterruptedException e){
