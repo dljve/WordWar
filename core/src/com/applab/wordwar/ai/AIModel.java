@@ -15,6 +15,7 @@ import com.applab.wordwar.server.messages.CapturedTileMessage;
 import com.applab.wordwar.server.messages.ChangeNameMessage;
 import com.applab.wordwar.server.messages.JoinGameMessage;
 import com.applab.wordwar.server.messages.PracticeEventMessage;
+import com.applab.wordwar.server.messages.RequestTrialMessage;
 import com.applab.wordwar.server.messages.RivialProtocol;
 import com.applab.wordwar.server.messages.UpdateModelMessage;
 
@@ -143,24 +144,25 @@ public class AIModel extends Socket implements Runnable{
         return thread;
     }
 
+    private void requestTrial(){
+        this.mimicServerCommunication(new RequestTrialMessage(gameid, player.getId(), System.currentTimeMillis()));
+    }
+
     @Override
     public void run() {
         long previousTime = System.currentTimeMillis();
         running = true;
+        long waitBetwenTrial = this.randomBetweenTrialTime();
         while(running){
  //           System.out.println("AI " + this.name + ": Tick");
             long now = System.currentTimeMillis();
-            try {
-                if (!server.getGameWithID(gameid).canAddPlayer()) { //Start playing when 3 players are there!
-                    if (now - previousTime > this.randomBetweenTrialTime()) {
-                        this.makeMove();
-                    }
-                }
+            if (now - previousTime > waitBetwenTrial) {
+                this.requestTrial();
+                this.makeMove();
+                waitBetwenTrial = this.randomBetweenTrialTime();
                 previousTime = now;
-                Thread.yield();
-            } catch (GameNotFoundException e){
-                e.printStackTrace();
             }
+            Thread.yield();
         }
     }
 
