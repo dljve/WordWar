@@ -184,15 +184,44 @@ public class GameModel implements Serializable {
     }
 
     public ArrayList<GameTile> getFrontier(int color) {
-        ArrayList<GameTile> frontier = new ArrayList<GameTile>();
+        ArrayList<GameTile> frontier = this.getBaseTileFrontier(color);
         for(int i = 0; i < map.size(); i++ ){
-            for(int j = i + 1; j < map.size(); j++ ){
-                if(map.get(i).isOwnedBy(color) && map.get(j).isOwnedBy(color) && this.areNeighbors(i,j)){
-                    frontier.add(map.get(j));
+            if (map.get(i).isOwnedBy(color)) {
+                for (int j = i + 1; j < map.size(); j++) {
+                    if (!map.get(j).isOwnedBy(color) && this.areNeighbors(i, j)) {
+                        frontier.add(map.get(j));
+                    }
                 }
             }
         }
         return frontier;
+    }
+
+    private ArrayList<GameTile> getBaseTileFrontier(int color){
+        int[] idxs;
+        switch (color){
+            case Player.BLUE : idxs = new int [] {17, 18, 33, 45};
+                break;
+            case Player.RED: idxs = new int[] {24,23,37,50};
+                break;
+            case Player.YELLOW: idxs = new int[] {52,54,41,42};
+                break;
+            default : idxs = new int[]{};
+        }
+        ArrayList<GameTile> frontier = new ArrayList<GameTile>();
+        for(int i : idxs){
+            if(!this.getFromMapWithBaseTiles(i).isOwnedBy(color)){
+                frontier.add(map.get(i));
+            }
+        }
+        return frontier;
+    }
+
+    private GameTile getFromMapWithBaseTiles(int i) {
+        if (i > 53) i--;
+        if (i > 32) i--;
+        if (i > 38) i--;
+        return map.get(i);
     }
 
     private boolean areNeighbors(int i, int j) {
@@ -259,6 +288,7 @@ public class GameModel implements Serializable {
                 {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,1,0,1},
                 {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,1,0}
         };
+        //System.out.println("Checking if " + i + " and " + j + " are neighbors: " + neighborMatrix[i][j]);
         return neighborMatrix[i][j] == 1;
     }
 
@@ -285,5 +315,8 @@ public class GameModel implements Serializable {
             string = string + tile.toString() + ", ";
         }
         return string + "]";
+    }
+
+    public void resetTimer() {
     }
 }

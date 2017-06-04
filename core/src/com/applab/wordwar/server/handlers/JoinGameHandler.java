@@ -1,6 +1,7 @@
 package com.applab.wordwar.server.handlers;
 
 
+import com.applab.wordwar.ai.AIModel;
 import com.applab.wordwar.model.Player;
 import com.applab.wordwar.server.ReplyProtocol;
 import com.applab.wordwar.server.exceptions.GameNotFoundException;

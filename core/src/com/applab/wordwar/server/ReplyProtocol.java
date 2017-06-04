@@ -1,6 +1,7 @@
 package com.applab.wordwar.server;
 
 
+import com.applab.wordwar.ai.AIModel;
 import com.applab.wordwar.server.messages.RivialProtocol;
 
 import java.io.IOException;
@@ -18,6 +19,7 @@ public class ReplyProtocol {
     int nrReplies = 0;
 
     public void addReply(RivialProtocol reply, Socket client){
+        if (client instanceof AIModel) return;
         this.replies[nrReplies] = reply;
         this.clients[nrReplies] = client;
         this.nrReplies ++;

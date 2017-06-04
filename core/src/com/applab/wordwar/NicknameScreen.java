@@ -2,6 +2,7 @@ package com.applab.wordwar;
 
 import com.applab.wordwar.LobbyScreen;
 import com.applab.wordwar.MainClass;
+import com.applab.wordwar.server.TempRivialClient;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -104,6 +105,7 @@ public class NicknameScreen implements Screen {
 
                 }else{
                     Gdx.input.setOnscreenKeyboardVisible(false);
+                    Gdx.app.log("NickNameScreen", "App : " + app + ", Client: " + app.getClient());
                     app.getClient().changeName(playerName);
                     app.setScreen(new LobbyScreen(app));
                     dispose();
