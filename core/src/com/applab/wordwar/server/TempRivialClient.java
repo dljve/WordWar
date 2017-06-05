@@ -26,10 +26,12 @@ import com.applab.wordwar.server.messages.StartGameMessage;
 import com.applab.wordwar.server.messages.UpdateModelMessage;
 import com.badlogic.gdx.Gdx;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.StreamCorruptedException;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
@@ -49,6 +51,8 @@ public class TempRivialClient implements Runnable {
         this.portNumber = port;
         this.ip = ip;
         this.socket = new Socket(this.ip, this.portNumber);
+
+        // only when first time connect
         this.initializeConnection();
     }
 
@@ -221,7 +225,14 @@ public class TempRivialClient implements Runnable {
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 }
-
+            } catch (SocketTimeoutException e) {
+                // Not receiving from client
+            } catch (EOFException e) {
+                try {
+                    this.socket = new Socket(this.ip, this.portNumber);
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
             } catch (StreamCorruptedException e){
                 System.err.println("ERROR: Exception caught at: " + System.currentTimeMillis() + " "+ this.getPlayer().getName()+ " " + this.lastSendMessage.logMessage());
                 e.printStackTrace();

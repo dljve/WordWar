@@ -7,6 +7,7 @@ import com.applab.wordwar.server.messages.RivialProtocol;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.net.SocketException;
 
 /**
  * Created by arian on 9-4-2017.
@@ -27,9 +28,13 @@ public class ReplyProtocol {
 
     public void sendReplies() throws IOException {
         for (int i = 0; i< nrReplies; i++) {
-            ObjectOutputStream out =
-                    new ObjectOutputStream(clients[i].getOutputStream());
-            out.writeObject(replies[i]);
+            try {
+                ObjectOutputStream out =
+                        new ObjectOutputStream(clients[i].getOutputStream());
+                out.writeObject(replies[i]);
+            } catch (SocketException e) {
+
+            }
         }
     }
 }

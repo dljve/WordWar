@@ -18,6 +18,7 @@ import com.applab.wordwar.server.messages.RivialProtocol;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.EOFException;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -28,6 +29,8 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketAddress;
+import java.net.SocketException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -70,11 +73,33 @@ public class RivialServer implements Runnable{
     }
 
     public Player addClient(Socket client){
+
         for(Player player: clients){
             if(player.getSocket().equals(client)){
                 return player;
             }
         }
+
+        Player player = new Player(client, clients.size(), "");
+        clients.add(player);
+        return player;
+
+        /*
+        if(!(client instanceof AIModel)) {
+            // reconnect player
+            for (Player player : clients) {
+                if (player.getSocket().getLocalSocketAddress() != null) {
+                    System.out.println(player.getName() + "  " + player.getSocket().getLocalSocketAddress() + " " + client.getLocalSocketAddress());
+
+                    if (player.getSocket().getLocalSocketAddress().equals(client.getLocalSocketAddress())) {
+                        System.out.println("Player " + player.getName() + " reconnecting");
+                        return player;
+                    }
+                }
+            }
+        }
+
+
         Player player = new Player(client, clients.size(), "Add name");
         clients.add(player);
         if(! (client instanceof AIModel) ){
@@ -82,6 +107,7 @@ public class RivialServer implements Runnable{
             thread.start();
         }
         return player;
+        */
     }
 
     public ArrayList<GameModel> getGames(){
@@ -176,7 +202,31 @@ public class RivialServer implements Runnable{
                         // Handle message
                         RivialHandler handler = protocol.getHandler();
                         handler.handleServerSide(this, currentClient);
-                        this.addClient(currentClient);
+                        //this.addClient(currentClient); // AKA: create a thread with a new player
+
+
+
+
+                        Player player = null;
+                        // Reconnect: look if the client/player already exists
+                        for (Player client : clients) {
+                            if (client.getSocket().getLocalAddress() != null) {
+                                System.out.println(client.getName() + "  " + client.getSocket().getLocalAddress() + " " + currentClient.getLocalAddress());
+                                if (client.getSocket().getLocalAddress().equals(currentClient.getLocalAddress())) {
+                                    System.out.println("Player " + player.getName() + " reconnected");
+                                    player = client;
+                                    break;
+                                }
+                            }
+                        }
+                        // New client: create a communication thread
+                        if (player == null) {
+                            Thread thread = new Thread(new ReadThread(this, currentClient));
+                            thread.start();
+                            clients.add(player);
+                        }
+
+
                         String log = handler.logMessage();
                         if(!log.isEmpty()) {
                             fw.write(log + "\n");
@@ -261,7 +311,7 @@ public class RivialServer implements Runnable{
             //ai2.startGame();
             System.out.println("AI3 starting game " + gameid);
             ai3.startGame();
-        }catch (IOException e){
+        } catch (IOException e){
             e.printStackTrace();
         //}catch (InterruptedException e){
          //   e.printStackTrace();
@@ -377,6 +427,16 @@ public class RivialServer implements Runnable{
                     Thread.yield();
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
+                } catch (SocketException e) {
+                    // Tries to write to a closed stream / connection reset
+                    try {
+                        client = new Socket(client.getLocalAddress(),8888);
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+                } catch (EOFException e) {
+                    // -1 = nothing to read
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 } finally {
