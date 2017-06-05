@@ -35,7 +35,6 @@ public class MainClass extends Game  {
 		splashScreenDisplayTime = 1000l;
 		HEIGHT_DISTANCE_UNIT = deviceHeight / 18;
 
-
 		try {
 			client = new TempRivialClient("192.168.0.100", 8888);
 			Gdx.app.log("MainClass/app", "Client created: " + client);

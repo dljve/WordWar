@@ -88,6 +88,7 @@ public class EndScreen extends Actor {
             name = "#" + (i+1) + ".  " + name + " (" + game.scores[id] +" tiles)";
             gillsans.draw(batch, name, getX()+getWidth()*0.1f,
                     getY()+getHeight()-i*(nameGlyph.height+getHeight()*0.1f)-y_margin);
+            i++;
         }
 
     }
