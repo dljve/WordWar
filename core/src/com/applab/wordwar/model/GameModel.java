@@ -200,9 +200,10 @@ public class GameModel implements Serializable {
         ArrayList<GameTile> frontier = this.getBaseTileFrontier(color);
         for(int i = 0; i < map.size(); i++ ){
             if (map.get(i).isOwnedBy(color)) {
-                for (int j = i + 1; j < map.size(); j++) {
+                for (int j = 0; j < map.size(); j++) {
                     if (!map.get(j).isOwnedBy(color) && this.areNeighbors(i, j)) {
-                        frontier.add(map.get(j));
+                        if (!frontier.contains(map.get(j)))
+                            frontier.add(map.get(j));
                     }
                 }
             }
@@ -305,7 +306,7 @@ public class GameModel implements Serializable {
         if (withToWithoutBaseTile){
             transform = -1;
         } else {
-            transform = +1;
+            transform = 1;
         }
         if (i > 31) i+=transform;
         if (i > 37) i+=transform;

@@ -112,6 +112,7 @@ public class AIModel extends Socket implements Runnable{
                 this.mimicServerCommunication(new UpdateModelMessage(this.gameid, this.player.getId(), tile.getItem(), System.currentTimeMillis()));
                 Thread.sleep(this.randomTypeDuration(tile.getTranslation().length()));
                 this.mimicServerCommunication(new CapturedTileMessage(this.gameid, tile.getId(), this.player.getId()));
+            System.out.println("AI " + this.player.getName() + ": Made move: " + tile);
         } catch (GameNotFoundException e){
             e.printStackTrace();
         } catch (InterruptedException e){
