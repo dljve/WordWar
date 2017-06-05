@@ -37,7 +37,7 @@ public class MainClass extends Game  {
 
 
 		try {
-			client = new TempRivialClient("192.168.0.103", 8888);
+			client = new TempRivialClient("192.168.0.254", 8888);
 			Gdx.app.log("MainClass/app", "Client created: " + client);
 			(new Thread(client)).start();
 		} catch (IOException e) {

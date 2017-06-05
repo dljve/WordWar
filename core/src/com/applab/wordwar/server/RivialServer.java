@@ -219,7 +219,7 @@ public class RivialServer implements Runnable{
         br.close();
         if (condition == null) {
             condition = rng.nextBoolean() ? "random" : "semantic";
-        } 
+        }
         if (condition.equals("random")) {
             condition = "semantic";
             int nr = rng.nextInt(3)+1;
@@ -228,6 +228,7 @@ public class RivialServer implements Runnable{
             condition = "random";
             filename = "wordlist/swahili-english.txt";
         }
+        System.out.println(condition);
 
         int port = 8888;
         System.out.println(port);
