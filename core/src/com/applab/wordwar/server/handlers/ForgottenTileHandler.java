@@ -28,6 +28,7 @@ public class ForgottenTileHandler extends RivialHandler {
     @Override
     public void run() {
         if(serverSide){
+            /*
             try {
                 server.handleForgottenTile(message.getGame(), message.getPlayer(), message.getTile());
                 ReplyProtocol replyProtocol = new ReplyProtocol();
@@ -44,11 +45,12 @@ public class ForgottenTileHandler extends RivialHandler {
             } catch (IOException e){
                 e.printStackTrace();
             }
+            */
         } else {
             try {
 
                 client.handleForgottenTile(message.getGame(), message.getPlayer(), message.getTile());
-
+                client.sendMessageToServer(message);
             } catch (PlayerNotFoundException e){
                 e.printStackTrace();
             } catch (TileNotFoundException e){

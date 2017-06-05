@@ -1,5 +1,6 @@
 package com.applab.wordwar.server.messages;
 
+import com.applab.wordwar.model.GameTile;
 import com.applab.wordwar.server.handlers.ForgottenTileHandler;
 import com.applab.wordwar.server.handlers.RivialHandler;
 
@@ -12,10 +13,12 @@ public class ForgottenTileMessage extends RivialProtocol {
     private int game;
     private int tile;
     private int player;
+    private GameTile t;
 
-    public ForgottenTileMessage(int game, int tile, int player){
+    public ForgottenTileMessage(int game, GameTile tile, int player){
         this.game = game;
-        this.tile = tile;
+        this.tile = tile.getId();
+        this.t = tile;
         this.player = player;
     }
 
@@ -43,6 +46,6 @@ public class ForgottenTileMessage extends RivialProtocol {
 
     @Override
     public String logMessage(){
-        return super.logMessage() + ", Game: " + game + ", Player:" + player + ", Tile: " + tile;
+        return super.logMessage() + ", Game: " + game + ", Player:" + player + ", Tile: " + t.getItem();
     }
 }
