@@ -88,4 +88,8 @@ public class Player implements Serializable{
     public String toString(){
         return "(" + id + ", " + name + ")";
     }
+
+    public void setSocket(Socket socket) {
+        this.socket = socket;
+    }
 }

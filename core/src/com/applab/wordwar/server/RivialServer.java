@@ -34,6 +34,7 @@ import java.net.SocketException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.ListIterator;
 import java.util.Random;
 
 public class RivialServer implements Runnable{
@@ -73,41 +74,27 @@ public class RivialServer implements Runnable{
     }
 
     public Player addClient(Socket client){
-
-        for(Player player: clients){
-            if(player.getSocket().equals(client)){
+        for (Player player: clients) {
+            if (player.getSocket().equals(client)) {
                 return player;
             }
         }
-
-        Player player = new Player(client, clients.size(), "");
-        clients.add(player);
-        return player;
-
-        /*
-        if(!(client instanceof AIModel)) {
-            // reconnect player
-            for (Player player : clients) {
-                if (player.getSocket().getLocalSocketAddress() != null) {
-                    System.out.println(player.getName() + "  " + player.getSocket().getLocalSocketAddress() + " " + client.getLocalSocketAddress());
-
-                    if (player.getSocket().getLocalSocketAddress().equals(client.getLocalSocketAddress())) {
-                        System.out.println("Player " + player.getName() + " reconnecting");
-                        return player;
-                    }
+        // Reconnect
+        if (!(client instanceof AIModel)) {
+            for (Player player: clients) {
+                if (player.getSocket().getLocalAddress().equals(client.getLocalAddress())) {
+                    player.setSocket(client);
+                    return player;
                 }
             }
         }
-
-
-        Player player = new Player(client, clients.size(), "Add name");
+        Player player = new Player(client, clients.size(), "");
         clients.add(player);
-        if(! (client instanceof AIModel) ){
+        if(!(client instanceof AIModel)){
             Thread thread = new Thread(new ReadThread(this, client));
             thread.start();
         }
         return player;
-        */
     }
 
     public ArrayList<GameModel> getGames(){
@@ -202,30 +189,7 @@ public class RivialServer implements Runnable{
                         // Handle message
                         RivialHandler handler = protocol.getHandler();
                         handler.handleServerSide(this, currentClient);
-                        //this.addClient(currentClient); // AKA: create a thread with a new player
-
-
-
-
-                        Player player = null;
-                        // Reconnect: look if the client/player already exists
-                        for (Player client : clients) {
-                            if (client.getSocket().getLocalAddress() != null) {
-                                System.out.println(client.getName() + "  " + client.getSocket().getLocalAddress() + " " + currentClient.getLocalAddress());
-                                if (client.getSocket().getLocalAddress().equals(currentClient.getLocalAddress())) {
-                                    System.out.println("Player " + player.getName() + " reconnected");
-                                    player = client;
-                                    break;
-                                }
-                            }
-                        }
-                        // New client: create a communication thread
-                        if (player == null) {
-                            Thread thread = new Thread(new ReadThread(this, currentClient));
-                            thread.start();
-                            clients.add(player);
-                        }
-
+                        this.addClient(currentClient);
 
                         String log = handler.logMessage();
                         if(!log.isEmpty()) {

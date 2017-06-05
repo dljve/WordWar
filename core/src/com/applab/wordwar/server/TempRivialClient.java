@@ -24,7 +24,6 @@ import com.applab.wordwar.server.messages.RequestTrialMessage;
 import com.applab.wordwar.server.messages.RivialProtocol;
 import com.applab.wordwar.server.messages.StartGameMessage;
 import com.applab.wordwar.server.messages.UpdateModelMessage;
-import com.badlogic.gdx.Gdx;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -52,7 +51,6 @@ public class TempRivialClient implements Runnable {
         this.ip = ip;
         this.socket = new Socket(this.ip, this.portNumber);
 
-        // only when first time connect
         this.initializeConnection();
     }
 
