@@ -52,6 +52,11 @@ public class RivialServer implements Runnable{
         this.words = new WordList(filename, condition.equals("random"));
         String dateTime = (new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss.SSS")).format(new Date(System.currentTimeMillis())).toString();
         this.filename = "./experiment/" + dateTime + "/log.txt";
+
+        File file = new File("./experiment/" + dateTime);
+        if (!file.exists())
+            file.mkdir();
+
         //this.filename = "./logs/ServerLogging_" + dateTime + ".txt";
         BufferedWriter bw = new BufferedWriter(new FileWriter("./experiment/" + dateTime + "/condition.txt"));
         bw.write(condition);
@@ -214,7 +219,8 @@ public class RivialServer implements Runnable{
         br.close();
         if (condition == null) {
             condition = rng.nextBoolean() ? "random" : "semantic";
-        } else if (condition.equals("random")) {
+        } 
+        if (condition.equals("random")) {
             condition = "semantic";
             int nr = rng.nextInt(3)+1;
             filename = "wordlist/swahili-english-lch" + String.valueOf(nr) + ".txt";
