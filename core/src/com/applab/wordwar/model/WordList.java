@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
 
 public class WordList {
 
@@ -13,7 +15,7 @@ public class WordList {
      * Create a word list from a file
      * @param fileName
      */
-    public WordList(String fileName) {
+    public WordList(String fileName, boolean randomize) {
         wordList = new ArrayList<Item>();
 
         try {
@@ -22,6 +24,11 @@ public class WordList {
             while ((line = br.readLine()) != null) {
                 parseLine(line);
             }
+
+            if (randomize) {
+                Collections.shuffle(wordList);
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }

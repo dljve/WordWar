@@ -16,16 +16,22 @@ import com.applab.wordwar.server.exceptions.TileNotFoundException;
 import com.applab.wordwar.server.handlers.RivialHandler;
 import com.applab.wordwar.server.messages.RivialProtocol;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
 
 public class RivialServer implements Runnable{
 
@@ -35,14 +41,22 @@ public class RivialServer implements Runnable{
     private ArrayList<Player> clients;
     private WordList words;
     private String filename;
+    private String condition;
 
-    public RivialServer(int portNumber, String filename) throws IOException{
+    public RivialServer(int portNumber, String filename, String condition) throws IOException{
         this.games = new ArrayList<GameModel>();
         this.serverSocket = new ServerSocket(portNumber);
         this.clients = new ArrayList<Player>();
         this.portNumber = portNumber;
-        this.words = new WordList(filename);
-        this.filename = "./logs/ServerLogging_" + (new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss.SSS")).format(new Date(System.currentTimeMillis())).toString() + ".txt";
+        this.condition = condition;
+        this.words = new WordList(filename, condition.equals("random"));
+        String dateTime = (new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss.SSS")).format(new Date(System.currentTimeMillis())).toString();
+        this.filename = "./experiment/" + dateTime + "/log.txt";
+        //this.filename = "./logs/ServerLogging_" + dateTime + ".txt";
+        BufferedWriter bw = new BufferedWriter(new FileWriter("./experiment/" + dateTime + "/condition.txt"));
+        bw.write(condition);
+        bw.flush();
+        bw.close();
         System.out.println(this.filename);
     }
 
@@ -92,7 +106,7 @@ public class RivialServer implements Runnable{
     }
 
     public int createGame() {
-        GameModel game = new GameModel(this.words, this.games.size());
+        GameModel game = new GameModel(this.words, this.games.size(), this.condition);
         this.games.add(game);
         return game.getId();
     }
@@ -188,12 +202,31 @@ public class RivialServer implements Runnable{
 
     }
 
-    public static void main(String[] args) throws IOException, GameNotFoundException {
-        String filename = "DEBUGswahili-english.txt"; // Also change at clientside
+    public static void main(String[] args) throws IOException, GameNotFoundException
+    {
+        Random rng = new Random();
+
+        String filename = "DEBUGswahili-english.txt"; // Also change at client-side
+
+        // Experimental condition
+        BufferedReader br = new BufferedReader(new FileReader("./experiment/condition.txt"));
+        String condition = br.readLine();
+        br.close();
+        if (condition == null) {
+            condition = rng.nextBoolean() ? "random" : "semantic";
+        } else if (condition.equals("random")) {
+            condition = "semantic";
+            int nr = rng.nextInt(3)+1;
+            filename = "wordlist/swahili-english-lch" + String.valueOf(nr) + ".txt";
+        } else {
+            condition = "random";
+            filename = "wordlist/swahili-english.txt";
+        }
+
         int port = 8888;
         System.out.println(port);
         try {
-            RivialServer server = new RivialServer(port, filename );
+            RivialServer server = new RivialServer(port, filename, condition);
             (new Thread(server)).start();
             AIModel ai1 = new AIModel(server, "Johan");
             //AIModel ai2 = new AIModel(server, "Danny");

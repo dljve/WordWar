@@ -5,6 +5,9 @@ import com.applab.wordwar.Game;
 import com.applab.wordwar.server.exceptions.PlayerNotFoundException;
 import com.applab.wordwar.server.exceptions.TileNotFoundException;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -20,11 +23,13 @@ public class GameModel implements Serializable {
     private ArrayList<GameTile> map;
     private ArrayList<Player> players;
     private Random rnd;
+    private String condition;
 
-    public GameModel(WordList words, int id) {
+    public GameModel(WordList words, int id, String condition) {
         this.id = id;
         this.players = new ArrayList<Player>();
         this.generateMap(words);
+        this.condition = condition;
         rnd = new Random();
     }
 
@@ -116,9 +121,17 @@ public class GameModel implements Serializable {
 
     public boolean endGame(int playerId) {
         try {
-
+            // Save SlimStampen parameters
             this.getPlayerById(playerId).saveModel();
+            // Save the (completed) experiment condition
+            BufferedWriter bw = new BufferedWriter(new FileWriter("./experiment/condition.txt"));
+            bw.write(condition);
+            bw.flush();
+            bw.close();
+
         } catch (PlayerNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return false;
