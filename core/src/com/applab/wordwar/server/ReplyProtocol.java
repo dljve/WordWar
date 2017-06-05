@@ -30,6 +30,7 @@ public class ReplyProtocol {
             ObjectOutputStream out =
                     new ObjectOutputStream(clients[i].getOutputStream());
             out.writeObject(replies[i]);
+            out.close();
         }
     }
 }

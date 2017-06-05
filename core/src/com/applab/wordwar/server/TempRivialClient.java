@@ -220,6 +220,12 @@ public class TempRivialClient implements Runnable {
                     Thread.yield();
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
+                } finally {
+                    try{
+                        in.close();
+                    } catch (IOException e){
+                        e.printStackTrace();
+                    }
                 }
 
             } catch (StreamCorruptedException e){

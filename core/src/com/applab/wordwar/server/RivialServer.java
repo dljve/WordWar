@@ -184,6 +184,12 @@ public class RivialServer implements Runnable{
                         Thread.yield();
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();
+                    } finally {
+                        try{
+                            in.close();
+                        } catch (IOException e){
+                            e.printStackTrace();
+                        }
                     }
                 } catch (IOException e) {
                     System.out.println("Exception caught when trying to listen for a connection");
@@ -373,6 +379,11 @@ public class RivialServer implements Runnable{
                     String log = handler.logMessage();
                     if(!log.isEmpty()) {
                         fw.write(log + "\n");
+                    }
+                    try{
+                        in.close();
+                    } catch (IOException e){
+                        e.printStackTrace();
                     }
                     Thread.yield();
                 } catch (ClassNotFoundException e) {
