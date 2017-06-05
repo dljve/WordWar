@@ -40,7 +40,7 @@ public class GameStateRequestHandler extends RivialHandler {
                 ReplyProtocol replyProtocol = new ReplyProtocol();
                 for(Player player: server.getPlayers(message.getGameID())){
                     if(player.getId() == message.getPlayerID()){
-                        replyProtocol.addReply(message, player.getSocket());
+                        replyProtocol.addReply(message, player.getSocket(),server.getOutStream(player.getSocket()));
                     }
                 }
                 replyProtocol.sendReplies();

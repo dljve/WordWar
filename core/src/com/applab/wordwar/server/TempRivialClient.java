@@ -28,6 +28,8 @@ import com.badlogic.gdx.Gdx;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 import java.io.StreamCorruptedException;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -39,6 +41,8 @@ public class TempRivialClient implements Runnable {
     private String ip;
     private GameModel game; //TODO make this client game model, different from server model!!! possibly
     private Socket socket;
+    private ObjectOutputStream outputStream;
+    private ObjectInputStream inputStream;
     private Player player;
     private ArrayList<GameModel> gamesToJoin;
     private boolean gameStarted = false;
@@ -49,6 +53,9 @@ public class TempRivialClient implements Runnable {
         this.portNumber = port;
         this.ip = ip;
         this.socket = new Socket(this.ip, this.portNumber);
+        System.out.println("Created Socket");
+        this.outputStream = new ObjectOutputStream(this.socket.getOutputStream());
+        System.out.println("Initializing connection!");
         this.initializeConnection();
     }
 
@@ -194,10 +201,10 @@ public class TempRivialClient implements Runnable {
 
     // Networking funcitons
     public void sendMessageToServer(RivialProtocol message){
-        System.out.println("Sending a message!");
+        System.out.println("Sending a message!: " + message.logMessage());
         try {
             ReplyProtocol reply = new ReplyProtocol();
-            reply.addReply(message, socket);
+            reply.addReply(message, socket, outputStream);
             this.lastSendMessage = message;
             reply.sendReplies();
         } catch (IOException e){
@@ -206,10 +213,11 @@ public class TempRivialClient implements Runnable {
     }
 
     public void run(){
+        System.out.println("Running client thread!!");
         boolean running = true;
-        while(running) {
-            try {
-                ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+        try{
+            ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+            while(running) {
                 try {
                     // Read protocol
                     Object input = in.readObject();
@@ -220,17 +228,17 @@ public class TempRivialClient implements Runnable {
                     Thread.yield();
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
-                }
 
-            } catch (StreamCorruptedException e){
-                System.err.println("ERROR: Exception caught at: " + System.currentTimeMillis() + " "+ this.getPlayer().getName()+ " " + this.lastSendMessage.logMessage());
-                e.printStackTrace();
-                running = false;
-            } catch (UnknownHostException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+                } catch (StreamCorruptedException e) {
+                    System.err.println("ERROR: Exception caught at: " + System.currentTimeMillis() + " " + this.getPlayer().getName() + " " + this.lastSendMessage.logMessage());
+                    e.printStackTrace();
+                    running = false;
+                } catch (UnknownHostException e) {
+                    e.printStackTrace();
+                }
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

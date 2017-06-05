@@ -31,7 +31,7 @@ public class CreateGameHandler extends RivialHandler {
                 int game = server.createGame();
                 ReplyProtocol replyProtocol = new ReplyProtocol();
                 message.addGame(game);
-                replyProtocol.addReply(message, clientSocket);
+                replyProtocol.addReply(message, clientSocket, server.getOutStream(clientSocket));
                 replyProtocol.sendReplies();
                 server.joinGame(clientSocket, message.getGame(), message.getTimestamp());
             } catch (PlayerNotFoundException e){

@@ -28,7 +28,7 @@ public class GetGamesHandler extends RivialHandler {
             if(serverSide){
                 ReplyProtocol reply = new ReplyProtocol();
                 message.addGames(server.getGames());
-                reply.addReply(message, clientSocket);
+                reply.addReply(message, clientSocket, server.getOutStream(clientSocket));
                 reply.sendReplies();
             } else {
                 client.handleGames(message.getGames());

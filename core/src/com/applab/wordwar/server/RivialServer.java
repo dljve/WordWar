@@ -1,14 +1,11 @@
 package com.applab.wordwar.server;
 // How to get the server running seperately: https://docs.oracle.com/javase/tutorial/networking/sockets/clientServer.html
 
-import com.applab.wordwar.Game;
 import com.applab.wordwar.ai.AIModel;
 import com.applab.wordwar.model.GameModel;
 import com.applab.wordwar.model.GameTile;
 import com.applab.wordwar.model.Item;
 import com.applab.wordwar.model.Player;
-import com.applab.wordwar.model.SlimStampen;
-import com.applab.wordwar.model.Trial;
 import com.applab.wordwar.model.WordList;
 import com.applab.wordwar.server.exceptions.GameNotFoundException;
 import com.applab.wordwar.server.exceptions.PlayerNotFoundException;
@@ -19,18 +16,17 @@ import com.applab.wordwar.server.messages.RivialProtocol;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
+import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Random;
 
 public class RivialServer implements Runnable{
@@ -42,6 +38,8 @@ public class RivialServer implements Runnable{
     private WordList words;
     private String filename;
     private String condition;
+    private HashMap<Socket, ObjectInputStream> inputStreams;
+    private HashMap<Socket, ObjectOutputStream> outputStreams;
 
     public RivialServer(int portNumber, String filename, String condition) throws IOException{
         this.games = new ArrayList<GameModel>();
@@ -52,7 +50,8 @@ public class RivialServer implements Runnable{
         this.words = new WordList(filename, condition.equals("random"));
         String dateTime = (new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss.SSS")).format(new Date(System.currentTimeMillis())).toString();
         this.filename = "./experiment/" + dateTime + "/log.txt";
-
+        this.inputStreams = new HashMap<Socket, ObjectInputStream>();
+        this.outputStreams = new HashMap<Socket, ObjectOutputStream>();
         File file = new File("./experiment/" + dateTime);
         if (!file.exists())
             file.mkdir();
@@ -75,13 +74,23 @@ public class RivialServer implements Runnable{
                 return player;
             }
         }
-        Player player = new Player(client, clients.size(), "Add name");
-        clients.add(player);
-        if(! (client instanceof AIModel) ){
-            Thread thread = new Thread(new ReadThread(this, client));
-            thread.start();
+        try {
+            Player player = new Player(client, clients.size(), "Add name");
+            if(client instanceof AIModel){
+                this.outputStreams.put(client, null);
+            } else {
+                this.outputStreams.put(client, new ObjectOutputStream(client.getOutputStream()));
+            }
+            clients.add(player);
+            if(! (client instanceof AIModel) ){
+                Thread thread = new Thread(new ReadThread(this, client));
+                thread.start();
+            }
+            return player;
+        } catch (IOException e){
+            e.printStackTrace();
         }
-        return player;
+        return null;
     }
 
     public ArrayList<GameModel> getGames(){
@@ -166,9 +175,11 @@ public class RivialServer implements Runnable{
             while (true) {
                 try {
                     Socket currentClient = this.getServerSocket().accept();
-                    System.out.println("Server: NEW CONNECTION " + currentClient.toString());
+                    System.out.println("Server: NEW CONNECTION " + currentClient.getInputStream().toString());
                     ObjectInputStream in = new ObjectInputStream(
                             currentClient.getInputStream());
+                    System.out.println("Server: NEW CONNECTION " + in.toString());
+                    inputStreams.put(currentClient, in);
                     try {
                         // Read protocol
                         Object input = in.readObject();
@@ -186,8 +197,9 @@ public class RivialServer implements Runnable{
                         e.printStackTrace();
                     }
                 } catch (IOException e) {
-                    System.out.println("Exception caught when trying to listen for a connection");
+                    System.out.println("Exception caught when trying to listen for a connection.");
                     System.out.println(e.getMessage());
+                    e.printStackTrace();
                 }
             }
         }catch (IOException e){
@@ -332,6 +344,10 @@ public class RivialServer implements Runnable{
         return toNotify;
     }
 
+    public ObjectOutputStream getOutStream(Socket clientSocket) {
+        return outputStreams.get(clientSocket);
+    }
+
     private class ReadThread implements Runnable {
 
         private RivialServer server;
@@ -364,7 +380,8 @@ public class RivialServer implements Runnable{
                     File file = new File(filename);
                     fw = new FileWriter(file.getAbsoluteFile(), true);
                     bw = new BufferedWriter(fw);
-                    ObjectInputStream in = new ObjectInputStream(client.getInputStream());
+                    System.out.println("ReadThread: " + client + client.getInputStream() + inputStreams.get(client));
+                    ObjectInputStream in = inputStreams.get(client);
                     Object input = in.readObject();
                     RivialProtocol protocol = (RivialProtocol) input;
                     // Handle message

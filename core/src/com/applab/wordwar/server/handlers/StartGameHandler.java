@@ -35,13 +35,13 @@ public class StartGameHandler extends RivialHandler {
                     if (server.canStartGame(message.getPlayer(), message.getGame())) {
                         message.setStarted(true);
                         for (Player player : players) {
-                            replyProtocol.addReply(message, player.getSocket());
+                            replyProtocol.addReply(message, player.getSocket(), server.getOutStream(player.getSocket()));
                         }
                     } else {
                         message.setStarted(false);
                         for(Player player: players){
                             if(player.getId() == message.getPlayer()){
-                                replyProtocol.addReply(message, player.getSocket());
+                                replyProtocol.addReply(message, player.getSocket(), server.getOutStream(player.getSocket()));
                             }
                         }
                     }

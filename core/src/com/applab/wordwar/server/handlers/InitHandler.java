@@ -26,7 +26,7 @@ public class InitHandler extends RivialHandler {
             if(serverSide){
                 ReplyProtocol reply = new ReplyProtocol();
                 message.setPlayer(server.addClient(clientSocket));
-                reply.addReply(message, clientSocket);
+                reply.addReply(message, clientSocket, server.getOutStream(clientSocket));
                 reply.sendReplies();
             } else {
                 client.setPlayer(message.getPlayer());

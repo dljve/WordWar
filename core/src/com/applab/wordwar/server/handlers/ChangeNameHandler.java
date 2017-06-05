@@ -32,7 +32,7 @@ public class ChangeNameHandler extends RivialHandler {
                 ArrayList<Player> toNotify = server.handleNameChange(message.getId(), message.getName());
                 ReplyProtocol replyProtocol = new ReplyProtocol();
                 for (Player player : toNotify) {
-                    replyProtocol.addReply(message, player.getSocket());
+                    replyProtocol.addReply(message, player.getSocket(), server.getOutStream(player.getSocket()));
                 }
                 replyProtocol.sendReplies();
             } catch (IOException e){

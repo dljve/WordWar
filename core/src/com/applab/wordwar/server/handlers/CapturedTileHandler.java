@@ -28,7 +28,7 @@ public class CapturedTileHandler extends RivialHandler {
                 server.handleCapturedTile(message.getGame(), message.getPlayer(), message.getTile());
                 ReplyProtocol replyProtocol = new ReplyProtocol();
                 for (Player player : server.getPlayers(message.getGame())) {
-                    replyProtocol.addReply(message, player.getSocket());
+                    replyProtocol.addReply(message, player.getSocket(), server.getOutStream(player.getSocket()));
                 }
                 replyProtocol.sendReplies();
             } catch (IOException e){
