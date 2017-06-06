@@ -230,8 +230,6 @@ public class RivialServer implements Runnable{
         }
         System.out.println(condition);
 
-        filename = "DEBUGswahili-english.txt"; // TODO REMOVE!!!
-
         int port = 8888;
         System.out.println(port);
         try {
