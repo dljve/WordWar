@@ -149,39 +149,40 @@ public class LobbyScreen implements Screen {
 
         rootTable.add(createGameButton).align(Align.bottom).width(2 * MainClass.deviceWidth / 3).height(2 * MainClass.HEIGHT_DISTANCE_UNIT).padBottom(20);
 
-        createGameButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                int timeSlept = 0;
-                while(app.getClient() == null && timeSlept < 100000){
-                    try {
-                        Thread.sleep(1000);
-                        timeSlept += 1000;
-                    } catch (InterruptedException e){
-                        e.printStackTrace();
-                    }
-                }
-                app.getClient().createGame(System.currentTimeMillis());
+        boolean experiment = true;
 
-                Gdx.app.postRunnable(new Runnable() {
-                    @Override
-                    public void run() {
-                        boolean gameNotCreated = true;
-                        GameModel gm;
-                        while(gameNotCreated) {
-                            gm = app.getClient().getGameModel();
-                            gameNotCreated = (gm == null);
+        if (!experiment) {
+            createGameButton.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    int timeSlept = 0;
+                    while(app.getClient() == null && timeSlept < 100000){
+                        try {
+                            Thread.sleep(1000);
+                            timeSlept += 1000;
+                        } catch (InterruptedException e){
+                            e.printStackTrace();
                         }
-                        // TODO Go to waiting room instead
-                        app.setScreen(new Game(app));
-                        dispose();
                     }
-                });
-            }
-        });
+                    app.getClient().createGame(System.currentTimeMillis());
 
-
-
+                    Gdx.app.postRunnable(new Runnable() {
+                        @Override
+                        public void run() {
+                            boolean gameNotCreated = true;
+                            GameModel gm;
+                            while(gameNotCreated) {
+                                gm = app.getClient().getGameModel();
+                                gameNotCreated = (gm == null);
+                            }
+                            // TODO Go to waiting room instead
+                            app.setScreen(new Game(app));
+                            dispose();
+                        }
+                    });
+                }
+            });
+        }
     }
 
 
