@@ -85,7 +85,7 @@ public class EndScreen extends Actor {
 
             gillsans.getData().setScale(0.5f);
             gillsans.setColor(playerColor);
-            name = "#" + (i+1) + ".  " + name + " (" + game.scores[id] +" tiles)";
+            name = "#" + (i+1) + ".  " + name + " (" + player.getScore() +" tiles)";
             gillsans.draw(batch, name, getX()+getWidth()*0.1f,
                     getY()+getHeight()-i*(nameGlyph.height+getHeight()*0.1f)-y_margin);
             i++;
