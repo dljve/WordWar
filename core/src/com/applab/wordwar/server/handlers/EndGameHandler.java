@@ -1,6 +1,7 @@
 package com.applab.wordwar.server.handlers;
 
 
+import com.applab.wordwar.ai.AIModel;
 import com.applab.wordwar.model.Player;
 import com.applab.wordwar.server.ReplyProtocol;
 import com.applab.wordwar.server.exceptions.GameNotFoundException;
@@ -32,6 +33,9 @@ public class EndGameHandler extends RivialHandler {
                 ReplyProtocol reply = new ReplyProtocol();
                 for (Player player : server.getPlayers(message.getGame())) {
                     reply.addReply(message, player.getSocket());
+                    if(player.getSocket() instanceof  AIModel){
+                        ((AIModel)player.getSocket()).endGame();
+                    }
                 }
                 reply.sendReplies();
             } catch (IOException e) {

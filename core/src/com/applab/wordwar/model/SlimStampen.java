@@ -333,8 +333,8 @@ public class SlimStampen {
         return true;
     }
 
-    public void endSession() {
-        String dataPath = "";
+    public void endSession(String path) {
+        String dataPath = path;
 
         FileWriter csv;
         try {

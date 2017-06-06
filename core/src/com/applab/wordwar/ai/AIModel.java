@@ -171,4 +171,8 @@ public class AIModel extends Socket implements Runnable{
     private void mimicServerCommunication(RivialProtocol message){
         message.getHandler().handleServerSide(server, this);
     }
+
+    public void endGame() {
+        running = false;
+    }
 }

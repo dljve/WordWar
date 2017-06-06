@@ -25,6 +25,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.OutputStreamWriter;
+import java.io.StreamCorruptedException;
 import java.io.Writer;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -42,6 +43,7 @@ public class RivialServer implements Runnable{
     private WordList words;
     private String filename;
     private String condition;
+    private String dateTime;
 
     public RivialServer(int portNumber, String filename, String condition) throws IOException{
         this.games = new ArrayList<GameModel>();
@@ -50,7 +52,7 @@ public class RivialServer implements Runnable{
         this.portNumber = portNumber;
         this.condition = condition;
         this.words = new WordList(filename, condition.equals("random"));
-        String dateTime = (new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss.SSS")).format(new Date(System.currentTimeMillis())).toString();
+        dateTime = (new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss.SSS")).format(new Date(System.currentTimeMillis())).toString();
         this.filename = "./experiment/" + dateTime + "/log.txt";
 
         File file = new File("./experiment/" + dateTime);
@@ -111,7 +113,7 @@ public class RivialServer implements Runnable{
     }
 
     public int createGame() {
-        GameModel game = new GameModel(this.words, this.games.size(), this.condition);
+        GameModel game = new GameModel(this.words, this.games.size(), this.condition, this.dateTime);
         this.games.add(game);
         return game.getId();
     }
@@ -375,6 +377,8 @@ public class RivialServer implements Runnable{
                     Thread.yield();
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
+                } catch (StreamCorruptedException e){
+                    System.out.println("StreamCurruptedException!");
                 } catch (IOException e) {
                     e.printStackTrace();
                 } finally {

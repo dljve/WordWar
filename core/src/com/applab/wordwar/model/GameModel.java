@@ -24,12 +24,15 @@ public class GameModel implements Serializable {
     private ArrayList<Player> players;
     private Random rnd;
     private String condition;
+    private String dateTime;
 
-    public GameModel(WordList words, int id, String condition) {
+    public GameModel(WordList words, int id, String condition, String dateTime) {
         this.id = id;
         this.players = new ArrayList<Player>();
         this.generateMap(words);
         this.condition = condition;
+        this.dateTime = dateTime;
+
         rnd = new Random();
     }
 
@@ -122,7 +125,8 @@ public class GameModel implements Serializable {
     public boolean endGame(int playerId) {
         try {
             // Save SlimStampen parameters
-            this.getPlayerById(playerId).saveModel();
+            this.getPlayerById(playerId).saveModel("./experiment/" + dateTime + "/");
+
             // Save the (completed) experiment condition
             BufferedWriter bw = new BufferedWriter(new FileWriter("./experiment/condition.txt"));
             bw.write(condition);
