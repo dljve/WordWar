@@ -1,0 +1,21 @@
+2017-06-07 16:30:41.959, CHANGE_NAME, PlayerId: 2, New name: dhv
+2017-06-07 16:30:42.081, GET_GAMES
+2017-06-07 16:30:43.219, JOIN_GAME, Game: 0, Player:2
+2017-06-07 16:30:43.901, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 16:30:44.913, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 16:30:45.920, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 16:30:46.608, ADD_NEW_ITEM, Game: 0, Player:2, Item: (shukuru,thanks)
+2017-06-07 16:30:50.025, PRACTICE_EVENT, Game: 0, Player:2, Item: (shukuru,thanks), Time: 1496845850023
+2017-06-07 16:30:51.313, UPDATE_MODEL, Game: 0, Player:2, Item: (shukuru,thanks), Timestamp: 1496845851312
+2017-06-07 16:30:54.140, CAPTURE_TILE, Game: 0, Player:2, Tile: 36
+2017-06-07 16:30:54.756, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 16:30:55.779, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 16:32:36.445, FORGOT_TILE, Game: 0, Player:2, Tile: (shukuru,thanks)
+2017-06-07 16:30:56.787, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 16:30:57.796, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 16:32:39.035, FORGOT_TILE, Game: 0, Player:1, Tile: (chama,society)
+2017-06-07 16:30:58.805, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 16:30:59.814, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 16:32:40.295, FORGOT_TILE, Game: 0, Player:0, Tile: (bustani,garden)
+2017-06-07 16:31:00.823, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 16:31:01.831, REQUEST_TRIAL, Game: 0, Player:2

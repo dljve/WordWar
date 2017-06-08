@@ -1,0 +1,22 @@
+2017-06-07 16:09:40.974, CHANGE_NAME, PlayerId: 2, New name: bsjen
+2017-06-07 16:09:41.128, GET_GAMES
+2017-06-07 16:09:42.167, JOIN_GAME, Game: 0, Player:2
+2017-06-07 16:09:42.751, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 16:09:43.761, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 16:09:44.651, ADD_NEW_ITEM, Game: 0, Player:2, Item: (chapati,bread)
+2017-06-07 16:09:47.574, PRACTICE_EVENT, Game: 0, Player:2, Item: (chapati,bread), Time: 1496844587572
+2017-06-07 16:09:51.624, UPDATE_MODEL, Game: 0, Player:2, Item: (chapati,bread), Timestamp: 1496844591623
+2017-06-07 16:09:52.597, CAPTURE_TILE, Game: 0, Player:2, Tile: 40
+2017-06-07 16:09:53.221, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 16:11:33.850, FORGOT_TILE, Game: 0, Player:1, Tile: (likizo,holidays)
+2017-06-07 16:11:33.857, FORGOT_TILE, Game: 0, Player:2, Tile: (chapati,bread)
+2017-06-07 16:09:54.230, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 16:09:55.238, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 16:09:55.362, PRACTICE_EVENT, Game: 0, Player:2, Item: (chapati,bread), Time: 1496844595362
+2017-06-07 16:09:56.251, UPDATE_MODEL, Game: 0, Player:2, Item: (chapati,bread), Timestamp: 1496844596251
+2017-06-07 16:09:56.909, CAPTURE_TILE, Game: 0, Player:2, Tile: 40
+2017-06-07 16:09:57.523, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 16:11:38.577, FORGOT_TILE, Game: 0, Player:0, Tile: (siri,secret)
+2017-06-07 16:09:58.531, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 16:09:59.542, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 16:10:00.564, REQUEST_TRIAL, Game: 0, Player:2

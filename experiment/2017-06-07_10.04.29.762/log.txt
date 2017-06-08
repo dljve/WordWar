@@ -1,0 +1,652 @@
+2017-06-07 10:10:30.942, CHANGE_NAME, PlayerId: 2, New name: eireen
+2017-06-07 10:10:31.100, GET_GAMES
+2017-06-07 10:10:37.738, JOIN_GAME, Game: 0, Player:2
+2017-06-07 10:10:38.479, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:10:39.481, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:10:40.493, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:10:41.499, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:10:42.507, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:10:43.515, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:10:43.691, ADD_NEW_ITEM, Game: 0, Player:2, Item: (kioo,mirror)
+2017-06-07 10:12:31.551, FORGOT_TILE, Game: 0, Player:1, Tile: (kaputula,pants)
+2017-06-07 10:10:51.316, PRACTICE_EVENT, Game: 0, Player:2, Item: (kioo,mirror), Time: 1496823051313
+2017-06-07 10:12:32.417, FORGOT_TILE, Game: 0, Player:0, Tile: (bibi,grandmother)
+2017-06-07 10:10:53.564, UPDATE_MODEL, Game: 0, Player:2, Item: (kioo,mirror), Timestamp: 1496823053562
+2017-06-07 10:12:38.605, FORGOT_TILE, Game: 0, Player:1, Tile: (anga,sky)
+2017-06-07 10:10:59.124, CAPTURE_TILE, Game: 0, Player:2, Tile: 36
+2017-06-07 10:10:59.743, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:12:40.644, FORGOT_TILE, Game: 0, Player:2, Tile: (kioo,mirror)
+2017-06-07 10:11:00.761, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:11:01.769, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:11:02.778, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:11:03.786, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:11:04.795, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:11:05.805, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:11:05.995, ADD_NEW_ITEM, Game: 0, Player:2, Item: (chanjo,scissors)
+2017-06-07 10:12:48.729, FORGOT_TILE, Game: 0, Player:0, Tile: (tabibu,doctor)
+2017-06-07 10:11:13.355, PRACTICE_EVENT, Game: 0, Player:2, Item: (chanjo,scissors), Time: 1496823073355
+2017-06-07 10:12:55.984, FORGOT_TILE, Game: 0, Player:0, Tile: (rafiki,friend)
+2017-06-07 10:12:56.090, FORGOT_TILE, Game: 0, Player:1, Tile: (tunda,fruit)
+2017-06-07 10:12:56.090, FORGOT_TILE, Game: 0, Player:1, Tile: (sauti,voice)
+2017-06-07 10:11:15.932, UPDATE_MODEL, Game: 0, Player:2, Item: (chanjo,scissors), Timestamp: 1496823075932
+2017-06-07 10:13:03.343, FORGOT_TILE, Game: 0, Player:0, Tile: (dhoruba,storm)
+2017-06-07 10:11:22.835, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:11:23.844, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:11:24.851, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:11:25.861, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:11:25.969, ADD_NEW_ITEM, Game: 0, Player:2, Item: (kisu,knife)
+2017-06-07 10:13:09.301, FORGOT_TILE, Game: 0, Player:0, Tile: (jiwe,stone)
+2017-06-07 10:13:10.309, FORGOT_TILE, Game: 0, Player:1, Tile: (kuku,chicken)
+2017-06-07 10:11:29.990, PRACTICE_EVENT, Game: 0, Player:2, Item: (kisu,knife), Time: 1496823089985
+2017-06-07 10:11:31.240, UPDATE_MODEL, Game: 0, Player:2, Item: (kisu,knife), Timestamp: 1496823091240
+2017-06-07 10:11:32.825, CAPTURE_TILE, Game: 0, Player:2, Tile: 24
+2017-06-07 10:11:33.442, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:11:34.458, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:11:35.466, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:13:16.369, FORGOT_TILE, Game: 0, Player:2, Tile: (kisu,knife)
+2017-06-07 10:13:16.991, FORGOT_TILE, Game: 0, Player:0, Tile: (bahari,sea)
+2017-06-07 10:13:17.274, FORGOT_TILE, Game: 0, Player:1, Tile: (kazi,work)
+2017-06-07 10:11:36.474, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:11:37.483, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:11:38.492, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:11:38.731, ADD_NEW_ITEM, Game: 0, Player:2, Item: (basi,bus)
+2017-06-07 10:11:41.579, PRACTICE_EVENT, Game: 0, Player:2, Item: (basi,bus), Time: 1496823101579
+2017-06-07 10:13:22.458, FORGOT_TILE, Game: 0, Player:0, Tile: (shukuru,thanks)
+2017-06-07 10:11:42.782, UPDATE_MODEL, Game: 0, Player:2, Item: (basi,bus), Timestamp: 1496823102782
+2017-06-07 10:11:43.805, CAPTURE_TILE, Game: 0, Player:2, Tile: 48
+2017-06-07 10:13:24.770, FORGOT_TILE, Game: 0, Player:1, Tile: (kaputula,pants)
+2017-06-07 10:13:24.770, FORGOT_TILE, Game: 0, Player:1, Tile: (kaputula,pants)
+2017-06-07 10:11:44.428, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:11:45.436, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:11:46.444, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:13:27.580, FORGOT_TILE, Game: 0, Player:0, Tile: (jicho,eye)
+2017-06-07 10:11:46.868, PRACTICE_EVENT, Game: 0, Player:2, Item: (kioo,mirror), Time: 1496823106868
+2017-06-07 10:11:49.841, UPDATE_MODEL, Game: 0, Player:2, Item: (kioo,mirror), Timestamp: 1496823109841
+2017-06-07 10:11:51.546, CAPTURE_TILE, Game: 0, Player:2, Tile: 36
+2017-06-07 10:11:52.166, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:13:33.200, FORGOT_TILE, Game: 0, Player:2, Tile: (basi,bus)
+2017-06-07 10:11:53.174, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:13:33.904, FORGOT_TILE, Game: 0, Player:0, Tile: (kijana,boy)
+2017-06-07 10:13:34.566, FORGOT_TILE, Game: 0, Player:1, Tile: (tunda,fruit)
+2017-06-07 10:13:34.566, FORGOT_TILE, Game: 0, Player:1, Tile: (tunda,fruit)
+2017-06-07 10:11:54.187, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:11:55.191, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:11:56.199, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:11:57.213, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:11:58.216, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:11:58.605, ADD_NEW_ITEM, Game: 0, Player:2, Item: (saduku,box)
+2017-06-07 10:13:40.017, FORGOT_TILE, Game: 0, Player:0, Tile: (chakula,food)
+2017-06-07 10:13:40.667, FORGOT_TILE, Game: 0, Player:1, Tile: (likizo,holidays)
+2017-06-07 10:12:01.568, PRACTICE_EVENT, Game: 0, Player:2, Item: (saduku,box), Time: 1496823121568
+2017-06-07 10:12:03.301, UPDATE_MODEL, Game: 0, Player:2, Item: (saduku,box), Timestamp: 1496823123301
+2017-06-07 10:12:04.525, CAPTURE_TILE, Game: 0, Player:2, Tile: 35
+2017-06-07 10:12:05.150, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:12:06.169, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:13:47.438, FORGOT_TILE, Game: 0, Player:1, Tile: (sauti,voice)
+2017-06-07 10:13:47.438, FORGOT_TILE, Game: 0, Player:1, Tile: (sauti,voice)
+2017-06-07 10:13:47.455, FORGOT_TILE, Game: 0, Player:2, Tile: (kioo,mirror)
+2017-06-07 10:12:07.177, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:13:48.069, FORGOT_TILE, Game: 0, Player:2, Tile: (saduku,box)
+2017-06-07 10:12:08.186, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:12:09.195, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:12:10.203, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:12:11.211, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:12:12.220, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:12:13.228, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:12:14.237, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:12:14.251, PRACTICE_EVENT, Game: 0, Player:2, Item: (kioo,mirror), Time: 1496823134251
+2017-06-07 10:13:55.363, FORGOT_TILE, Game: 0, Player:0, Tile: (chapati,bread)
+2017-06-07 10:13:56.011, FORGOT_TILE, Game: 0, Player:1, Tile: (anga,sky)
+2017-06-07 10:12:15.702, UPDATE_MODEL, Game: 0, Player:2, Item: (kioo,mirror), Timestamp: 1496823135701
+2017-06-07 10:12:17.601, CAPTURE_TILE, Game: 0, Player:2, Tile: 36
+2017-06-07 10:12:18.226, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:12:19.248, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:12:20.256, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:12:20.495, PRACTICE_EVENT, Game: 0, Player:2, Item: (basi,bus), Time: 1496823140495
+2017-06-07 10:12:23.551, UPDATE_MODEL, Game: 0, Player:2, Item: (basi,bus), Timestamp: 1496823143551
+2017-06-07 10:14:04.972, FORGOT_TILE, Game: 0, Player:0, Tile: (jicho,eye)
+2017-06-07 10:14:04.972, FORGOT_TILE, Game: 0, Player:0, Tile: (jicho,eye)
+2017-06-07 10:12:31.120, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:14:11.875, FORGOT_TILE, Game: 0, Player:0, Tile: (tabibu,doctor)
+2017-06-07 10:14:11.875, FORGOT_TILE, Game: 0, Player:0, Tile: (tabibu,doctor)
+2017-06-07 10:14:11.875, FORGOT_TILE, Game: 0, Player:0, Tile: (kuku,chicken)
+2017-06-07 10:12:32.126, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:12:33.135, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:12:34.147, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:12:35.169, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:12:36.178, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:14:17.790, FORGOT_TILE, Game: 0, Player:1, Tile: (ajabu,wonder)
+2017-06-07 10:14:17.790, FORGOT_TILE, Game: 0, Player:1, Tile: (tumaini,hope)
+2017-06-07 10:12:37.186, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:12:38.194, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:12:38.286, ADD_NEW_ITEM, Game: 0, Player:2, Item: (baskeli,bike)
+2017-06-07 10:12:42.298, PRACTICE_EVENT, Game: 0, Player:2, Item: (baskeli,bike), Time: 1496823162298
+2017-06-07 10:12:43.506, UPDATE_MODEL, Game: 0, Player:2, Item: (baskeli,bike), Timestamp: 1496823163506
+2017-06-07 10:14:24.311, FORGOT_TILE, Game: 0, Player:0, Tile: (tumbili,monkey)
+2017-06-07 10:14:25.877, FORGOT_TILE, Game: 0, Player:1, Tile: (kuku,chicken)
+2017-06-07 10:12:45.117, CAPTURE_TILE, Game: 0, Player:2, Tile: 47
+2017-06-07 10:12:45.734, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:12:46.742, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:12:47.750, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:14:28.654, FORGOT_TILE, Game: 0, Player:2, Tile: (baskeli,bike)
+2017-06-07 10:14:29.471, FORGOT_TILE, Game: 0, Player:0, Tile: (dhoruba,storm)
+2017-06-07 10:12:48.759, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:12:49.766, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:12:50.775, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:12:51.784, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:12:52.487, PRACTICE_EVENT, Game: 0, Player:2, Item: (saduku,box), Time: 1496823172487
+2017-06-07 10:14:33.281, FORGOT_TILE, Game: 0, Player:1, Tile: (kazi,work)
+2017-06-07 10:12:54.434, UPDATE_MODEL, Game: 0, Player:2, Item: (saduku,box), Timestamp: 1496823174434
+2017-06-07 10:12:55.809, CAPTURE_TILE, Game: 0, Player:2, Tile: 35
+2017-06-07 10:12:56.433, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:12:57.456, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:12:58.463, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:12:59.472, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:13:00.208, ADD_NEW_ITEM, Game: 0, Player:2, Item: (kofia,hat)
+2017-06-07 10:14:41.301, FORGOT_TILE, Game: 0, Player:1, Tile: (tunda,fruit)
+2017-06-07 10:14:41.301, FORGOT_TILE, Game: 0, Player:1, Tile: (tunda,fruit)
+2017-06-07 10:13:03.678, PRACTICE_EVENT, Game: 0, Player:2, Item: (kofia,hat), Time: 1496823183678
+2017-06-07 10:13:05.181, UPDATE_MODEL, Game: 0, Player:2, Item: (kofia,hat), Timestamp: 1496823185181
+2017-06-07 10:13:06.308, CAPTURE_TILE, Game: 0, Player:2, Tile: 46
+2017-06-07 10:13:06.933, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:14:47.839, FORGOT_TILE, Game: 0, Player:2, Tile: (kioo,mirror)
+2017-06-07 10:13:07.954, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:14:48.864, FORGOT_TILE, Game: 0, Player:0, Tile: (bahari,sea)
+2017-06-07 10:14:48.864, FORGOT_TILE, Game: 0, Player:0, Tile: (bahari,sea)
+2017-06-07 10:14:48.864, FORGOT_TILE, Game: 0, Player:0, Tile: (kichwa,head)
+2017-06-07 10:14:48.864, FORGOT_TILE, Game: 0, Player:0, Tile: (roho,soul)
+2017-06-07 10:13:08.962, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:13:09.971, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:14:51.197, FORGOT_TILE, Game: 0, Player:2, Tile: (kofia,hat)
+2017-06-07 10:13:10.980, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:13:11.947, PRACTICE_EVENT, Game: 0, Player:2, Item: (basi,bus), Time: 1496823191947
+2017-06-07 10:13:13.150, UPDATE_MODEL, Game: 0, Player:2, Item: (basi,bus), Timestamp: 1496823193150
+2017-06-07 10:13:14.890, CAPTURE_TILE, Game: 0, Player:2, Tile: 48
+2017-06-07 10:13:15.512, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:14:56.419, FORGOT_TILE, Game: 0, Player:2, Tile: (saduku,box)
+2017-06-07 10:13:16.535, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:13:17.542, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:13:17.799, PRACTICE_EVENT, Game: 0, Player:2, Item: (kioo,mirror), Time: 1496823197799
+2017-06-07 10:13:20.147, UPDATE_MODEL, Game: 0, Player:2, Item: (kioo,mirror), Timestamp: 1496823200147
+2017-06-07 10:13:22.222, CAPTURE_TILE, Game: 0, Player:2, Tile: 36
+2017-06-07 10:13:22.850, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:13:23.859, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:13:24.867, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:13:25.619, PRACTICE_EVENT, Game: 0, Player:2, Item: (saduku,box), Time: 1496823205619
+2017-06-07 10:13:26.882, UPDATE_MODEL, Game: 0, Player:2, Item: (saduku,box), Timestamp: 1496823206882
+2017-06-07 10:13:28.205, CAPTURE_TILE, Game: 0, Player:2, Tile: 35
+2017-06-07 10:13:28.819, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:13:29.831, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:15:11.240, FORGOT_TILE, Game: 0, Player:0, Tile: (jicho,eye)
+2017-06-07 10:15:11.240, FORGOT_TILE, Game: 0, Player:0, Tile: (chakula,food)
+2017-06-07 10:15:11.240, FORGOT_TILE, Game: 0, Player:0, Tile: (jicho,eye)
+2017-06-07 10:13:30.852, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:15:12.142, FORGOT_TILE, Game: 0, Player:1, Tile: (shukuru,thanks)
+2017-06-07 10:15:12.142, FORGOT_TILE, Game: 0, Player:1, Tile: (jiwe,stone)
+2017-06-07 10:15:12.142, FORGOT_TILE, Game: 0, Player:1, Tile: (rafiki,friend)
+2017-06-07 10:15:12.142, FORGOT_TILE, Game: 0, Player:1, Tile: (wakati,alarm)
+2017-06-07 10:13:31.555, PRACTICE_EVENT, Game: 0, Player:2, Item: (kofia,hat), Time: 1496823211555
+2017-06-07 10:13:34.219, UPDATE_MODEL, Game: 0, Player:2, Item: (kofia,hat), Timestamp: 1496823214218
+2017-06-07 10:13:35.273, CAPTURE_TILE, Game: 0, Player:2, Tile: 46
+2017-06-07 10:13:35.896, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:13:36.920, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:13:37.928, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:13:38.938, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:13:39.946, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:15:20.845, FORGOT_TILE, Game: 0, Player:0, Tile: (chapati,bread)
+2017-06-07 10:13:40.954, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:13:41.962, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:13:42.401, PRACTICE_EVENT, Game: 0, Player:2, Item: (chanjo,scissors), Time: 1496823222401
+2017-06-07 10:13:43.908, UPDATE_MODEL, Game: 0, Player:2, Item: (chanjo,scissors), Timestamp: 1496823223907
+2017-06-07 10:15:28.558, FORGOT_TILE, Game: 0, Player:1, Tile: (kaputula,pants)
+2017-06-07 10:15:28.558, FORGOT_TILE, Game: 0, Player:1, Tile: (kaputula,pants)
+2017-06-07 10:13:50.346, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:13:51.355, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:13:52.363, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:13:53.371, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:13:54.380, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:13:54.833, ADD_NEW_ITEM, Game: 0, Player:2, Item: (lango,door)
+2017-06-07 10:13:57.494, PRACTICE_EVENT, Game: 0, Player:2, Item: (lango,door), Time: 1496823237494
+2017-06-07 10:14:00.015, UPDATE_MODEL, Game: 0, Player:2, Item: (lango,door), Timestamp: 1496823240015
+2017-06-07 10:14:01.097, CAPTURE_TILE, Game: 0, Player:2, Tile: 55
+2017-06-07 10:14:01.723, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:15:42.642, FORGOT_TILE, Game: 0, Player:2, Tile: (basi,bus)
+2017-06-07 10:15:42.642, FORGOT_TILE, Game: 0, Player:2, Tile: (kofia,hat)
+2017-06-07 10:14:02.730, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:14:03.738, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:15:44.773, FORGOT_TILE, Game: 0, Player:2, Tile: (lango,door)
+2017-06-07 10:14:04.747, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:14:05.754, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:14:06.078, PRACTICE_EVENT, Game: 0, Player:2, Item: (kofia,hat), Time: 1496823246078
+2017-06-07 10:14:07.187, UPDATE_MODEL, Game: 0, Player:2, Item: (kofia,hat), Timestamp: 1496823247187
+2017-06-07 10:14:08.179, CAPTURE_TILE, Game: 0, Player:2, Tile: 46
+2017-06-07 10:14:08.800, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:14:09.823, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:15:50.763, FORGOT_TILE, Game: 0, Player:0, Tile: (tabibu,doctor)
+2017-06-07 10:15:50.763, FORGOT_TILE, Game: 0, Player:0, Tile: (tabibu,doctor)
+2017-06-07 10:15:50.763, FORGOT_TILE, Game: 0, Player:0, Tile: (wakati,alarm)
+2017-06-07 10:15:51.483, FORGOT_TILE, Game: 0, Player:1, Tile: (anga,sky)
+2017-06-07 10:15:51.483, FORGOT_TILE, Game: 0, Player:1, Tile: (anga,sky)
+2017-06-07 10:14:10.831, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:14:11.840, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:14:12.013, ADD_NEW_ITEM, Game: 0, Player:2, Item: (keja,house)
+2017-06-07 10:14:14.545, PRACTICE_EVENT, Game: 0, Player:2, Item: (keja,house), Time: 1496823254545
+2017-06-07 10:14:15.779, UPDATE_MODEL, Game: 0, Player:2, Item: (keja,house), Timestamp: 1496823255779
+2017-06-07 10:15:58.824, FORGOT_TILE, Game: 0, Player:0, Tile: (rafiki,friend)
+2017-06-07 10:15:58.824, FORGOT_TILE, Game: 0, Player:0, Tile: (shukuru,thanks)
+2017-06-07 10:14:21.082, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:16:01.997, FORGOT_TILE, Game: 0, Player:2, Tile: (kioo,mirror)
+2017-06-07 10:16:01.997, FORGOT_TILE, Game: 0, Player:2, Tile: (saduku,box)
+2017-06-07 10:14:22.092, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:14:23.099, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:14:23.917, PRACTICE_EVENT, Game: 0, Player:2, Item: (saduku,box), Time: 1496823263917
+2017-06-07 10:14:24.978, UPDATE_MODEL, Game: 0, Player:2, Item: (saduku,box), Timestamp: 1496823264978
+2017-06-07 10:14:26.103, CAPTURE_TILE, Game: 0, Player:2, Tile: 35
+2017-06-07 10:14:26.721, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:16:07.891, FORGOT_TILE, Game: 0, Player:1, Tile: (kamba,rope)
+2017-06-07 10:14:27.728, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:14:28.737, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:14:29.720, PRACTICE_EVENT, Game: 0, Player:2, Item: (kioo,mirror), Time: 1496823269720
+2017-06-07 10:14:31.160, UPDATE_MODEL, Game: 0, Player:2, Item: (kioo,mirror), Timestamp: 1496823271160
+2017-06-07 10:16:13.968, FORGOT_TILE, Game: 0, Player:1, Tile: (kuku,chicken)
+2017-06-07 10:16:13.968, FORGOT_TILE, Game: 0, Player:1, Tile: (kuku,chicken)
+2017-06-07 10:14:33.706, CAPTURE_TILE, Game: 0, Player:2, Tile: 36
+2017-06-07 10:14:34.325, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:14:35.333, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:14:36.342, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:14:37.350, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:14:38.360, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:14:39.368, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:16:20.359, FORGOT_TILE, Game: 0, Player:0, Tile: (kuku,chicken)
+2017-06-07 10:14:40.375, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:14:41.384, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:14:41.756, PRACTICE_EVENT, Game: 0, Player:2, Item: (keja,house), Time: 1496823281756
+2017-06-07 10:14:44.764, UPDATE_MODEL, Game: 0, Player:2, Item: (keja,house), Timestamp: 1496823284764
+2017-06-07 10:16:30.006, FORGOT_TILE, Game: 0, Player:1, Tile: (shukuru,thanks)
+2017-06-07 10:14:51.124, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:14:52.131, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:14:53.139, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:14:53.511, PRACTICE_EVENT, Game: 0, Player:2, Item: (chanjo,scissors), Time: 1496823293511
+2017-06-07 10:16:37.494, FORGOT_TILE, Game: 0, Player:1, Tile: (tumaini,hope)
+2017-06-07 10:14:59.003, UPDATE_MODEL, Game: 0, Player:2, Item: (chanjo,scissors), Timestamp: 1496823299003
+2017-06-07 10:16:41.861, FORGOT_TILE, Game: 0, Player:0, Tile: (kijana,boy)
+2017-06-07 10:16:41.861, FORGOT_TILE, Game: 0, Player:0, Tile: (roho,soul)
+2017-06-07 10:15:06.681, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:16:47.515, FORGOT_TILE, Game: 0, Player:1, Tile: (sauti,voice)
+2017-06-07 10:16:47.515, FORGOT_TILE, Game: 0, Player:1, Tile: (sauti,voice)
+2017-06-07 10:16:47.541, FORGOT_TILE, Game: 0, Player:2, Tile: (kofia,hat)
+2017-06-07 10:15:07.692, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:15:08.703, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:15:09.722, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:15:10.732, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:15:11.739, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:15:12.748, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:15:13.756, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:15:14.062, PRACTICE_EVENT, Game: 0, Player:2, Item: (kofia,hat), Time: 1496823314062
+2017-06-07 10:15:15.002, UPDATE_MODEL, Game: 0, Player:2, Item: (kofia,hat), Timestamp: 1496823315002
+2017-06-07 10:15:16.013, CAPTURE_TILE, Game: 0, Player:2, Tile: 46
+2017-06-07 10:15:16.635, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:15:17.643, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:15:18.651, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:15:19.660, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:15:20.668, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:15:21.676, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:15:22.684, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:17:03.651, FORGOT_TILE, Game: 0, Player:0, Tile: (kichwa,head)
+2017-06-07 10:15:23.694, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:15:24.704, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:15:25.712, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:15:25.786, PRACTICE_EVENT, Game: 0, Player:2, Item: (basi,bus), Time: 1496823325786
+2017-06-07 10:15:26.977, UPDATE_MODEL, Game: 0, Player:2, Item: (basi,bus), Timestamp: 1496823326977
+2017-06-07 10:15:28.364, CAPTURE_TILE, Game: 0, Player:2, Tile: 48
+2017-06-07 10:15:28.994, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:15:30.011, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:15:31.019, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:15:31.572, PRACTICE_EVENT, Game: 0, Player:2, Item: (chanjo,scissors), Time: 1496823331572
+2017-06-07 10:15:32.760, UPDATE_MODEL, Game: 0, Player:2, Item: (chanjo,scissors), Timestamp: 1496823332760
+2017-06-07 10:15:35.790, CAPTURE_TILE, Game: 0, Player:2, Tile: 23
+2017-06-07 10:15:36.411, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:17:17.909, FORGOT_TILE, Game: 0, Player:0, Tile: (rafiki,friend)
+2017-06-07 10:17:17.909, FORGOT_TILE, Game: 0, Player:0, Tile: (jiwe,stone)
+2017-06-07 10:17:17.909, FORGOT_TILE, Game: 0, Player:0, Tile: (jicho,eye)
+2017-06-07 10:17:17.909, FORGOT_TILE, Game: 0, Player:0, Tile: (jicho,eye)
+2017-06-07 10:17:17.909, FORGOT_TILE, Game: 0, Player:0, Tile: (jicho,eye)
+2017-06-07 10:15:37.434, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:17:18.715, FORGOT_TILE, Game: 0, Player:1, Tile: (likizo,holidays)
+2017-06-07 10:15:38.443, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:15:39.451, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:15:40.459, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:15:41.063, PRACTICE_EVENT, Game: 0, Player:2, Item: (keja,house), Time: 1496823341063
+2017-06-07 10:17:23.452, FORGOT_TILE, Game: 0, Player:0, Tile: (bibi,grandmother)
+2017-06-07 10:15:43.628, UPDATE_MODEL, Game: 0, Player:2, Item: (keja,house), Timestamp: 1496823343628
+2017-06-07 10:15:45.332, CAPTURE_TILE, Game: 0, Player:2, Tile: 34
+2017-06-07 10:15:45.951, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:17:27.470, FORGOT_TILE, Game: 0, Player:2, Tile: (saduku,box)
+2017-06-07 10:15:46.959, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:15:47.966, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:17:28.895, FORGOT_TILE, Game: 0, Player:2, Tile: (kioo,mirror)
+2017-06-07 10:15:48.974, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:15:49.983, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:15:50.991, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:15:51.430, PRACTICE_EVENT, Game: 0, Player:2, Item: (saduku,box), Time: 1496823351430
+2017-06-07 10:17:32.834, FORGOT_TILE, Game: 0, Player:1, Tile: (chunga,pot)
+2017-06-07 10:17:32.834, FORGOT_TILE, Game: 0, Player:1, Tile: (tabibu,doctor)
+2017-06-07 10:17:32.834, FORGOT_TILE, Game: 0, Player:1, Tile: (kioo,mirror)
+2017-06-07 10:17:32.834, FORGOT_TILE, Game: 0, Player:1, Tile: (bibi,grandmother)
+2017-06-07 10:17:32.834, FORGOT_TILE, Game: 0, Player:1, Tile: (tumbili,monkey)
+2017-06-07 10:15:52.765, UPDATE_MODEL, Game: 0, Player:2, Item: (saduku,box), Timestamp: 1496823352765
+2017-06-07 10:15:54.008, CAPTURE_TILE, Game: 0, Player:2, Tile: 35
+2017-06-07 10:15:54.630, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:15:55.637, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:15:56.539, PRACTICE_EVENT, Game: 0, Player:2, Item: (kioo,mirror), Time: 1496823356539
+2017-06-07 10:15:58.195, UPDATE_MODEL, Game: 0, Player:2, Item: (kioo,mirror), Timestamp: 1496823358195
+2017-06-07 10:17:39.737, FORGOT_TILE, Game: 0, Player:1, Tile: (kaputula,pants)
+2017-06-07 10:17:39.738, FORGOT_TILE, Game: 0, Player:1, Tile: (kaputula,pants)
+2017-06-07 10:15:59.759, CAPTURE_TILE, Game: 0, Player:2, Tile: 36
+2017-06-07 10:16:00.383, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:16:01.391, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:16:02.400, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:16:03.408, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:16:04.419, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:16:05.425, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:16:06.433, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:16:07.352, PRACTICE_EVENT, Game: 0, Player:2, Item: (baskeli,bike), Time: 1496823367352
+2017-06-07 10:16:08.289, UPDATE_MODEL, Game: 0, Player:2, Item: (baskeli,bike), Timestamp: 1496823368289
+2017-06-07 10:16:13.644, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:17:54.588, FORGOT_TILE, Game: 0, Player:2, Tile: (keja,house)
+2017-06-07 10:16:14.652, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:16:15.661, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:16:16.670, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:16:17.678, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:16:17.719, PRACTICE_EVENT, Game: 0, Player:2, Item: (keja,house), Time: 1496823377719
+2017-06-07 10:16:18.645, UPDATE_MODEL, Game: 0, Player:2, Item: (keja,house), Timestamp: 1496823378645
+2017-06-07 10:16:19.724, CAPTURE_TILE, Game: 0, Player:2, Tile: 34
+2017-06-07 10:16:20.341, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:16:21.349, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:16:22.358, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:18:03.305, FORGOT_TILE, Game: 0, Player:2, Tile: (basi,bus)
+2017-06-07 10:16:23.366, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:16:24.375, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:16:24.994, PRACTICE_EVENT, Game: 0, Player:2, Item: (basi,bus), Time: 1496823384994
+2017-06-07 10:16:26.101, UPDATE_MODEL, Game: 0, Player:2, Item: (basi,bus), Timestamp: 1496823386101
+2017-06-07 10:16:26.844, CAPTURE_TILE, Game: 0, Player:2, Tile: 48
+2017-06-07 10:16:27.472, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:18:08.416, FORGOT_TILE, Game: 0, Player:2, Tile: (kofia,hat)
+2017-06-07 10:16:28.491, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:18:10.048, FORGOT_TILE, Game: 0, Player:0, Tile: (chakula,food)
+2017-06-07 10:16:29.475, PRACTICE_EVENT, Game: 0, Player:2, Item: (kisu,knife), Time: 1496823389475
+2017-06-07 10:16:30.469, UPDATE_MODEL, Game: 0, Player:2, Item: (kisu,knife), Timestamp: 1496823390469
+2017-06-07 10:16:31.672, CAPTURE_TILE, Game: 0, Player:2, Tile: 24
+2017-06-07 10:16:32.301, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:16:33.324, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:16:34.345, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:16:35.354, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:16:36.362, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:18:17.321, FORGOT_TILE, Game: 0, Player:2, Tile: (chanjo,scissors)
+2017-06-07 10:16:36.968, PRACTICE_EVENT, Game: 0, Player:2, Item: (kofia,hat), Time: 1496823396968
+2017-06-07 10:16:39.113, UPDATE_MODEL, Game: 0, Player:2, Item: (kofia,hat), Timestamp: 1496823399113
+2017-06-07 10:18:24.092, FORGOT_TILE, Game: 0, Player:0, Tile: (chapati,bread)
+2017-06-07 10:16:44.265, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:18:25.222, FORGOT_TILE, Game: 0, Player:2, Tile: (kisu,knife)
+2017-06-07 10:16:45.274, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:16:46.283, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:16:46.308, PRACTICE_EVENT, Game: 0, Player:2, Item: (baskeli,bike), Time: 1496823406308
+2017-06-07 10:16:48.341, UPDATE_MODEL, Game: 0, Player:2, Item: (baskeli,bike), Timestamp: 1496823408341
+2017-06-07 10:16:49.649, CAPTURE_TILE, Game: 0, Player:2, Tile: 47
+2017-06-07 10:16:50.270, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:18:31.049, FORGOT_TILE, Game: 0, Player:0, Tile: (dhoruba,storm)
+2017-06-07 10:18:31.049, FORGOT_TILE, Game: 0, Player:0, Tile: (kuku,chicken)
+2017-06-07 10:18:31.049, FORGOT_TILE, Game: 0, Player:0, Tile: (dhoruba,storm)
+2017-06-07 10:16:51.293, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:16:52.293, PRACTICE_EVENT, Game: 0, Player:2, Item: (kofia,hat), Time: 1496823412293
+2017-06-07 10:16:53.621, UPDATE_MODEL, Game: 0, Player:2, Item: (kofia,hat), Timestamp: 1496823413621
+2017-06-07 10:16:54.402, CAPTURE_TILE, Game: 0, Player:2, Tile: 46
+2017-06-07 10:16:55.020, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:16:56.043, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:16:57.064, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:16:58.073, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:16:59.081, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:16:59.900, PRACTICE_EVENT, Game: 0, Player:2, Item: (chanjo,scissors), Time: 1496823419900
+2017-06-07 10:17:01.076, UPDATE_MODEL, Game: 0, Player:2, Item: (chanjo,scissors), Timestamp: 1496823421076
+2017-06-07 10:17:03.143, CAPTURE_TILE, Game: 0, Player:2, Tile: 23
+2017-06-07 10:18:44.085, FORGOT_TILE, Game: 0, Player:0, Tile: (degaga,glasses)
+2017-06-07 10:18:44.085, FORGOT_TILE, Game: 0, Player:0, Tile: (tofaa,apple)
+2017-06-07 10:17:03.764, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:17:04.785, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:17:05.793, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:17:06.794, PRACTICE_EVENT, Game: 0, Player:2, Item: (kisu,knife), Time: 1496823426794
+2017-06-07 10:18:49.407, FORGOT_TILE, Game: 0, Player:0, Tile: (rafiki,friend)
+2017-06-07 10:17:10.451, UPDATE_MODEL, Game: 0, Player:2, Item: (kisu,knife), Timestamp: 1496823430451
+2017-06-07 10:17:13.736, CAPTURE_TILE, Game: 0, Player:2, Tile: 24
+2017-06-07 10:17:14.363, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:18:55.384, FORGOT_TILE, Game: 0, Player:2, Tile: (keja,house)
+2017-06-07 10:17:15.368, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:17:16.378, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:18:57.220, FORGOT_TILE, Game: 0, Player:0, Tile: (bibi,grandmother)
+2017-06-07 10:17:17.386, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:17:18.394, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:17:19.403, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:17:20.412, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:17:21.420, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:17:22.429, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:17:23.437, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:17:23.842, PRACTICE_EVENT, Game: 0, Player:2, Item: (keja,house), Time: 1496823443842
+2017-06-07 10:17:27.924, UPDATE_MODEL, Game: 0, Player:2, Item: (keja,house), Timestamp: 1496823447924
+2017-06-07 10:17:29.198, CAPTURE_TILE, Game: 0, Player:2, Tile: 34
+2017-06-07 10:17:29.821, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:19:10.741, FORGOT_TILE, Game: 0, Player:2, Tile: (kioo,mirror)
+2017-06-07 10:19:10.742, FORGOT_TILE, Game: 0, Player:2, Tile: (baskeli,bike)
+2017-06-07 10:17:30.828, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:19:12.353, FORGOT_TILE, Game: 0, Player:0, Tile: (jiwe,stone)
+2017-06-07 10:17:31.836, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:17:32.092, PRACTICE_EVENT, Game: 0, Player:2, Item: (kioo,mirror), Time: 1496823452092
+2017-06-07 10:17:33.005, UPDATE_MODEL, Game: 0, Player:2, Item: (kioo,mirror), Timestamp: 1496823453005
+2017-06-07 10:19:13.956, FORGOT_TILE, Game: 0, Player:1, Tile: (kazi,work)
+2017-06-07 10:19:13.956, FORGOT_TILE, Game: 0, Player:1, Tile: (kazi,work)
+2017-06-07 10:17:34.519, CAPTURE_TILE, Game: 0, Player:2, Tile: 36
+2017-06-07 10:17:35.128, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:17:36.137, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:17:37.143, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:17:37.847, PRACTICE_EVENT, Game: 0, Player:2, Item: (baskeli,bike), Time: 1496823457846
+2017-06-07 10:17:38.856, UPDATE_MODEL, Game: 0, Player:2, Item: (baskeli,bike), Timestamp: 1496823458855
+2017-06-07 10:19:19.911, FORGOT_TILE, Game: 0, Player:0, Tile: (kijana,boy)
+2017-06-07 10:17:39.847, CAPTURE_TILE, Game: 0, Player:2, Tile: 47
+2017-06-07 10:17:40.472, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:19:21.444, FORGOT_TILE, Game: 0, Player:2, Tile: (kisu,knife)
+2017-06-07 10:19:21.444, FORGOT_TILE, Game: 0, Player:2, Tile: (saduku,box)
+2017-06-07 10:17:41.493, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:19:22.467, FORGOT_TILE, Game: 0, Player:1, Tile: (sauti,voice)
+2017-06-07 10:19:22.467, FORGOT_TILE, Game: 0, Player:1, Tile: (kuku,chicken)
+2017-06-07 10:19:22.467, FORGOT_TILE, Game: 0, Player:1, Tile: (sauti,voice)
+2017-06-07 10:19:22.467, FORGOT_TILE, Game: 0, Player:1, Tile: (tumaini,hope)
+2017-06-07 10:19:22.467, FORGOT_TILE, Game: 0, Player:1, Tile: (kuku,chicken)
+2017-06-07 10:17:42.502, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:17:42.757, PRACTICE_EVENT, Game: 0, Player:2, Item: (saduku,box), Time: 1496823462757
+2017-06-07 10:17:43.699, UPDATE_MODEL, Game: 0, Player:2, Item: (saduku,box), Timestamp: 1496823463699
+2017-06-07 10:17:44.807, CAPTURE_TILE, Game: 0, Player:2, Tile: 35
+2017-06-07 10:17:45.415, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:17:46.420, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:17:47.428, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:17:48.097, PRACTICE_EVENT, Game: 0, Player:2, Item: (kisu,knife), Time: 1496823468097
+2017-06-07 10:17:49.089, UPDATE_MODEL, Game: 0, Player:2, Item: (kisu,knife), Timestamp: 1496823469089
+2017-06-07 10:17:50.311, CAPTURE_TILE, Game: 0, Player:2, Tile: 24
+2017-06-07 10:17:50.936, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:17:51.959, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:17:52.968, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:17:53.975, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:17:54.761, ADD_NEW_ITEM, Game: 0, Player:2, Item: (skati,skirt)
+2017-06-07 10:17:58.265, PRACTICE_EVENT, Game: 0, Player:2, Item: (skati,skirt), Time: 1496823478265
+2017-06-07 10:17:58.964, UPDATE_MODEL, Game: 0, Player:2, Item: (skati,skirt), Timestamp: 1496823478964
+2017-06-07 10:17:59.987, CAPTURE_TILE, Game: 0, Player:2, Tile: 45
+2017-06-07 10:18:00.608, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:18:01.617, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:18:02.624, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:18:03.632, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:19:44.627, FORGOT_TILE, Game: 0, Player:2, Tile: (skati,skirt)
+2017-06-07 10:18:04.641, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:18:05.649, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:18:06.658, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:18:07.666, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:18:08.676, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:18:09.683, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:18:09.725, ADD_NEW_ITEM, Game: 0, Player:2, Item: (chunga,pot)
+2017-06-07 10:18:12.169, PRACTICE_EVENT, Game: 0, Player:2, Item: (chunga,pot), Time: 1496823492169
+2017-06-07 10:18:12.914, UPDATE_MODEL, Game: 0, Player:2, Item: (chunga,pot), Timestamp: 1496823492914
+2017-06-07 10:18:13.674, CAPTURE_TILE, Game: 0, Player:2, Tile: 22
+2017-06-07 10:18:14.300, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:19:55.272, FORGOT_TILE, Game: 0, Player:2, Tile: (basi,bus)
+2017-06-07 10:19:55.962, FORGOT_TILE, Game: 0, Player:1, Tile: (rafiki,friend)
+2017-06-07 10:19:55.962, FORGOT_TILE, Game: 0, Player:1, Tile: (wakati,alarm)
+2017-06-07 10:18:15.322, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:18:16.331, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:18:17.002, PRACTICE_EVENT, Game: 0, Player:2, Item: (basi,bus), Time: 1496823497002
+2017-06-07 10:18:17.958, UPDATE_MODEL, Game: 0, Player:2, Item: (basi,bus), Timestamp: 1496823497958
+2017-06-07 10:18:19.204, CAPTURE_TILE, Game: 0, Player:2, Tile: 48
+2017-06-07 10:18:19.821, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:20:00.847, FORGOT_TILE, Game: 0, Player:2, Tile: (chunga,pot)
+2017-06-07 10:18:20.829, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:20:01.990, FORGOT_TILE, Game: 0, Player:2, Tile: (chanjo,scissors)
+2017-06-07 10:20:01.990, FORGOT_TILE, Game: 0, Player:2, Tile: (keja,house)
+2017-06-07 10:18:21.837, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:18:22.754, PRACTICE_EVENT, Game: 0, Player:2, Item: (chunga,pot), Time: 1496823502754
+2017-06-07 10:18:25.331, UPDATE_MODEL, Game: 0, Player:2, Item: (chunga,pot), Timestamp: 1496823505331
+2017-06-07 10:18:26.190, CAPTURE_TILE, Game: 0, Player:2, Tile: 22
+2017-06-07 10:18:26.813, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:18:27.822, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:18:28.831, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:18:29.551, PRACTICE_EVENT, Game: 0, Player:2, Item: (chanjo,scissors), Time: 1496823509551
+2017-06-07 10:18:30.650, UPDATE_MODEL, Game: 0, Player:2, Item: (chanjo,scissors), Timestamp: 1496823510649
+2017-06-07 10:18:32.342, CAPTURE_TILE, Game: 0, Player:2, Tile: 23
+2017-06-07 10:18:32.968, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:18:33.990, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:18:34.999, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:18:36.013, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:18:37.016, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:18:37.901, PRACTICE_EVENT, Game: 0, Player:2, Item: (keja,house), Time: 1496823517901
+2017-06-07 10:18:42.195, UPDATE_MODEL, Game: 0, Player:2, Item: (keja,house), Timestamp: 1496823522195
+2017-06-07 10:18:43.360, CAPTURE_TILE, Game: 0, Player:2, Tile: 34
+2017-06-07 10:18:43.982, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:20:25.130, FORGOT_TILE, Game: 0, Player:2, Tile: (chunga,pot)
+2017-06-07 10:18:45.002, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:18:46.011, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:18:47.019, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:18:48.029, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:18:49.037, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:18:49.481, PRACTICE_EVENT, Game: 0, Player:2, Item: (chunga,pot), Time: 1496823529481
+2017-06-07 10:18:51.109, UPDATE_MODEL, Game: 0, Player:2, Item: (chunga,pot), Timestamp: 1496823531109
+2017-06-07 10:18:51.939, CAPTURE_TILE, Game: 0, Player:2, Tile: 22
+2017-06-07 10:18:52.561, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:20:33.600, FORGOT_TILE, Game: 0, Player:2, Tile: (kisu,knife)
+2017-06-07 10:18:53.569, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:18:54.593, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:18:55.180, PRACTICE_EVENT, Game: 0, Player:2, Item: (kisu,knife), Time: 1496823535180
+2017-06-07 10:18:56.035, UPDATE_MODEL, Game: 0, Player:2, Item: (kisu,knife), Timestamp: 1496823536035
+2017-06-07 10:18:57.347, CAPTURE_TILE, Game: 0, Player:2, Tile: 24
+2017-06-07 10:18:57.970, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:18:58.991, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:20:39.982, FORGOT_TILE, Game: 0, Player:2, Tile: (baskeli,bike)
+2017-06-07 10:19:00.005, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:20:41.118, FORGOT_TILE, Game: 0, Player:0, Tile: (tumbili,monkey)
+2017-06-07 10:19:01.025, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:19:01.231, PRACTICE_EVENT, Game: 0, Player:2, Item: (baskeli,bike), Time: 1496823541231
+2017-06-07 10:19:05.176, UPDATE_MODEL, Game: 0, Player:2, Item: (baskeli,bike), Timestamp: 1496823545176
+2017-06-07 10:19:06.251, CAPTURE_TILE, Game: 0, Player:2, Tile: 47
+2017-06-07 10:19:06.865, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:19:07.887, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:20:48.488, FORGOT_TILE, Game: 0, Player:1, Tile: (kazi,work)
+2017-06-07 10:19:08.896, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:19:09.905, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:19:10.913, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:20:51.976, FORGOT_TILE, Game: 0, Player:2, Tile: (kofia,hat)
+2017-06-07 10:19:11.922, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:19:12.930, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:19:13.699, ADD_NEW_ITEM, Game: 0, Player:2, Item: (kiti,chair)
+2017-06-07 10:19:16.411, PRACTICE_EVENT, Game: 0, Player:2, Item: (kiti,chair), Time: 1496823556411
+2017-06-07 10:19:17.785, UPDATE_MODEL, Game: 0, Player:2, Item: (kiti,chair), Timestamp: 1496823557785
+2017-06-07 10:19:18.959, CAPTURE_TILE, Game: 0, Player:2, Tile: 57
+2017-06-07 10:19:19.579, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:19:20.586, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:21:01.586, FORGOT_TILE, Game: 0, Player:0, Tile: (jicho,eye)
+2017-06-07 10:19:21.594, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:19:22.603, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:21:03.616, FORGOT_TILE, Game: 0, Player:2, Tile: (chunga,pot)
+2017-06-07 10:21:03.616, FORGOT_TILE, Game: 0, Player:2, Tile: (kiti,chair)
+2017-06-07 10:19:23.612, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:21:04.630, FORGOT_TILE, Game: 0, Player:2, Tile: (kioo,mirror)
+2017-06-07 10:19:24.620, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:19:25.628, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:19:25.951, PRACTICE_EVENT, Game: 0, Player:2, Item: (chunga,pot), Time: 1496823565951
+2017-06-07 10:19:26.946, UPDATE_MODEL, Game: 0, Player:2, Item: (chunga,pot), Timestamp: 1496823566946
+2017-06-07 10:19:27.737, CAPTURE_TILE, Game: 0, Player:2, Tile: 22
+2017-06-07 10:19:28.359, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:19:29.366, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:21:10.781, FORGOT_TILE, Game: 0, Player:1, Tile: (kaputula,pants)
+2017-06-07 10:21:10.781, FORGOT_TILE, Game: 0, Player:1, Tile: (kaputula,pants)
+2017-06-07 10:19:30.330, PRACTICE_EVENT, Game: 0, Player:2, Item: (kioo,mirror), Time: 1496823570330
+2017-06-07 10:19:31.206, UPDATE_MODEL, Game: 0, Player:2, Item: (kioo,mirror), Timestamp: 1496823571206
+2017-06-07 10:21:14.674, FORGOT_TILE, Game: 0, Player:0, Tile: (chapati,bread)
+2017-06-07 10:19:34.479, CAPTURE_TILE, Game: 0, Player:2, Tile: 36
+2017-06-07 10:19:35.107, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:19:36.128, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:19:37.137, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:19:38.145, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:19:39.154, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:21:20.199, FORGOT_TILE, Game: 0, Player:2, Tile: (keja,house)
+2017-06-07 10:19:39.891, PRACTICE_EVENT, Game: 0, Player:2, Item: (kofia,hat), Time: 1496823579890
+2017-06-07 10:19:42.120, UPDATE_MODEL, Game: 0, Player:2, Item: (kofia,hat), Timestamp: 1496823582120
+2017-06-07 10:21:25.548, FORGOT_TILE, Game: 0, Player:0, Tile: (bibi,grandmother)
+2017-06-07 10:21:25.548, FORGOT_TILE, Game: 0, Player:0, Tile: (rafiki,friend)
+2017-06-07 10:21:25.548, FORGOT_TILE, Game: 0, Player:0, Tile: (dhoruba,storm)
+2017-06-07 10:19:47.326, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:19:48.334, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:19:49.341, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:19:50.349, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:19:51.358, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:19:52.366, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:19:53.374, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:19:54.383, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:19:55.393, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:19:56.402, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:19:57.409, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:19:58.112, PRACTICE_EVENT, Game: 0, Player:2, Item: (kiti,chair), Time: 1496823598112
+2017-06-07 10:19:59.070, UPDATE_MODEL, Game: 0, Player:2, Item: (kiti,chair), Timestamp: 1496823599070
+2017-06-07 10:20:05.232, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:21:46.368, FORGOT_TILE, Game: 0, Player:2, Tile: (saduku,box)
+2017-06-07 10:20:06.241, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:20:07.249, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:20:08.257, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:20:09.027, PRACTICE_EVENT, Game: 0, Player:2, Item: (saduku,box), Time: 1496823609027
+2017-06-07 10:20:09.951, UPDATE_MODEL, Game: 0, Player:2, Item: (saduku,box), Timestamp: 1496823609951
+2017-06-07 10:20:11.009, CAPTURE_TILE, Game: 0, Player:2, Tile: 35
+2017-06-07 10:20:11.633, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:20:12.655, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:20:13.664, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:20:14.674, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:21:55.684, FORGOT_TILE, Game: 0, Player:2, Tile: (chunga,pot)
+2017-06-07 10:20:15.591, PRACTICE_EVENT, Game: 0, Player:2, Item: (keja,house), Time: 1496823615591
+2017-06-07 10:20:16.471, UPDATE_MODEL, Game: 0, Player:2, Item: (keja,house), Timestamp: 1496823616470
+2017-06-07 10:20:17.458, CAPTURE_TILE, Game: 0, Player:2, Tile: 34
+2017-06-07 10:20:18.081, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:21:59.185, FORGOT_TILE, Game: 0, Player:2, Tile: (chanjo,scissors)
+2017-06-07 10:20:19.088, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:20:20.097, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:20:21.105, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:20:21.363, PRACTICE_EVENT, Game: 0, Player:2, Item: (kofia,hat), Time: 1496823621363
+2017-06-07 10:20:22.436, UPDATE_MODEL, Game: 0, Player:2, Item: (kofia,hat), Timestamp: 1496823622436
+2017-06-07 10:20:23.145, CAPTURE_TILE, Game: 0, Player:2, Tile: 46
+2017-06-07 10:20:23.770, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:22:04.867, FORGOT_TILE, Game: 0, Player:2, Tile: (kisu,knife)
+2017-06-07 10:20:24.777, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:20:25.785, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:20:26.794, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:20:27.802, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:20:27.877, PRACTICE_EVENT, Game: 0, Player:2, Item: (chanjo,scissors), Time: 1496823627877
+2017-06-07 10:20:28.987, UPDATE_MODEL, Game: 0, Player:2, Item: (chanjo,scissors), Timestamp: 1496823628987
+2017-06-07 10:20:32.735, CAPTURE_TILE, Game: 0, Player:2, Tile: 23
+2017-06-07 10:20:33.360, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:20:34.367, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:20:35.334, PRACTICE_EVENT, Game: 0, Player:2, Item: (kisu,knife), Time: 1496823635334
+2017-06-07 10:20:36.193, UPDATE_MODEL, Game: 0, Player:2, Item: (kisu,knife), Timestamp: 1496823636193
+2017-06-07 10:20:37.798, CAPTURE_TILE, Game: 0, Player:2, Tile: 24
+2017-06-07 10:20:38.422, REQUEST_TRIAL, Game: 0, Player:2
+2017-06-07 10:20:38.486, END_GAME, Game: 0
